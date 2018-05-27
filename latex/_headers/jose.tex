@@ -58,9 +58,21 @@
     \newcommand{\ind}{\hspace*{\parindent}}
     \newcommand{\tripstar}{
         \begin{center}
-            {\LARGE * * *}
+            {\textbf{* * *}}
         \end{center}
     }
+    \newcommand{\quadstar}{
+        \begin{center}
+            {\textbf{* * * *}}
+        \end{center}
+    }
+
+%DEFAULT SETS
+    \newcommand{\N}{\mathbb{N}}
+    \newcommand{\Z}{\mathbb{Z}}
+    \newcommand{\Q}{\mathbb{Q}}
+    \newcommand{\R}{\mathbb{R}}
+    \newcommand{\C}{\mathbb{C}}
 
 %CASE DEFINITIONS
     \newcommand{\casedef}[1]{
@@ -72,15 +84,43 @@
     }
 
 %ENVIRONMENTS
-    \newenvironment{definition}[1]{
-        \nl\nl{\sc Definição} {\bf #1}:
+    \newcounter{envcount}
+    \setcounter{envcount}{00}
+    \newcommand{\begannewenv}{\addtocounter{envcount}{1}}
+
+    \newenvironment{definition}[1]{\begannewenv\nl\nl
+        \textbf{\arabic{envcount}}) 
+        {\sc Definição:} \textbf{#1}.
         \addcontentsline{toc}{subsection}{Def. #1}\\\ind
     }{
         \tripstar
     }
 
-    \renewenvironment{proof*}{
-        \nl\nl{\sc Prova:}\\
+    \renewenvironment{lemma*}{\begannewenv\nl\nl
+        \textbf{\arabic{envcount}}) 
+        {\sc Lema:}
+    }{}
+
+    \renewenvironment{lemma}[1]{\begannewenv\nl\nl
+        \textbf{\arabic{envcount}}) 
+        {\sc Lema:} \textbf{#1}.
+        \addcontentsline{toc}{subsection}{Prp. #1}\\\ind
+    }{}
+
+    \renewenvironment{proposition}[1]{\begannewenv\nl\nl
+        \textbf{\arabic{envcount}}) 
+        {\sc Proposição:} \textbf{#1}.
+        \addcontentsline{toc}{subsection}{Prp. #1}\\\ind
+    }{}
+
+    \renewenvironment{theorem}[1]{\begannewenv\nl\nl
+        \textbf{\arabic{envcount}}) 
+        {\sc Teorema:} \textbf{#1}.
+        \addcontentsline{toc}{subsection}{Teo. #1}\\\ind
+    }{}
+
+    \renewenvironment{proof*}{\nl\nl\nl
+        {\sc Prova:}\\
     }{}
     \renewenvironment{proof}
         {\begin{proof*}\ind}
