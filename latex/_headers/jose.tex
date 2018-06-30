@@ -2,7 +2,7 @@
 
 \newlength\tabsize                    % Indentation
 \setlength\tabsize\parindent          % Indentation
-\setlength\parindent{0pt}             % Indentation
+%\setlength\parindent{0pt}             % Indentation
 \newcommand{\ind}{\hspace*{\tabsize}} % Indentation
 \newcommand{\bnd}{\ind\ind}           % Indentation
 
@@ -55,7 +55,7 @@
     \newcommand{\nl}{$ $\newline}                           %Force Newline
     \newcommand{\cls}{\newpage}                             %Shorthand for clearpage
     \newcommand*\elide{\textup{[\,\dots] }}                 %[...]
-    \newcommand{\ind}{\hspace*{\parindent}}
+    \renewcommand{\ind}{\hspace*{\parindent}}
     \newcommand{\tripstar}{
         \begin{center}
             {\textbf{* * *}}
@@ -66,6 +66,10 @@
             {\textbf{* * * *}}
         \end{center}
     }
+    \newcommand{\ZF}{\text{\sc ZF}}
+    \newcommand{\ZFC}{\text{\sc ZFC}}
+
+    \newcommand{\strong}{\textbf}
 
 %DEFAULT SETS
     \newcommand{\N}{\mathbb{N}}
@@ -96,32 +100,32 @@
         \tripstar
     }
 
-    \renewenvironment{lemma*}{\begannewenv\nl\nl
+    \newenvironment{lemma*}{\begannewenv\nl\nl
         \textbf{\arabic{envcount}}) 
         {\sc Lema:}
     }{}
 
-    \renewenvironment{lemma}[1]{\begannewenv\nl\nl
+    \newenvironment{lemma}[1]{\begannewenv\nl\nl
         \textbf{\arabic{envcount}}) 
         {\sc Lema:} \textbf{#1}.
         \addcontentsline{toc}{subsection}{Prp. #1}\\\ind
     }{}
 
-    \renewenvironment{proposition}[1]{\begannewenv\nl\nl
+    \newenvironment{proposition}[1]{\begannewenv\nl\nl
         \textbf{\arabic{envcount}}) 
         {\sc Proposição:} \textbf{#1}.
         \addcontentsline{toc}{subsection}{Prp. #1}\\\ind
     }{}
 
-    \renewenvironment{theorem}[1]{\begannewenv\nl\nl
+    \newenvironment{theorem}[1]{\begannewenv\nl\nl
         \textbf{\arabic{envcount}}) 
         {\sc Teorema:} \textbf{#1}.
         \addcontentsline{toc}{subsection}{Teo. #1}\\\ind
     }{}
 
-    \renewenvironment{proof*}{\nl\nl\nl
-        {\sc Prova:}\\
+    \newenvironment{proof*}{\nl\nl\nl
+        {\emph{Prova}:}\\
     }{}
-    \renewenvironment{proof}
+    \newenvironment{proof}
         {\begin{proof*}\ind}
         {\end{proof*}}

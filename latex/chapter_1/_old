@@ -1,0 +1,486 @@
+
+        \paragraph{}
+            Definimos uma língua formal como sendo 
+            as sequências simbólicas finitas definidas
+            por pela seguinte gramática:
+        \paragraph{}
+            Dados $\Sigma=\SET{R_0}{\ldots}{R_n}$ símbolos 
+            relacionais $\rho_0,\ldots,\rho_n$-árias,
+            respectivamente; e uma coleção $\Omega
+            =\SET{x_0}{x_1}{x_2}{\ldots}$ de símbolos 
+            de variáveis (infinitos e distintos dos relacionais)
+            que uma sequência (finita) de símbolos $\sigma$ 
+            pertence à língua de $\TUPLE{\Sigma}{\Omega}$  
+            exatamente quando vale alguma das 
+            condições abaixo:
+        \begin{enumerate}[label=\alph*)]
+            \item $\sigma\equiv R_k\POINT{x_{\alpha_0}}{\ldots}{x_{\alpha_{\rho_k}}}$, com $0\leq k\leq n$, e $x_{\alpha_i}$ todos em $\Omega$.
+            \item $\sigma\equiv \varphi\land\psi$, com $\varphi,\psi$ da língua.
+            \item $\sigma\equiv \varphi\lor \psi$, com $\varphi,\psi$ da língua.
+            \item $\sigma\equiv \neg\varphi$, com $\varphi$ da língua.
+            \item $\sigma\equiv \forall x_i:\varphi$, com $x_i$ variável em $\Omega$ e $\varphi$ da língua.
+            \item $\sigma\equiv \exists x_i:\varphi$, com $x_i$ variável em $\Omega$ e $\varphi$ da língua.
+        \end{enumerate}
+        \paragraph{}
+            Como na construção da língua, usamos 
+            apenas a aridade e número de 
+            símbolos relacionais, podemos 
+            definir uma língua canônica para 
+            cada ``assinatura''. 
+        \paragraph{}
+            Primeiro, fixaremos uma coleção 
+            de símbolos $\Omega=\SET{x_0}
+            {x_1}{\ldots}$, para variáveis, 
+            e uma coleção de símbolos 
+            distintos $\Sigma=\SET{R_0}
+            {R_1}{\ldots}$ relacionais.
+            Para cada $\rho:n\longrightarrow\N$
+            que define a aridade de cada um dos 
+            $R_i$-s e número de símbolos relacionais,
+            define-se a língua $\mathcal{L}_\rho$ 
+            como feito acima.
+            
+
+        \subsection{\textbf{Satisfatibilidade}}
+        \paragraph{}
+            Sem alguma ideia de o que fórmulas de 
+            uma língua dada dizem a respeito de um 
+            ambiente, não temos nada de muito interessante.
+            Então, vamos definir o que queremos dizer com 
+            um ambiente e, então definir o que significa 
+            satisfatibilidade. 
+        \paragraph{}
+            Primeiro, para definirmos \textbf{estruturas}, 
+            pois se uma fórmula é verdade ela deve
+            ser verdade em algum lugar. Para tanto, 
+            vamos definir uma 
+            {\textbf{valoração de variáveis}}:
+
+        \begin{definition}{Valoração de Variáveis}
+                Dada uma classe $A$ de objetos, uma
+                valoração de 
+                \textbf{variáveis das variáveis} 
+                de uma língua $\mathcal{L}$ de 
+                primeira ordem com alguma assinatura,
+                dizemos que $f$ é uma \textbf{valoração de 
+                variáveis} quando ela é uma realização
+                dos símbolos das $\mathcal{L}$-variáveis
+                em objetos de $A$ --- {\emph ie.} uma função 
+                que associa símbolos de variáveis a objetos 
+                concretos de $A$.
+            \paragraph{}
+                Adicionalmente, dados um objeto $o$ 
+                de $A$, uma variável $x_j$ de 
+                $\mathcal{L}$ e uma valoração $f$, 
+                definimos:
+                $$f[x_j\slash{o}](x_i) = \casedef{
+                    o\text{, &se }i = j;\\
+                    f(x_i)\text{, &se }i\not=j.
+                }$$ 
+            \paragraph{}
+                Uma valoração que é a substituição do 
+                valor de $f$ em um só ponto. 
+        \end{definition}
+
+        \paragraph{}
+            Uma \textbf{estrutura} é uma coleção de informações:
+            $$\mathfrak{A} = \TUPLE{A}{R_0}{\ldots}{R_n}$$
+        \paragraph{}
+            Onde $A$ é uma classe não vazia chamada ``domínio'' 
+            e cada uma $R_i$ é uma relação definida 
+            sobre o mesmo. Dizemos que uma estrutura 
+            e uma língua são \textbf{compatíveis}
+            exatamente quando a aridade de cada $R_i$ 
+            é $\rho_i$.
+
+        \begin{definition}{Satisfatibilidade}
+                Sejam $\varphi$ uma $\mathcal{L}$-fórmula;  
+                $\mathfrak{A} = \TUPLE{A}{P_0}{\ldots}{P_n}$
+                uma estrutura;
+                $f$ uma valoração de variáveis em $A$; e 
+                sejam $\mathcal{L}$ e $\mathfrak{A}$ compatíveis.
+                $$ \mathfrak A\vDash_f\varphi$$
+            \paragraph{}
+                Que se lê  ``$\mathfrak{A}$ satisfaz 
+                $\varphi$'', ``$\mathfrak{A}$ crê que 
+                $\varphi$'' ou ``$\varphi$ vale em 
+                $\mathfrak{A}$'', É definido recursivamente:
+            \begin{align*}
+                \varphi\equiv R_i\POINT{x_0}{\ldots}{x_{\alpha_{\rho_i}}}
+                    &\RAR \mathfrak A\vDash_f\varphi \bim P_i\POINT{f(x_0)}{\ldots}{f(x_{\alpha_{\rho_i}})}.\\
+                \varphi\equiv \sigma\land\psi    
+                    &\RAR \mathfrak A\vDash_f\varphi \bim \mathfrak A\vDash_f\sigma \text{ e } \mathfrak A\vDash_f\psi.\\
+                \varphi\equiv \sigma\lor \psi    
+                    &\RAR \mathfrak A\vDash_f\varphi \bim \mathfrak A\vDash_f\sigma \text{ ou } \mathfrak A\vDash_f\psi.\\
+                \varphi\equiv \neg\sigma         
+                    &\RAR \mathfrak A\vDash_f\varphi \bim \text{ não }\mathfrak A\vDash_f\sigma.\\
+                \varphi\equiv \sigma\rar\psi         
+                    &\RAR \mathfrak A\vDash_f\varphi \bim \mathfrak A\vDash_f\neg\sigma \text{ ou } \mathfrak A\vDash_f\psi.\\
+                \varphi\equiv \forall x_i:\sigma 
+                    &\RAR \mathfrak A\vDash_f\varphi \bim \text{ para todo $a$ de $A$: } \mathfrak A\vDash_{f[x_i\slash{a}]}\varphi.\\
+                \varphi\equiv \exists x_i:\sigma 
+                    &\RAR \mathfrak A\vDash_f\varphi \bim \text{ existe algum $a$ de $A$: } \mathfrak A\vDash_{f[x_i\slash{a}]}\varphi.
+            \end{align*}
+            \paragraph{}
+                Existe uma questão delicada nessa quantificação
+                que fazemos nas últimas duas clausulas: Não devemos
+                acreditar que é possível fazer isso em $1^a$ ordem,
+                devido a um resultado de Tarski. Uma língua que pode 
+                definir satisfatibilidade para todas as outras línguas 
+                de primeira ordem, pode, também definir para ela mesma,
+                e isso resulta em uma contradição devido a meta-linguística.
+        \end{definition}
+
+        \paragraph{}
+            Vamos tomar um parágrafo para explorar o significado 
+            da definição (admitidamente meta-teorética) de 
+            satisfatibilidade. Primeiro, vemos que se a fórmula 
+            sendo interpretada é um sentença\footnote{{\emph ie.} 
+            todas as variáveis da fórmula estão quantificadas 
+            sobre por algum $\forall$ ou um $\exists$, em todos 
+            os escopos.}, então não importa quais valorações $f,
+            f'$ que dermos, dada uma $\sigma$-sentença:
+            $$ \mathfrak{A}\vDash_{f} \sigma \BIM \mathfrak{A}\vDash_{f'} \sigma $$
+        \paragraph{}
+            Segundo, se uma fórmula da língua é $\varphi\POINT{x}{y}{z}$\footnote{
+            Onde $x,y,z$ são açucar sintático para alguns $x_i, 
+            x_j, x_k$.} onde estas vairáveis estão livres na 
+            fórmula, então se $\hat{x}, \hat{y}, \hat{z}$ forem
+            objetos do domínio de uma estrutura compatível, 
+            ``$\varphi\POINT{\hat{x}}{\hat{y}}{\hat{z}}$'' ---
+            que gostaríamos que significasse quão verdade é dizer que
+            $\hat{x}, \hat{y}, \hat{z}$ estão relacionados como
+            $\varphi$ predica --- se traduz simplesmente em:
+            $f'=f[x\slash\hat x; y\slash\hat y; z\slash\hat z]$
+            uma nova valoração de variáveis:
+            $$ \mathfrak{A}\vDash_{f'} \varphi $$
+        \paragraph{}
+            Assim, satisfatibilidade é a codificação dessa interpretação 
+            de uma coisa {\emph sintática}, a fórmula, em uma coisa 
+            {\emph semântica} relações entre objetos, quantificações 
+            sobre o domínio, etc.
+        \paragraph{}
+            Finalmente, --- dado um coleção de fórmulas $\Gamma$\footnote{
+                Caso $\Gamma$ seja vazio, $\mathfrak{A}\vDash\Gamma$ é vacuamente verdade.
+            }
+            de uma língua compatível com $\mathfrak A$ estrutura e uma 
+            valoração $f$ ---, dizemos que:
+            $$\mathfrak{A}\vDash_f\Gamma\BIM\text{ para toda }\varphi\text{ de }\Gamma\text{: }\mathfrak{A}\vDash_f\varphi$$
+        \paragraph{}
+            E que, se $\Gamma$ for coleção de sentenças, então dizemos:
+            $$\mathfrak{A}\vDash\Gamma\BIM\text{ para toda }\varphi\text{ de }\Gamma\text{: }\mathfrak{A}\vDash_f\varphi$$
+            onde $f$ é qualquer (fixa) valoração das variáveis, por exemplo: $f(x_i)=\hat{x}$\footnote{Pelo menos uma tal 
+            valoração existe pois os domínios de estruturas são não vazios.}
+
+        \subsection{\textbf{Consequência Sintática}}
+        \paragraph{}
+            Agora, sendo um pouco colecionista, 
+            considere o conjunto das fórmulas de 
+            de uma língua $\mathcal{L}_\Sigma$,
+            com $\Sigma = \TUPLE{R_0}{\ldots}{R_n}$.
+        \begin{definition}{Consequência}
+                A ideia por trás da definição é que existem coisas 
+                que são verdadeiras independente de interpretação e 
+                localidade. Por exemplo, não importa se 
+                $\forall x_7\forall x_8:R_3(x_7,x_8)$ é verdade ou não
+                em um uma dada estrutura (de assinatura compatível), 
+                sempre vale que: $\varphi\equiv[\forall x_7\forall x_8:R_3(x_7,x_8)]
+                \rar[\exists x_7:\exists x_8:R_3(x_7,x_8)]$. Isto é, 
+                existem sentenças que não dependem de interpretações de 
+                variáveis nem da semântica das relações: sua verdade
+                é \emph{consequente de hipóteses}. No caso, $\varphi$ é 
+                consequência do conjunto vazio de hipóteses.
+            \paragraph{}
+                Então vamos definir uma relação entre conjuntos de sentenças 
+                de uma língua e sentenças desta mesma língua, a de consequência.
+            \paragraph{}
+                Seja $\Gamma\subset\mathcal{L}$ conjunto de sentenças de uma 
+                língua. Seja também $\varphi$ uma sentença da mesma língua. 
+                Dizemos que $\varphi$ é consequência sintática de $\Gamma$:
+                $$\Gamma\vdash\varphi\BIM(\mathfrak{A}\vDash\Gamma\RAR\mathfrak{A}\vDash\varphi)\footnote{
+                    Onde $\mathfrak{A}$ é uma estrutura de assinatura compatível. Estamos, de certa forma,
+                    com $\mathfrak{A}$ livre sobre estruturas, o que é assustador. Afinal, para teoria de 
+                    conjuntos, por exemplo, potencialmente estaríamos quantificando sobre classe próprias. 
+                    E, em teorias mais fortes, todo tipo de coisas informalizáveis. Já estamos, no entanto, 
+                    em uma meta-teoria generosa.\\ Pouco mais abaixo de onde estamos se agita um mar de metafísica, e questões 
+                    epistemo e ontológicas no qual não ousamos mergulhar.
+                }$$
+        \end{definition}
+        \paragraph{}
+            A definição se extende para conjuntos de sentenças simplemente dizendo
+            $$\Gamma\vdash\Sigma\BIM\text{ para todo $\sigma$ de $\Sigma$ temos: } \Gamma\vdash\sigma$$
+        \paragraph{}
+            Em se tratando de conjuntos unitários, {\emph ie.} $\Gamma=\SET{\varphi}$, abreviamos a relação $\vdash$ para:
+            $$\varphi\vdash\psi\BIM\SET{\varphi}\vdash\psi$$
+        \paragraph{}
+            Esta é uma definição de fato bem estranha, definimos uma coisa ser consequente
+            da outra em termos de interpretações, que são semânticas --- portanto 
+            particulares --- em natureza\footnote{
+            É claro que é possível fazê-lo de maneira puramente sintática, que é útil 
+            para computadores e provadores automáticos de teoremas, mas cremos que é 
+            uma abordagem que oculta algo da beleza da relação inseparável entre $\vdash$ 
+            e $\vDash$.\\
+            Por outro lado, uma abordagem sintática {\emph é} de fato mais precisa, pois não
+            necessita quantificar sobre as estruturas compatíveis com a língua, 
+            {\emph etc.}
+        }. No entanto,
+        ela é uma relação extremamente razoável: não há interpretação que tenha $\Gamma$ 
+        sem ter $\varphi$. De alguma forma, dizer que ``Em todo lugar que $\Gamma$ vale, 
+        $\varphi$ vale'' nos garante que não importa o lugar, apenas $\Gamma$ e $\varphi$.
+        
+        \begin{proposition}{Resultados sobre $\vdash$}
+            Dada uma língua fixada $\mathcal{L}$ e 
+            $\varphi,\psi$ sentenças da
+            de $\mathcal{L}$.
+            \label{vdash_results_00}
+            \begin{enumerate}[label=\alph*)]
+                \item $    {\varphi}\vdash\varphi$,
+                \item $\Gamma\vdash\varphi$ e $\Gamma\subseteq\Lambda\RAR \Lambda\vdash\varphi$,
+                \item $    {\varphi}\vdash\varphi\lor\psi$,
+                \item $\SET{\varphi}{\psi}\vdash\varphi\land\psi$,
+                \item $    {\varphi\land\psi}\vdash\SET{\varphi}{\psi}$,
+                \item $\emptyset\vdash  \varphi\lor\neg\varphi$,
+                \item $\varphi\vdash\neg\neg\varphi$,
+                \item $\neg\neg\varphi\vdash\varphi$,
+                \item $    {\varphi}\vdash\psi\BIM\emptyset\vdash\varphi\rar\psi$,
+                \item $    {\forall x:\varphi}\vdash\exists x:\varphi$,
+                \item $    {\forall x:\varphi}\vdash\neg\exists x:\neg\varphi$,
+                \item $    {\neg\exists x:\neg\varphi}\vdash\forall x:\varphi$,
+                \item $\emptyset\vdash\varphi\RAR\emptyset\vdash\SET{\forall x:\varphi}{\exists x:\varphi}$,
+                \item $\SET{\varphi}{\varphi\rar\psi}\vdash\psi$,
+                \item $\SET{\varphi\lor\psi}{\neg\varphi}\vdash\psi$.
+            \end{enumerate}
+        \end{proposition}
+        \begin{proof}
+            \begin{enumerate}[label=\alph*)]
+                \item $ $
+                    \begin{prooftree}
+                        \AxiomC{$\mathfrak{A}\vDash{\varphi}$}
+                        \UnaryInfC{$\mathfrak{A}\vDash\varphi$}
+                        \UnaryInfC{$\mathfrak{A}\vDash{\varphi}\RAR\mathfrak{A}\vDash\varphi$}
+                        \UnaryInfC{${\varphi}\vdash\varphi$}
+                    \end{prooftree}
+                \item $ $
+                    \begin{prooftree}
+                        \AxiomC{$\mathfrak{A}\vDash\Lambda$}
+
+                        \AxiomC{$\Gamma\vdash\varphi$}
+                        \UnaryInfC{$\mathfrak{B}\vDash\Gamma\RAR\mathfrak{B}\vDash\varphi$}
+
+                        \AxiomC{$\Gamma\subseteq\Lambda$}
+                        
+                        \AxiomC{$\mathfrak{A}\vDash\Lambda$}
+                        \UnaryInfC{$\lambda\in\Lambda\RAR\mathfrak{A}\vDash\lambda$}
+                        
+                        \BinaryInfC{$\lambda\in\Gamma \RAR\mathfrak{A}\vDash\lambda$}
+                        \UnaryInfC{$\mathfrak{A}\vDash\Gamma$}
+                    
+                        \BinaryInfC{$\mathfrak{A}\vDash\varphi$}
+                    \end{prooftree}
+                    $$\therefore\mathfrak{A}\vDash\Lambda\RAR\mathfrak{A}\vDash\varphi$$
+                    $$\text{Assim, } \Lambda\vdash\varphi$$
+
+                \item $ $
+                    \begin{prooftree}
+                        \AxiomC{   $\mathfrak{A}\vDash{\varphi}$}
+                        \UnaryInfC{$\mathfrak{A}\vDash{\varphi}$ ou $\mathfrak{A}\vDash{\psi}$}
+                        \UnaryInfC{$\mathfrak{A}\vDash{\varphi\lor\psi}$}
+                    \end{prooftree}                                            
+                    $$\therefore{\varphi}\vdash\varphi\lor\psi $$
+
+                \item $ $
+                    \begin{prooftree}
+                        \AxiomC{$\mathfrak{A}\vDash\SET{\varphi}{\psi}$}
+                        \UnaryInfC{$\mathfrak{A}\vDash\varphi$}
+                        \AxiomC{$\mathfrak{A}\vDash\SET{\varphi}{\psi}$}
+                        \UnaryInfC{$\mathfrak{A}\vDash\psi$}
+                        \BinaryInfC{$\mathfrak{A}\vDash\varphi$ e $\mathfrak{A}\vDash\psi$}
+                        \UnaryInfC{$\mathfrak{A}\vDash\varphi\land\psi$}
+                    \end{prooftree}
+                    $$\therefore\SET{\varphi}{\psi}\vdash\varphi\land\psi $$
+                
+                \item $ $
+                    \begin{prooftree}
+                        \AxiomC{$\mathfrak{A}\vDash{\varphi\land\psi}$}
+                        \UnaryInfC{$\mathfrak{A}\vDash{\varphi}$ e $\mathfrak{A}\vDash{\psi}$}
+                        \UnaryInfC{$\mathfrak{A}\vDash\SET{\varphi}{\psi}$}
+                    \end{prooftree}
+                    $$\therefore{\varphi\land\psi}\vdash\SET{\varphi}{\psi} $$
+                
+                \item $ $
+                    \begin{prooftree}
+                        \AxiomC{$\mathfrak{A}\vDash\emptyset$}
+                        \AxiomC{$\mathfrak{A}\not\vDash\varphi$}
+                        \BinaryInfC{Não $\mathfrak{A}\vDash\varphi$}
+                        \UnaryInfC{$\mathfrak{A}\vDash\neg\varphi$}
+                    \end{prooftree}
+                    $$\therefore\emptyset\vdash\varphi\lor\neg\varphi $$ 
+
+                \item $ $
+                    \begin{prooftree}
+                        \AxiomC{$\mathfrak{A}\vDash\varphi$}
+                        \UnaryInfC{Não-não $\mathfrak{A}\vDash\varphi$}
+                        \UnaryInfC{Não $\mathfrak{A}\vDash\neg\varphi$}
+                        \UnaryInfC{$\mathfrak{A}\vDash\neg\neg\varphi$}
+                    \end{prooftree}
+                    $$\therefore\varphi\vdash\neg\neg\varphi $$ 
+
+                \item $ $
+                    \begin{prooftree}
+                        \AxiomC{$\mathfrak{A}\vDash\neg\neg\varphi$}
+                        \UnaryInfC{Não $\mathfrak{A}\vDash\neg\varphi$}
+                        \UnaryInfC{Não-não $\mathfrak{A}\vDash\varphi$}
+                        \UnaryInfC{$\mathfrak{A}\vDash\varphi$}
+                    \end{prooftree}
+                    $$\therefore\neg\neg\varphi\vdash\varphi $$ 
+
+                \item $ $
+                    \begin{prooftree}
+                        \AxiomC{${\varphi}\vdash\psi$}
+                        \UnaryInfC{$\mathfrak{A}\vDash{\varphi}\RAR\mathfrak{A}\vDash\psi$}
+                        \UnaryInfC{Não $\mathfrak{A}\vDash\varphi$ ou $\mathfrak{A}\vDash\psi$}
+                        \UnaryInfC{$\mathfrak{A}\vDash\neg\varphi$ ou $\mathfrak{A}\vDash\psi$}
+                        \UnaryInfC{$\mathfrak{A}\vDash\neg\varphi\lor\psi$}
+                        \AxiomC{$   \mathfrak{A}\vDash\emptyset$}
+                        \BinaryInfC{$\mathfrak{A}\vDash\emptyset\RAR\mathfrak{A}\vDash\varphi\rar\psi$}
+                        \UnaryInfC{$\emptyset\vdash\varphi\rar\psi$}
+                    \end{prooftree}
+
+                    \begin{prooftree}
+                        \AxiomC{$\emptyset\vdash\varphi\rar\psi$}
+                        \UnaryInfC{$\mathfrak{A}\vDash\emptyset\RAR\mathfrak{A}\vDash\varphi\rar\psi$}
+                        \UnaryInfC{$\mathfrak{A}\vDash\varphi\rar\psi$}
+                        \UnaryInfC{Não $\mathfrak{A}\vDash\varphi$ ou $\mathfrak{A}\vDash\psi$}
+                        \UnaryInfC{$\mathfrak{A}\vDash\varphi$\RAR$\mathfrak{A}\vDash\psi$}
+                        %\UnaryInfC{$\mathfrak{A}\vDash\SET{\varphi}$\RAR$\mathfrak{A}\vDash\psi$}
+                        \UnaryInfC{${\varphi}\vdash\psi$}
+                    \end{prooftree}
+                    $$\therefore {\varphi}\vdash\psi\BIM\emptyset\vdash\varphi\rar\psi $$
+
+                \item $ $
+                    \begin{prooftree}
+                        \AxiomC{$\mathfrak{A}\vDash\forall x:\varphi$}
+                        \UnaryInfC{Para todo $\hat x$ de $|\mathfrak{A}|$: $\mathfrak{A}\vDash_{f[x\slash{\hat x}]} \varphi$}
+                        \AxiomC{$|\mathfrak{A}|\not=\emptyset$}
+                        \UnaryInfC{Existe $\hat x$ em $|\mathfrak{A}|$}
+                        \BinaryInfC{Existe $\hat x$ em $|\mathfrak{A}|$: $\mathfrak{A}\vDash_{f[x\slash{\hat x}]} \varphi$}
+                        \UnaryInfC{$\mathfrak{A}\vDash\exists x:\varphi$}
+                    \end{prooftree}
+                    $$\therefore \forall x:\varphi\vdash\exists x:\varphi $$
+                    
+                \item $ $
+                    \begin{prooftree}
+                        \AxiomC{$\mathfrak{A}\vDash\forall x:\varphi$}
+                        \UnaryInfC{Para todo $\hat x$ em $|\mathfrak{A}|$: $\mathfrak{A}_{f[x\slash\hat x]}\vDash\varphi$}
+                        
+                        \AxiomC{$\mathfrak{A}\vDash\exists x:\neg\varphi$}
+                        \UnaryInfC{Existe $\hat x$ em $|\mathfrak{A}|$: $\mathfrak{A}_{f[x\slash\hat x]}\vDash\neg\varphi$}
+                        
+                        \BinaryInfC{$\bot$}
+                    \end{prooftree}
+                    $$\therefore \forall x:\varphi\vdash\neg\exists x:\neg\varphi $$
+                \item $ $
+                    $$\therefore \exists x:\neg\varphi\vdash\neg\forall x:\varphi $$
+                \item Se $x$ não ocorre em $\varphi$, então é trivial. Se $x$ ocorre em 
+                $\varphi$, lembramos que é uma sentença, então $x$ sempre ocorre 
+                quantificado em $\varphi$. Então $\vDash$ vai ignorar os quantificadores 
+                em ``$\forall x:\phi$'' e ``$\exists x:\phi$''.
+                
+                \item $ $
+                    \begin{prooftree}
+                        \AxiomC{$\mathfrak{A}\vDash\varphi$}
+                        \AxiomC{$\mathfrak{A}\vDash\varphi\rar\psi$}
+                        \UnaryInfC{$\mathfrak{A}\not\vDash\varphi$ ou $\mathfrak{A}\vDash\psi$}
+                        \BinaryInfC{$\mathfrak{A}\vDash\psi$}
+                    \end{prooftree}
+                    $$\therefore\SET{\varphi}{\varphi\rar\psi}\vdash\psi $$
+                
+                \item $ $
+                    \begin{prooftree}
+                        \AxiomC{$\mathfrak{A}\vDash\neg\varphi$}
+                        \UnaryInfC{Não $\mathfrak{A}\vDash\varphi$}
+
+                        \AxiomC{$\mathfrak{A}\vDash\varphi\lor\psi$}
+                        \UnaryInfC{$\mathfrak{A}\vDash\varphi$ ou $\mathfrak{A}\vDash\psi$}
+                        
+                        \BinaryInfC{$\mathfrak{A}\vDash\psi$}
+                    \end{prooftree}
+                    $$\therefore\SET{\varphi\lor\psi}{\neg\varphi}\vdash\psi $$
+            \end{enumerate}
+            \eop
+        \end{proof}
+        \paragraph{}
+            O que estes resultados primários nos dizem é que, se tivermos uma prova formal 
+            (em um sistema dedutivo razoável)
+            --- partindo de hipóteses $\Gamma$ --- de uma coleção $\Phi$ de sentenças, 
+            então temos garantido que $\Gamma\vdash\Phi$. Isto é importante porque temos 
+            que, de certa forma, $\vdash$ respeita a dedução lógica: se achamos que 
+            $\Gamma$ consegue provar $\Phi$, então de fato onde vale $\Gamma$, vale $\Phi$.
+        \paragraph{}
+            A reciproca, {\emph{que toda sentênça consequente de $\Gamma$ é provável por 
+            hipóteses de $\Gamma$}}, requer um trato cuidadoso com sistemas dedutíveis, 
+            definição de prova, {\emph{etc.}} Mas é resultado conhecido que se $\Gamma\vdash\varphi$,
+            então {\emph{prova-se}} $\varphi$ com hipóteses de $\Gamma$.
+        \end{definition}
+
+        \subsection{\textbf{Teorias}}
+        \begin{definition}{Teoria}
+                Dada uma língua, um subconjunto de sentenças $\mathcal{T}$ é dito uma teoria
+                quando ele é não-vazio e $\vdash$-fechado. Isto é, se $\mathcal{T}\vdash\tau$ 
+                então $\tau$ já estava em $\mathcal{T}$. Ou seja, é uma coleção de sentenças 
+                que contém todas as suas consequências sintáticas.
+        \end{definition}
+        \paragraph{}
+            \newcommand{\theoryof}[1]{\mathcal{T}_{#1}}
+            Dada uma língua $\mathcal{L}$, e um conjunto de sentenças não-vazio desta que batizamos ``axiomas'' 
+            $\mathcal{A}$, dizemos que um conjunto de sentenças $\mathcal{T}$ é a teoria de 
+            $\mathcal{A}$ exatamente quando para toda $\tau$ de $\mathcal{T}$, temos 
+            $\mathcal{A}\vdash\tau$, que podemos abreviar para $\theoryof{\mathcal{A}}$.
+        \paragraph{}
+            O fato de que, para um conjunto de axiomas conforme acima, $\theoryof{\mathcal{A}}$ é teoria 
+            verifica-se por:
+        \begin{proof*}
+            \begin{prooftree}
+                \AxiomC{$\theoryof{\mathcal{A}}\vdash\tau$}
+                \UnaryInfC{$\mathfrak{A}\vDash\theoryof{\mathcal{A}}\RAR\mathfrak{A}\vDash\tau$}
+
+                \AxiomC{$\mathcal{A}\subseteq\theoryof{\mathcal{A}}$}
+                \UnaryInfC{$\mathfrak{A}\vDash\theoryof{\mathcal{A}}\RAR\mathfrak{A}\vDash\mathcal{A}$}
+
+                \AxiomC{para cada $\sigma$ em $\theoryof{\mathcal{A}}$}
+                \UnaryInfC{$\mathcal{A}\vdash\sigma$}
+                \UnaryInfC{$\mathfrak{A}\vDash\mathcal{A}\RAR\mathfrak{A}\vDash\theoryof{\mathcal{A}}$}
+                
+                \BinaryInfC{$\mathfrak{A}\vDash\mathcal{A}\BIM\mathfrak{A}\vDash\theoryof{\mathcal{A}}$}
+                \BinaryInfC{$\mathfrak{A}\vDash\mathcal{A}\RAR\mathfrak{A}\vDash\tau$}
+
+                \UnaryInfC{$\mathcal{A}\vdash\tau$}
+                \UnaryInfC{$\tau$ está em $\theoryof{\mathcal{A}}$}
+            \end{prooftree}
+            \eop
+        \end{proof*}
+
+        \begin{definition}{Consistência}
+            Dizemos que uma teoria $\theoryof{}$ sobre uma língua $\mathcal{L}$ é 
+            consistente se e só se ela é não trivial, isto é, existe uma 
+            $\mathcal{L}$-sentença $\varphi$ que não está em $\theoryof{}$.
+        \end{definition}
+        
+        \paragraph{}
+            A motivação da definição de consistência é evitar contradições: 
+            \begin{prooftree}
+                \AxiomC{$\neg\varphi\land\varphi$ em $\theoryof{}$}
+                \UnaryInfC{$\neg\varphi$ em $\theoryof{}$}
+
+                \AxiomC{$\neg\varphi\land\varphi$ em $\theoryof{}$}
+                \UnaryInfC{$\varphi$ em $\theoryof{}$}
+
+                \AxiomC{$\psi$ em $\mathcal{L}$ sentença}
+                \BinaryInfC{$\varphi\lor\psi$ em $\theoryof{}$}
+
+                \BinaryInfC{$\psi$ em $\theoryof$}
+            \end{prooftree}
+        \paragraph{}
+            Se a teoria não for trivial, então ela não pode ser 
+            contraditória. Se ela \emph{for} trivial, ela  
+            obviamente é inconsistente.

@@ -1,4 +1,4 @@
-\chapter{Lógica}
+\chapter{Lógica de Primeira Ordem}
     \epigraph{\justify
         It seems to me now that mathematics 
         is capable of an artistic excellence 
@@ -13,328 +13,373 @@
         }{\textit{Bertrand Russell.}}    
     \cls
     \paragraph{}
-        A forma mais básica de lógica que nos propomos
-        a tratar é a ``lógica proposicional'', que 
-        veremos ser intimamente ligada a álgebras de
-        Heyting. Ela consiste de uma coleção de letras
-        proposicionais, que podem ser vistas como 
-        condições, e destas ``fórmulas atômicas'', 
-        obtemos fórmulas compostas através do uso de 
-        conectivos e operadores lógicos.
-    \paragraph{}
-        O estudo da lógica proposicional tem seu 
-        mérito, mas não será especialmente util para
-        nós. O nosso foco serão álgebras booleanas 
-        completas. Veremos, no entanto, um tanto sobre
-        álgebras de heyting, que são como que realizações 
-        de alguma lógica proposicional.
-    \paragraph{}
-        Grosseiramente, uma lógica proposicional se ocupa
-        de sentenças como:
-        $$(P\rar Q)\rar P\rar Q$$
-        $$(P\land Q)\rar P$$
-    \paragraph{}
-        Onde $P$, $Q$, {\emph etc.} são letras 
-        proposicionais. Uma álgebra de Heyting 
-        como que dá um valor parcialmente ordenado
-        a cada uma das letras, e indutivamente, 
-        obtemos um valor para fórmulas como as 
-        acima.
+        Começamos com uma língua $\mathcal{L}$ de primeira ordem, isto é, 
+        a coleção de palavras (bem-)formadas por um determinado conjunto de 
+        símbolos para variáveis; uma série de símbolos para relações,
+        $\TUPLE{R_1}{R_2}{\ldots}$; uma de funções, $\TUPLE{F_1}{F_2}{\ldots}$
+        e uma de constantes $\TUPLE{C_1}{C_2}{\ldots}$; conectivos e operadores 
+        lógicos e quantificadores.
+    \begin{definition}{Termos, Fórmulas e variáveis livres ${\vert}$ escopadas}
+        \begin{enumerate}[label=(\alph*)]
+            \item Se $x_i$ for uma variável, então a palavra ``$x_i$'' é um 
+                \strong{termo} e a (única) ocorrência de $x_i$ é dita 
+                \strong{livre} no termo.
 
-    \section{Lógica de Primeira Ordem}
-        \paragraph{}
-            Definimos uma língua formal como sendo 
-            as sequências simbólicas finitas definidas
-            por pela seguinte gramática:
-        \paragraph{}
-            Dados $\Sigma=\SET{R_0}{\ldots}{R_n}$ símbolos 
-            relacionais $\rho_0,\ldots,\rho_n$-árias,
-            respectivamente; e uma coleção $\Omega
-            =\SET{x_0}{x_1}{x_2}{\ldots}$ de símbolos 
-            de variáveis (infinitos e distintos dos relacionais)
-            que uma sequência (finita) de símbolos $\sigma$ 
-            pertence à língua de $\TUPLE{\Sigma}{\Omega}$  
-            exatamente quando vale alguma das 
-            condições abaixo:
-        \begin{enumerate}[label=\alph*)]
-            \item $\sigma\equiv R_k\POINT{x_{\alpha_0}}{\ldots}{x_{\alpha_{\rho_k}}}$, com $0\leq k\leq n$, e $x_{\alpha_i}$ todos em $\Omega$.
-            \item $\sigma\equiv \varphi\land\psi$, com $\varphi,\psi$ da língua.
-            \item $\sigma\equiv \varphi\lor \psi$, com $\varphi,\psi$ da língua.
-            \item $\sigma\equiv \neg\varphi$, com $\varphi$ da língua.
-            \item $\sigma\equiv \forall x_i:\varphi$, com $x_i$ variável em $\Omega$ e $\varphi$ da língua.
-            \item $\sigma\equiv \exists x_i:\varphi$, com $x_i$ variável em $\Omega$ e $\varphi$ da língua.
+            \item Se $C_i$ for uma constante, então a palavra ``$C_i$'' é 
+                um \strong{termo}. Como ele não contém variável, não faz 
+                sentido tratar de ocorrências de variáveis livres ou escopadas.
+
+            \item Se $\SET{t_1}{\ldots}{t_k}$ forem termos, e $R_j$ é um 
+                relacional de aridade $k$, então a palavra 
+                ``$(R_j\POINT{t_1}{\ldots}{t_k})$'' é uma \strong{fórmula}. E 
+                cada ocorrência de cada variável presente nesta é dita livre 
+                nela exatamente quando for livre no termo em que ocorre e 
+                é dita escopada exatamente quando é escopada no termo que 
+                ocorre.
+        
+            \item Se $\SET{t_1}{\ldots}{t_k}$ forem termos, e $F_j$ é um 
+                relacional de aridade $k$, então a palavra 
+                ``$(F_j\POINT{t_1}{\ldots}{t_k})$'' é um \strong{termo}. E 
+                cada ocorrência de cada variável presente nesta é dita livre 
+                nela exatamente quando for livre no termo em que ocorre e 
+                é dita escopada exatamente quando é escopada no termo que 
+                ocorre.
+
+            \item Se $\varphi,\psi$ forem fórmulas e $\diamond$ for um conectivo 
+                lógico, então as palavras: ``($\varphi\diamond\psi$)'' e ``($\neg\varphi$)''
+                são \strong{fórmulas}, e occorências de variáveis são livres ou escopadas 
+                de acordo com sua liberdade ou limitação nas fórmulas componentes.
+            
+            \item Se $\varphi$ for uma fórmula, e $x_i$ é uma variável, então as 
+                palavras: ``$\exists x_i:\varphi$'' e ``$\forall x_i:\varphi$''
+                são \strong{fórmulas} e cada ocorrência de $x_i$ é dita \strong{escopada}
+                --- pois está no escopo de um quantificador ---,
+                e cada ocorrência de qualquer outra variável é livre ou escopada 
+                de acordo com sua situação em $\varphi$.
+
+%            \item Se $\varphi$ for uma fórmula e $x_i$ for uma variável, então 
+%                a palavra ``$\SET{x_i \vert \varphi }$'' é um \strong{termo} 
+%                com todas ocorrências de $x_i$ escopadas e outras ocorrências como em 
+%                $\varphi$.
         \end{enumerate}
         \paragraph{}
-            Como na construção da língua, usamos 
-            apenas a aridade e número de 
-            símbolos relacionais, podemos 
-            definir uma língua canônica para 
-            cada ``assinatura''. 
+            A língua é formada destes componentes, fórmulas e termos.
+    \end{definition}
+    
+    \paragraph{}
+        Por legibilidade, por omitiremos parenteses quando possível, e 
+        intruduziremos abreviaturas para fórmulas, termos \emph{etc.}
+    \paragraph{}
+        A ideia de uma língua é que ela \emph{fale sobre} um determinado
+        domínio. Quando escrevo, minhas palavras tratam de objetos de alguma 
+        sorte. Quando nomeio um objeto e predico sobre ele, por exemplo, 
+        existe uma interpretação da verdade do predicado no nosso universo.
+    \paragraph{}
+        Por exemplo, ``\emph{Eu tenho cinco dedos cada uma de minhas mãos}'',
+        é uma sentença da língua portuguesa, cujo valor de verdade é dependente
+        em quem é ``\emph{Eu}'' e em suas propriedades. Poderia ser o caso que
+        o autor {\emph{não}} tivesse cinco dedos em cada uma de minhas mãos, então,
+        a interpretação costumeira de quem \emph{é} ``Eu'' falsearia a sentença.
+    \paragraph{}
+        Poderia ser o caso que o autor não tivesse \emph{mão alguma}, mas neste 
+        caso a sentença seria verdade, pelo mesmo motivo que eu tenho uma 
+        lamborghini em cada uma das minhas mansões.
+    \paragraph{}
+        Tentando capturar a noção de interpretação das \emph{palavras} para 
+        objetos concretos (que não pertencem à língua, mas a um mundo) --- 
+        por exemplo ``\emph{Eu}'' --- e como, associando palavras a objetos e 
+        símbolos a relações, constantes, funções \emph{etc.} temos como 
+        determinar a veracidade de uma proposição no mundo alvo, dada uma 
+        interpretação.
+    
+    \begin{definition}{Estrutura, Interpretação e Validação}
+        \paragraph{Assinatura:}
+            Uma \strong{assinatura} é uma tripla de coleções: a das 
+            relações, cada qual com sua aridade; 
+            a das constantes; e, finalmente, a das funções, 
+            cada qual com sua aridade.
+        $$\Sigma=\TUPLE{
+            \TUPLE{
+                \mathbf{R_1}
+            }{
+                \ldots}
+        }{
+            \TUPLE{
+                \mathbf{C_1}
+            }{
+                \ldots
+        }}{
+            \TUPLE{
+                \mathbf{F_1}
+            }{
+                \ldots
+        }}$$
         \paragraph{}
-            Primeiro, fixaremos uma coleção 
-            de símbolos $\Omega=\SET{x_0}
-            {x_1}{\ldots}$, para variáveis, 
-            e uma coleção de símbolos 
-            distintos $\Sigma=\SET{R_0}
-            {R_1}{\ldots}$ relacionais.
-            Para cada $\rho:n\longrightarrow\N$
-            que define a aridade de cada um dos 
-            $R_i$-s e número de símbolos relacionais,
-            define-se a língua $\mathcal{L}_\rho$ 
-            como feito acima.
-            
+            Se cada relação ou função em uma assinatura $\Sigma$ 
+            tiver domínio em uma coleção $A$, e cada constante 
+            estiver em $A$, então podemos dizer que $\Sigma$ está 
+            definida sobre $A$. 
 
-        \subsection{Satisfatibilidade}
-        \paragraph{}
-            Sem alguma ideia de o que fórmulas de 
-            uma língua dada dizem a respeito de um 
-            ambiente, não temos nada de muito interessante.
-            Então, vamos definir o que queremos dizer com 
-            um ambiente e, então definir o que significa 
-            satisfatibilidade. 
-        \paragraph{}
-            Primeiro, para definirmos \textbf{estruturas}, 
-            pois se uma fórmula é verdade ela deve
-            ser verdade em algum lugar. Para tanto, 
-            vamos definir uma 
-            {\textbf{valoração de variáveis}}:
+        \paragraph{Estrutura:}
+            Chamamos a dupla $\TUPLE{A}{\Sigma}$ de $A$ coleção e uma assinatura 
+            $\Sigma$ definida sobre $A$, de $\mathfrak{A}$. E este tipo de objeto batizamos de \strong{estrutura}. 
+            E dizemos $A$ ser o domínio de $\mathfrak{A}$, que escrevemos $|\mathfrak{A}|$, 
+            e $\Sigma$ ser assinatura de $\mathfrak{A}$, possivelmente $sgn(\mathfrak{A})$.
 
-        \begin{definition}{Valoração de Variáveis}
-                Dada uma classe $A$ de objetos, uma
-                valoração de 
-                \textbf{variáveis das variáveis} 
-                de uma língua $\mathcal{L}$ de 
-                primeira ordem com alguma assinatura,
-                dizemos que $f$ é uma \textbf{valoração de 
-                variáveis} quando ela é uma realização
-                dos símbolos das $\mathcal{L}$-variáveis
-                em objetos de $A$ --- {\emph ie.} uma função 
-                que associa símbolos de variáveis a objetos 
-                concretos de $A$.
-            \paragraph{}
-                Adicionalmente, dados um objeto $o$ 
-                de $A$, uma variável $x_j$ de 
-                $\mathcal{L}$ e uma valoração $f$, 
-                definimos:
-                $$f[x_j\slash{o}](x_i) = \casedef{
-                    o\text{, &se }i = j;\\
-                    f(x_i)\text{, &se }i\not=j.
-                }$$ 
-            \paragraph{}
-                Uma valoração que é a substituição do 
-                valor de $f$ em um só ponto. 
-        \end{definition}
-
+        \paragraph{Compatibilidade Estrutura-Língua:}
+            Dada uma língua de primeira ordem $\mathcal{L}$ e uma estrutura $\mathfrak{A}$ 
+            dizemos elas serem compatíveis se e só se valem todas:
+            \begin{enumerate}[label=(\alph*)]
+                \item Se $sgn(\mathfrak{A})$ tiver tantas relações quanto há relacionais na língua.
+                \item Se $\mathbf{R_i}$ é a $i$-ésima relação da estrutura, então\\
+                $R_i$, o $i$-ésimo símbolo relacional da língua, concorda com sua 
+                aridade.
+                \item Se $sgn(\mathfrak{A})$ tiver tantas  funções quanto há funcionais  na língua.
+                \item Se $\mathbf{F_i}$ é a $i$-ésima função da estrutura, então\\
+                    $F_i$, o $i$-ésimo símbolo funcional da língua, concorda com sua 
+                    aridade.
+            \end{enumerate}
+        
+        \paragraph{Interpretação:}
+            Dizemos que uma $f$ é uma interpretação de $\mathcal{L}$ para $\mathfrak{A}$
+            se e, só se:
+            \begin{enumerate}[label=(\alph*)]
+                \item $\mathcal{L}$ e $\mathfrak{A}$ são compatíveis.
+                \item $f$ associa cada variável $\lambda$ da língua para algum 
+                    elemento $f(\lambda)$ de $|\mathfrak{A}|$.
+                \item $f$ leva cada símbolo relacional   $R$ em uma relação $f[R]$ da $sgn(\mathfrak{A})$.
+                \item $f$ leva cada símbolo funcional    $F$ em uma função  $f[F]$ da $sgn(\mathfrak{A})$.
+                \item Se ${x_1},{\ldots},{x_k}$ forem termos e $F$ um funcional, então\\
+                    $f(F\POINT{x_1}{\ldots}{x_k}) = f[F]\POINT{f(x_1)}{\ldots}{f(x_k)}$.
+                \item $f$ leva cada símbolo de constante $c$ em um membro   $f(c)$ de $|\mathfrak{A}|$.
+            \end{enumerate}
         \paragraph{}
-            Uma \textbf{estrutura} é uma coleção de informações:
-            $$\mathfrak{A} = \TUPLE{A}{R_0}{\ldots}{R_n}$$
+            Isto é, ter uma interpretação --- ou melhor --- \emph{interpretar} um 
+            símbolo é dar significado a ele. Pois, leva-lo a um objeto, relação 
+            semântica entre objetos, função, \emph{etc}.
         \paragraph{}
-            Onde $A$ é uma classe não vazia chamada ``domínio'' 
-            e cada uma $R_i$ é uma relação definida 
-            sobre o mesmo. Dizemos que uma estrutura 
-            e uma língua são \textbf{compatíveis}
-            exatamente quando a aridade de cada $R_i$ 
-            é $\rho_i$.
+            Um exemplo de significação é imaginar que quando escrevo ``\emph{o 
+            autor}'' em alguma sentença, pode-se \emph{interpretar} como referente do 
+            símbolo o \emph{autor deste texto}. Ficam, pois, definidas as propriedades 
+            do signo e, assim, este pedaço da sentença ganha significado.
+        \paragraph{}
+            Além disso, dada uma interpretação $f$ de $\mathcal{L}$ para $\mathfrak{A}$,
+            uma variável ou constante $x$ e um membro $a$ de $|\mathfrak{A}|$, 
+            definimos $f_{[x\slash a]}$ como sendo exatamente igual a $f$ nas variáveis 
+            e constantes exceto em $x$, onde ela valerá $a$. Os outros valores de $f$ 
+            --- isto é, em termos diversos --- induz-se das funções, constantes e variáveis.
+        \paragraph{}
+            Isto se comporta como mudar um pedaço da intepretação, por exemplo, a 
+            interpretação de ``\emph{o nome do autor tem a letra W}'' muda radicalmente 
+            de acordo com quem é o autor, mesmo mantendo a interpretação da função ``nome 
+            de X''. Não poderia ``\emph{autor}'' denotar Ludwig Wittgenstein, que foi 
+            autor?
 
-        \begin{definition}{Satisfatibilidade}
-                Sejam $\varphi$ uma $\mathcal{L}$-fórmula;  
-                $\mathfrak{A} = \TUPLE{A}{P_0}{\ldots}{P_n}$
-                uma estrutura;
-                $f$ uma valoração de variáveis em $A$; e 
-                sejam $\mathcal{L}$ e $\mathfrak{A}$ compatíveis.
-                $$ \mathfrak A\vDash_f\varphi$$
-            \paragraph{}
-                Que se lê  ``$\mathfrak{A}$ satisfaz 
-                $\varphi$'', ``$\mathfrak{A}$ crê que 
-                $\varphi$'' ou ``$\varphi$ vale em 
-                $\mathfrak{A}$'', É definido recursivamente:
+        \paragraph{Validação:}
+            Definimos uma fórmula $\varphi$ de $\mathcal{L}$ valer em $\mathfrak{A}$ sob 
+            a interpretação $f$ (estrutura compatível com a língua) --- alternativamente, 
+            que $\mathfrak{A}$ satisfaz $\varphi$ ---, ou simbolicamente, $\mathfrak{A}
+            \vDash_{f}\varphi$ por recorrência sobre sua complexidade.\\
+        (a) Se $x_0,\ldots,x_{\rho_i}$ forem termos quaisquer, $R_i$ relacional de aridade $\rho_i$:
+            $$\varphi\equiv R_i\POINT{x_0}{\ldots}{x_{\rho_i}}
+                \RAR\left[\mathfrak A\vDash_f\varphi \BIM f[R_i]\POINT{f(x_0)}{\ldots}{f(x_{\rho_i})}\right]$$
+        (b) Se $\sigma$ e $\psi$ forem fórmulas, $x$ uma variável:
             \begin{align*}
-                \varphi\equiv R_i\POINT{x_0}{\ldots}{x_{\alpha_{\rho_i}}}
-                    &\RAR \mathfrak A\vDash_f\varphi \bim P_i\POINT{f(x_0)}{\ldots}{f(x_{\alpha_{\rho_i}})}.\\
-                \varphi\equiv \sigma\land\psi    
-                    &\RAR \mathfrak A\vDash_f\varphi \bim \mathfrak A\vDash_f\sigma \text{ e } \mathfrak A\vDash_f\psi.\\
-                \varphi\equiv \sigma\lor \psi    
-                    &\RAR \mathfrak A\vDash_f\varphi \bim \mathfrak A\vDash_f\sigma \text{ ou } \mathfrak A\vDash_f\psi.\\
-                \varphi\equiv \neg\sigma         
-                    &\RAR \mathfrak A\vDash_f\varphi \bim \text{ não }\mathfrak A\vDash_f\sigma.\\
-                \varphi\equiv \sigma\rar\psi         
-                    &\RAR \mathfrak A\vDash_f\varphi \bim \mathfrak A\vDash_f\neg\sigma \text{ ou } \mathfrak A\vDash_f\psi.\\
-                \varphi\equiv \forall x_i:\sigma 
-                    &\RAR \mathfrak A\vDash_f\varphi \bim \text{ para todo $a$ de $A$: } \mathfrak A\vDash_{f[x_i\slash{a}]}\varphi.\\
-                \varphi\equiv \exists x_i:\sigma 
-                    &\RAR \mathfrak A\vDash_f\varphi \bim \text{ existe algum $a$ de $A$: } \mathfrak A\vDash_{f[x_i\slash{a}]}\varphi.
+                \varphi\equiv \sigma\land\psi &\RAR\\
+                    [\mathfrak{A}\vDash_f\varphi&\BIM\mathfrak A\vDash_f\sigma\text{ e  }\mathfrak A\vDash_f\psi]
             \end{align*}
+            \begin{align*}
+                \varphi\equiv \sigma\lor \psi &\RAR\\
+                    [\mathfrak{A}\vDash_f\varphi&\BIM\mathfrak A\vDash_f\sigma\text{ ou }\mathfrak A\vDash_f\psi]
+            \end{align*}
+            \begin{align*}
+                \varphi\equiv \neg\sigma      &\RAR\\
+                    [\mathfrak{A}\vDash_f\varphi&\BIM\text{ não }\mathfrak A\vDash_f\sigma]
+            \end{align*}
+            \begin{align*}
+                \varphi\equiv \sigma\rar\psi  &\RAR\\
+                    [\mathfrak{A}\vDash_f\varphi&\BIM\mathfrak A\vDash_f\neg\sigma\text{ ou }\mathfrak A\vDash_f\psi]
+            \end{align*}
+            \begin{align*}
+                \varphi\equiv \forall x:\sigma&\RAR\\
+                    [\mathfrak{A}\vDash_f\varphi&\BIM\text{ para todo $a$ de    $|\mathfrak A|$: }
+                    \mathfrak A\vDash_{f_{[x\slash{a}]}}\varphi]
+            \end{align*}
+            \begin{align*}
+                \varphi\equiv \exists x:\sigma&\RAR\\
+                    [\mathfrak{A}\vDash_f\varphi&\BIM\text{ existe algum $a$ de $|\mathfrak A|$: }
+                    \mathfrak A\vDash_{f_{[x\slash{a}]}}\varphi]
+            \end{align*}
+        \paragraph{}
+            A motivação desta definição é a ideia que os fatos elementares,
+            no caso as relações e funções entre os objetos, determinam todos 
+            os fatos ``complexos''. Os quantificadores por sua vez, desempenham o papel de providenciar
+            genericidade. Isto é, sem estes, a validade de uma fórmula é 
+            extremamente dependente da interpretação. Mas uma \strong{sentença} 
+            --- isto é, uma fórmula com todas as variáveis em algum escopo de 
+            quantificador ---, de certa forma, não depende de uma interpretação. 
+    \end{definition}
+
+    \begin{definition}{Sentença}
+        Uma \strong{sentença} de uma língua é uma fórmula em que todas as ocorrências 
+        de suas variáveis são escopadas.
+    \end{definition}
+
+    \begin{lemma}{Genericidade restrita de fórmulas:}
+        Se todas as ocorrências de uma variável $x$ em uma dada fórmula $\varphi$ 
+        estiverem escopadas, então para todo $a$ no domínio de uma certa estrutura 
+        $\mathfrak{A}$ compatível com a língua de $\varphi$, $\mathfrak{A}\vDash_{f}
+        \varphi\BIM\mathfrak{A}\vDash_{f_{[x\slash{a}]}}\varphi$.
+    \end{lemma}
+    \begin{proof}
+        Onde $x$ aparecer, ela estará escopada, então \emph{ja íamos} substituir
+        o valor de $f$ lá. Como a validade das fórmulas é dada por recorrência,
+        e como tudo permanece o mesmo salvo em $x$, fica clara a ida, para a volta 
+        reaplica-se a inda.\eop
+    \end{proof}
+
+    \begin{lemma}{Independência das interpretações irrelevantes:}
+        Se $x$ não ocorrer em $varphi$ uma $\mathcal{L}$-fórmula
+        com língua compatível com $\mathfrak{A}$ estrutura, então
+        para todo $a$ em $|\mathfrak{A}|$, $\mathfrak{A}\vDash_{f}
+        \varphi\BIM\mathfrak{A}\vDash_{f_{[x\slash{a}]}}\varphi$.
+    \end{lemma}
+    \begin{proof}
+        Na definição de validação $x$ não desempenha papel algum.\eop
+    \end{proof}
+
+    \begin{theorem}{Genericidade de sentenças para validação:}
+        Dadas uma língua e uma estrutura compatíveis. Se $\varphi$ for uma 
+        sentença da língua, então a estrutura valida $\varphi$ sob uma 
+        interpretação $f$ se e somente se valida sob qualquer interpretação 
+        $g$ que leva as relações, funções e constantes nas mesmas que leva 
+        $f$.
+    \end{theorem}
+    \begin{proof}
+        A volta é trivial, se valida para qualquer que coincide com $f$ em 
+        certa parte, valida para $f$, que de certo coincide com $f$ nesta 
+        parte.
+        \paragraph{}
+            Por outro lado, todas as ocorrências de variáveis são escopadas,
+            então, qualquer substituição de variáveis (presentes em $\varphi$) 
+            na intepretação não altera a validade da sentença. Adicionalmente,
+            qualquer substituição de variáveis irrelevantes não altera a 
+            validade. Pois, quaisquer substituições não alteram a validade.
+            Logo, toda interpretação leva a mesma validação.\eop
+    \end{proof}
+
+    \begin{definition}{Satisfatibilidade}
+        Finalmente, definiremos uma noção de satisfatibilidade ou validade
+        que independe de \emph{interpretação}.
+        \paragraph{}
+            Dadas $\mathfrak{A}$ uma estrutura e $\mathcal{L}$ uma língua 
+            compatíveis, e uma fórmula $\varphi$ da língua.
+        \paragraph{}
+            Deixe $\psi\equiv\forall x_1,\ldots,\forall x_k:\varphi$ onde 
+            $x_1,\ldots,x_k$ são todas as variáveis em $\varphi$ não escopadas,
+            $$\mathfrak{A}\vDash\psi\BIM[\text{Para toda interpretação $f$}:\mathfrak{A}\vDash_{f}\psi]$$
+        \paragraph{}
+            Possívelmente, nenhuma variável será livre em $\varphi$
+            neste caso, $\psi$ coincidirá com $\varphi$.
+        \paragraph{}
+            No caso que $\mathfrak{A}\vDash\varphi$ vale, dizemos que 
+            $\mathfrak{A}$ satisfaz $\varphi$ ou, alternativamente,
+            $\varphi$ é válida em $\mathfrak{A}$. Note que uma fórmula 
+            que não for sentença é válida só se por falta de contra 
+            exemplo.
+    \end{definition}
+
+    O estudo das estruturas e as fórmulas que lá são satisfeitas é 
+    extremamente importante, afinal. De exemplos, um trivial é uma 
+    estrutura com (apenas) a relação identidade e uma língua com 
+    (apenas) o símbolo ``$=$'', sendo assim, temos que 
+    $$ \TUPLE{A}{Id}\footnote{
+        No caso, interprete que a dupla é uma estrutura com apenas relações, 
+        nesta instância $Id$ e domínio $A$.
+    }\vDash x = x$$
+
+
+    \paragraph{Notação:}
+        A partir deste ponto, não vamos explicitamente dizer que 
+        uma língua é compatível com uma estrutura quando tratamos 
+        delas. Nem diremos que uma $\varphi$ é fórmula da língua,
+        \emph{etc.}
+
+    \begin{definition}{Consequência}
+        Da mesma forma que definimos satisfatibilidade com a intenção
+        de abstrair a noção de interpretação, queremos agora abstrair
+        as relações da própria estrutura.
+
+        \paragraph{Estruturas compatíveis}
+            Duas estruturas são ditas compatíveis exatamente quando 
+            houver uma língua que é compatível com as duas, isto é 
+            as aridades de cada relação, função, número de constantes
+            \emph{etc.} coincidem.
+
+        \paragraph{}
+            Duas estruturas compatíveis podem satisfazer fórumlas 
+            radicalmente diferentes, por exemplo, a estrutura que 
+            tomamos acima e uma outra estrutura com apenas a 
+            relação ``$x (Nq) y\BIM x\not=y$''. Se $\mathcal{L}$ for a língua 
+            com apenas um símbolo relacional $R$, fica claro que 
+            $\TUPLE{A}{Id}\vDash x = x$ e $\TUPLE{B}{Nq}\not\vDash x = x$.
+            Queremos, pois, uma noção que não dependa tanto da estrutura fina
+            do universo interpretativo.
+
+        \paragraph{Consequência:}
+            Dizemos que $\varphi$ segue, ou é consequência, de $\psi$, ou simbolicamente,
+            $$ \varphi\vdash\psi \BIM [\text{Para toda }\mathfrak{A}:\mathfrak{A}\vDash\psi\RAR\mathfrak{A}\vDash\varphi]$$
             \paragraph{}
-                Existe uma questão delicada nessa quantificação
-                que fazemos nas últimas duas clausulas: Não devemos
-                acreditar que é possível fazer isso em $1^a$ ordem,
-                devido a um resultado de Tarski. Uma língua que pode 
-                definir satisfatibilidade para todas as outras línguas 
-                de primeira ordem, pode, também definir para ela mesma,
-                e isso resulta em uma contradição devido a meta-linguística.
-        \end{definition}
-
-        \paragraph{}
-            Vamos tomar um parágrafo para explorar o significado 
-            da definição (admitidamente meta-teorética) de 
-            satisfatibilidade. Primeiro, vemos que se a fórmula 
-            sendo interpretada é um sentença\footnote{{\emph ie.} 
-            todas as variáveis da fórmula estão quantificadas 
-            sobre por algum $\forall$ ou um $\exists$, em todos 
-            os escopos.}, então não importa quais valorações $f,
-            f'$ que dermos, dada uma $\sigma$-sentença:
-            $$ \mathfrak{A}\vDash_{f} \sigma \BIM \mathfrak{A}\vDash_{f'} \sigma $$
-        \paragraph{}
-            Segundo, se uma fórmula da língua é $\varphi\POINT{x}{y}{z}$\footnote{
-            Onde $x,y,z$ são açucar sintático para alguns $x_i, 
-            x_j, x_k$.} onde estas vairáveis estão livres na 
-            fórmula, então se $\hat{x}, \hat{y}, \hat{z}$ forem
-            objetos do domínio de uma estrutura compatível, 
-            ``$\varphi\POINT{\hat{x}}{\hat{y}}{\hat{z}}$'' ---
-            que gostaríamos que significasse quão verdade é dizer que
-            $\hat{x}, \hat{y}, \hat{z}$ estão relacionados como
-            $\varphi$ predica --- se traduz simplesmente em:
-            $f'=f[x\slash\hat x; y\slash\hat y; z\slash\hat z]$
-            uma nova valoração de variáveis:
-            $$ \mathfrak{A}\vDash_{f'} \varphi $$
-        \paragraph{}
-            Codifica exatamente isso. $\vDash_{f'}$ vale se e só
-            se a estrutura dá uma semiose à $\varphi$ ``avaliada''
-            nos objetos $\hat{x},\hat{y},\hat{z}$. Assim, 
-            satisfatibilidade é a codificação dessa interpretação 
-            de uma coisa {\emph sintática}, a fórmula, em uma coisa 
-            {\emph semântica} relações entre objetos, quantificações 
-            sobre o domínio, etc.
-        \paragraph{}
-            Finalmente, --- dado um coleção de fórmulas $\Gamma$\footnote{
-                Caso $\Gamma$ seja vazio, $\mathfrak{A}\vDash\Gamma$ é vacuamente verdade.
-            }
-            de uma língua compatível com $\mathfrak A$ estrutura e uma 
-            valoração $f$ ---, dizemos que:
-            $$\mathfrak{A}\vDash_f\Gamma\BIM\text{ para toda }\varphi\text{ de }\Gamma\text{: }\mathfrak{A}\vDash_f\varphi$$
-        \paragraph{}
-            E que, se $\Gamma$ for coleção de sentenças, então dizemos:
-            $$\mathfrak{A}\vDash\Gamma\BIM\text{ para toda }\varphi\text{ de }\Gamma\text{: }\mathfrak{A}\vDash_f\varphi$$
-            onde $f$ é qualquer (fixa) valoração das variáveis, por exemplo: $f(x_i)=\hat{x}$\footnote{Pelo menos uma tal 
-            valoração existe pois os domínios de estruturas são não vazios.}
-
-        \subsection{Provabilidade}
-        \paragraph{}
-            O interessante da satisfatibilidade como 
-            definida antes é sua relação com a
-            provabilidade. Para explora-la, devemos 
-            tratar de ``teorias''.
-        \paragraph{}
-            Agora, sendo um pouco colecionista, 
-            considere o conjunto das fórmulas de 
-            de uma língua $\mathcal{L}_\Sigma$,
-            com $\Sigma = \TUPLE{R_0}{\ldots}{R_n}$.
-        \begin{definition}{Consequência Sintática}
-                A ideia por trás da definição é que existem coisas 
-                que são verdadeiras independente de interpretação e 
-                localidade. Por exemplo, não importa se 
-                $\forall x_7\forall x_8:R_3(x_7,x_8)$ é verdade ou não
-                em um uma dada estrutura (de assinatura compatível), 
-                sempre vale que: $[\forall x_7\forall x_8:R_3(x_7,x_8)]
-                \rar[\exists x_7:\exists x_8:R_3(x_7,x_8)]$. Isto é, 
-                existem sentenças que não dependem de interpretações de 
-                variáveis nem da semântica das relações: suas verdades 
-                são {\emph consequências sintáticas}.
+                Note a semelhança com a definição de satisfatibilidade
+                sem interpretação. Novamente, a quantificação universal
+                faz o trabalho de generalizar o conceito em certa direção.
             \paragraph{}
-                Então vamos definir uma relação entre conjuntos de sentenças 
-                de uma língua e sentenças desta mesma língua a de consequência
-                sintática.
+                Extendemos a definição para conjuntos de fórmulas dos dois 
+                lados,
+            $$ \Gamma\vdash\Sigma $$
+                Da maneira natural de fazer, isto é, para cada $\varphi$ em $\Sigma$,
+                $ \Gamma\vdash\varphi $, e por isso, queremos dizer:
+            $$ [\text{Para toda }\mathfrak{A}:(\text{para toda $\gamma$ em $\Gamma$}:\mathfrak{A}\vDash\psi)\RAR\mathfrak{A}\vDash\varphi]$$
             \paragraph{}
-                Seja $\Gamma\subset\mathcal{L}$ conjunto de sentenças de uma 
-                língua. Seja também $\varphi$ uma sentença da mesma língua. 
-                Dizemos que $\varphi$ é consequência sintática de $\Gamma$:
-                $$\Gamma\vdash\varphi\BIM(\mathfrak{A}\vDash\Gamma\RAR\mathfrak{A}\vDash\varphi)\footnote{
-                    Onde $\mathfrak{A}$ é uma estrutura de assinatura compatível. Estamos, de certa forma,
-                    com $\mathfrak{A}$ livre sobre estruturas, o que é assustador. Afinal, para teoria de 
-                    conjuntos, por exemplo, potencialmente estaríamos quantificando sobre classe próprias. 
-                    E, em teorias mais fortes, todo tipo de coisas informalizáveis. Já estamos, no entanto, 
-                    em uma meta-teoria generosa.\\ Pouco mais abaixo de onde estamos se agita um mar de metafísica, e questões 
-                    epistemo e ontológicas no qual não ousamos mergulhar.
-                }$$
-        \end{definition}
+                Finalmente, se $\emptyset\vdash\varphi$, escrevemos $\vdash\varphi$.
+    \end{definition}
+    \paragraph{}
+        A interpretação da definição é que algumas fórmulas são genéricas sobre 
+        uma certa sorte de estrutura, por exemplo, considere a fórmula $\varphi\equiv 
+        xRx \rar xRx$. Não importa \emph{quem} seja $x$, nem quais 
+        sejam suas relações com quaisquer outros membros de seu universo. 
+        $\varphi$ é \emph{sempre} verdade.
+    \paragraph{}
+        Considere um outro exemplo menos formal do mesmo princípio: 
+        Seja $\psi=$``\emph{Todos os cavalos são animais}'' e 
+             $\varphi=$``\emph{todas as cabeças de cavalo são cabeças de animais}''
+        então $\psi\vdash\varphi$ é válida. Isso não depende de se existem cavalos,
+        o quê são cavalos, o quê são cabeças, se cavalos tem quatro patas, 
+        se cavalos tem cabeças, se cavalos são uma cor \emph{etc.} E isso 
+        não é jogo de palavras: 
+        $$\psi\equiv\forall x: E(x,x)\rar A(x,x)$$ $$\varphi\equiv\forall c: (\exists a: E(a,a)\land C(c,a))\rar \exists b: A(a,a)\land C(c,b)$$
         \paragraph{}
-            A definição se extende para conjuntos de sentenças simplemente dizendo
-            $$\Gamma\vdash\Sigma\BIM\text{ para todo $\sigma$ de $\Sigma$ temos: } \Gamma\vdash\sigma$$
-        \paragraph{}
-            Em se tratando de conjuntos unitários, {\emph ie.} $\Gamma=\SET{\varphi}$, abreviamos a relação $\vdash$ para:
-            $$\varphi\vdash\psi\BIM\SET{\varphi}\vdash\psi$$
-        \paragraph{}
-            Esta é uma definição de fato bem estranha, definimos uma coisa ser sintáticamente 
-            consequente da outra em termos de interpretações, que são semânticas em 
-            natureza\footnote{
-                É claro que é possível fazê-lo de maneira puramente sintática, que é útil 
-                para computadores e provadores automáticos de teoremas, mas cremos que é 
-                uma abordagem que oculta algo da beleza da relação inseparável entre $\vdash$ 
-                e $\vDash$.\\
-                Por outro lado, uma abordagem sintática {\emph é} de fato mais precisa, pois não
-                necessita quantificar sobre as estruturas compatíveis com a língua, 
-                {\emph etc.}
-            }. No entanto,
-            ela é uma relação extremamente razoável: não há interpretação que tenha $\Gamma$ 
-            sem ter $\varphi$. De alguma forma, dizer que ``Em todo lugar que $\Gamma$ vale, 
-            $\varphi$ vale'' nos garante que não importa o lugar, apenas $\Gamma$ e $\varphi$.
-        
-        \subsubsection{Teorias}
-        \begin{definition}{Teoria}
-                Dada uma língua, um subconjunto de sentenças $\mathcal{T}$ é dito uma teoria
-                quando ele é não-vazio e $\vdash$-fechado. Isto é, se $\mathcal{T}\vdash\tau$ 
-                então $\tau$ já estava em $\mathcal{T}$. Ou seja, é uma coleção de sentenças 
-                que contém todas as suas consequências semânticas.
-        \end{definition}
-        \paragraph{}
-            \newcommand{\theoryof}[1]{\mathcal{T}_{#1}}
-            Dada uma língua $\mathcal{L}$, e um conjunto de sentenças não-vazio desta que batizamos ``axiomas'' 
-            $\mathcal{A}$, dizemos que um conjunto de sentenças $\mathcal{T}$ é a teoria de 
-            $\mathcal{A}$ exatamente quando {\emph para toda $\tau$ de $\mathcal{T}$, temos 
-            $\mathcal{A}\vdash\tau$}, que podemos abreviar para $\theoryof{\mathcal{A}}$.
-        \paragraph{}
-            O fato de que, para um conjunto de axiomas conforme acima, $\theoryof{\mathcal{A}}$ é teoria 
-            verifica-se por:
-        \begin{proof*}
-            \begin{prooftree}
-                \AxiomC{$\theoryof{\mathcal{A}}\vdash\tau$}
-                \UnaryInfC{$\mathfrak{A}\vDash\theoryof{\mathcal{A}}\RAR\mathfrak{A}\vDash\tau$}
-
-                \AxiomC{$\mathcal{A}\subseteq\theoryof{\mathcal{A}}$}
-                \UnaryInfC{$\mathfrak{A}\vDash\theoryof{\mathcal{A}}\RAR\mathfrak{A}\vDash\mathcal{A}$}
-
-                \AxiomC{para cada $\sigma$ em $\theoryof{\mathcal{A}}$}
-                \UnaryInfC{$\mathcal{A}\vdash\sigma$}
-                \UnaryInfC{$\mathfrak{A}\vDash\mathcal{A}\RAR\mathfrak{A}\vDash\theoryof{\mathcal{A}}$}
-                
-                \BinaryInfC{$\mathfrak{A}\vDash\mathcal{A}\BIM\mathfrak{A}\vDash\theoryof{\mathcal{A}}$}
-                \BinaryInfC{$\mathfrak{A}\vDash\mathcal{A}\RAR\mathfrak{A}\vDash\tau$}
-
-                \UnaryInfC{$\mathcal{A}\vdash\tau$}
-                \UnaryInfC{$\tau$ está em $\theoryof{\mathcal{A}}$}
-            \end{prooftree}
-            \eop
-        \end{proof*}
-        
+            Que podemos ler ``$\varphi$: para todo objeto, se este for um Equino, 
+            ele é um Animal'' e ``$\psi$: para todo objeto, se existe um outro 
+            que é Equino e tem como Cabeça este, então existe um terceiro que é 
+            Animal e tem como Cabeça o primeiro''.
         \begin{proposition}{Resultados sobre $\vdash$}
-            Dada uma língua fixada $\mathcal{L}$ e 
-            $\varphi,\psi,\sigma,\tau$ sentenças da
-            de $\mathcal{L}$.
-            \label{vdash_results_00}
             \begin{enumerate}[label=\alph*)]
                 \item $    {\varphi}\vdash\varphi$,
                 \item $\Gamma\vdash\varphi$ e $\Gamma\subseteq\Lambda\RAR \Lambda\vdash\varphi$,
                 \item $    {\varphi}\vdash\varphi\lor\psi$,
                 \item $\SET{\varphi}{\psi}\vdash\varphi\land\psi$,
                 \item $    {\varphi\land\psi}\vdash\SET{\varphi}{\psi}$,
-                \item $\emptyset\vdash  \varphi\lor\neg\varphi$,
+                \item $    \vdash  \varphi\lor\neg\varphi$,
                 \item $\varphi\vdash\neg\neg\varphi$,
                 \item $\neg\neg\varphi\vdash\varphi$,
-                \item $    {\varphi}\vdash\psi\BIM\emptyset\vdash\varphi\rar\psi$,
+                \item $    {\varphi}\vdash\psi\BIM\vdash\varphi\rar\psi$,
                 \item $    {\forall x:\varphi}\vdash\exists x:\varphi$,
                 \item $    {\forall x:\varphi}\vdash\neg\exists x:\neg\varphi$,
                 \item $    {\neg\exists x:\neg\varphi}\vdash\forall x:\varphi$,
-                \item $\emptyset\vdash\varphi\RAR\emptyset\vdash\SET{\forall x:\varphi}{\exists x:\varphi}$
+                \item $\vdash\varphi\RAR{}\vdash\SET{\forall x:\varphi}{\exists x:\varphi}$,
+                \item $\SET{\varphi}{\varphi\rar\psi}\vdash\psi$,
+                \item $\SET{\varphi\lor\psi}{\neg\varphi}\vdash\psi$.
             \end{enumerate}
         \end{proposition}
         \begin{proof}
@@ -348,17 +393,15 @@
                     \end{prooftree}
                 \item $ $
                     \begin{prooftree}
-                        \AxiomC{$\mathfrak{A}\vDash\Lambda$}
-
                         \AxiomC{$\Gamma\vdash\varphi$}
-                        \UnaryInfC{$\mathfrak{B}\vDash\Gamma\RAR\mathfrak{B}\vDash\varphi$}
+                        \UnaryInfC{$\mathfrak{A}\vDash\Gamma\RAR\mathfrak{A}\vDash\varphi$}
 
                         \AxiomC{$\Gamma\subseteq\Lambda$}
                         
                         \AxiomC{$\mathfrak{A}\vDash\Lambda$}
                         \UnaryInfC{$\lambda\in\Lambda\RAR\mathfrak{A}\vDash\lambda$}
                         
-                        \BinaryInfC{$\lambda\in\Gamma \RAR\mathfrak{A}\vDash\lambda$}
+                        \BinaryInfC{$\gamma\in\Gamma \RAR\mathfrak{A}\vDash\gamma$}
                         \UnaryInfC{$\mathfrak{A}\vDash\Gamma$}
                     
                         \BinaryInfC{$\mathfrak{A}\vDash\varphi$}
@@ -409,10 +452,8 @@
                         \UnaryInfC{Não $\mathfrak{A}\vDash\neg\varphi$}
                         \UnaryInfC{$\mathfrak{A}\vDash\neg\neg\varphi$}
                     \end{prooftree}
-
                     $$\therefore\varphi\vdash\neg\neg\varphi $$ 
 
-%%
                 \item $ $
                     \begin{prooftree}
                         \AxiomC{$\mathfrak{A}\vDash\neg\neg\varphi$}
@@ -420,9 +461,7 @@
                         \UnaryInfC{Não-não $\mathfrak{A}\vDash\varphi$}
                         \UnaryInfC{$\mathfrak{A}\vDash\varphi$}
                     \end{prooftree}
-
                     $$\therefore\neg\neg\varphi\vdash\varphi $$ 
-
 
                 \item $ $
                     \begin{prooftree}
@@ -441,7 +480,7 @@
                         \UnaryInfC{$\mathfrak{A}\vDash\emptyset\RAR\mathfrak{A}\vDash\varphi\rar\psi$}
                         \UnaryInfC{$\mathfrak{A}\vDash\varphi\rar\psi$}
                         \UnaryInfC{Não $\mathfrak{A}\vDash\varphi$ ou $\mathfrak{A}\vDash\psi$}
-                        \UnaryInfC{$\mathfrak{A}\vDash\varphi$\RAR$\mathfrak{A}\vDash\psi$}
+                        \UnaryInfC{$\mathfrak{A}\vDash\varphi\RAR\mathfrak{A}\vDash\psi$}
                         %\UnaryInfC{$\mathfrak{A}\vDash\SET{\varphi}$\RAR$\mathfrak{A}\vDash\psi$}
                         \UnaryInfC{${\varphi}\vdash\psi$}
                     \end{prooftree}
@@ -475,16 +514,40 @@
                 $\varphi$, lembramos que é uma sentença, então $x$ sempre ocorre 
                 quantificado em $\varphi$. Então $\vDash$ vai ignorar os quantificadores 
                 em ``$\forall x:\phi$'' e ``$\exists x:\phi$''.
+                
+                \item $ $
+                    \begin{prooftree}
+                        \AxiomC{$\mathfrak{A}\vDash\varphi$}
+                        \AxiomC{$\mathfrak{A}\vDash\varphi\rar\psi$}
+                        \UnaryInfC{$\mathfrak{A}\not\vDash\varphi$ ou $\mathfrak{A}\vDash\psi$}
+                        \BinaryInfC{$\mathfrak{A}\vDash\psi$}
+                    \end{prooftree}
+                    $$\therefore\SET{\varphi}{\varphi\rar\psi}\vdash\psi $$
+                
+                \item $ $
+                    \begin{prooftree}
+                        \AxiomC{$\mathfrak{A}\vDash\neg\varphi$}
+                        \UnaryInfC{Não $\mathfrak{A}\vDash\varphi$}
+
+                        \AxiomC{$\mathfrak{A}\vDash\varphi\lor\psi$}
+                        \UnaryInfC{$\mathfrak{A}\vDash\varphi$ ou $\mathfrak{A}\vDash\psi$}
+                        
+                        \BinaryInfC{$\mathfrak{A}\vDash\psi$}
+                    \end{prooftree}
+                    $$\therefore\SET{\varphi\lor\psi}{\neg\varphi}\vdash\psi $$
             \end{enumerate}
             \eop
         \end{proof}
         \paragraph{}
             O que estes resultados primários nos dizem é que, se tivermos uma prova formal 
+            (em um sistema dedutivo razoável)
             --- partindo de hipóteses $\Gamma$ --- de uma coleção $\Phi$ de sentenças, 
             então temos garantido que $\Gamma\vdash\Phi$. Isto é importante porque temos 
             que, de certa forma, $\vdash$ respeita a dedução lógica: se achamos que 
             $\Gamma$ consegue provar $\Phi$, então de fato onde vale $\Gamma$, vale $\Phi$.
         \paragraph{}
-            O importante agora é ver se ``Se $\Gamma\vdash\varphi$, então existe uma 
-            \textbf{prova} de $\varphi$ partindo de $\Gamma$''. Ou seja, que consequência 
-            sintática é equivalente a provabilidade.
+            A reciproca, {\emph{que toda sentênça consequente de $\Gamma$ é provável por 
+            hipóteses de $\Gamma$}}, requer um trato cuidadoso com sistemas dedutíveis, 
+            definição de prova, {\emph{etc.}} Mas é resultado conhecido que se $\Gamma\vdash\varphi$,
+            então {\emph{prova-se}} $\varphi$ com hipóteses de $\Gamma$, mas isso depende do 
+            sistema dedutivo.
