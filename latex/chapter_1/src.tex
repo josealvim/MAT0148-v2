@@ -56,11 +56,6 @@
                 --- pois está no escopo de um quantificador ---,
                 e cada ocorrência de qualquer outra variável é livre ou escopada 
                 de acordo com sua situação em $\varphi$.
-
-%            \item Se $\varphi$ for uma fórmula e $x_i$ for uma variável, então 
-%                a palavra ``$\SET{x_i \vert \varphi }$'' é um \strong{termo} 
-%                com todas ocorrências de $x_i$ escopadas e outras ocorrências como em 
-%                $\varphi$.
         \end{enumerate}
         \paragraph{}
             A língua é formada destes componentes, fórmulas e termos.
@@ -147,8 +142,8 @@
                 \item $\mathcal{L}$ e $\mathfrak{A}$ são compatíveis.
                 \item $f$ associa cada variável $\lambda$ da língua para algum 
                     elemento $f(\lambda)$ de $|\mathfrak{A}|$.
-                \item $f$ leva cada símbolo relacional   $R$ em uma relação $f[R]$ da $sgn(\mathfrak{A})$.
-                \item $f$ leva cada símbolo funcional    $F$ em uma função  $f[F]$ da $sgn(\mathfrak{A})$.
+                \item $f$ leva cada símbolo relacional   ${R}_i$ na relação $f[{R}_i] = \mathbf{R}_i$ da $sgn(\mathfrak{A})$.
+                \item $f$ leva cada símbolo funcional    ${F}_i$ na função  $f[{F}_i] = \mathbf{F}_i$ da $sgn(\mathfrak{A})$.
                 \item Se ${x_1},{\ldots},{x_k}$ forem termos e $F$ um funcional, então\\
                     $f(F\POINT{x_1}{\ldots}{x_k}) = f[F]\POINT{f(x_1)}{\ldots}{f(x_k)}$.
                 \item $f$ leva cada símbolo de constante $c$ em um membro   $f(c)$ de $|\mathfrak{A}|$.
@@ -230,23 +225,23 @@
         estiverem escopadas, então para todo $a$ no domínio de uma certa estrutura 
         $\mathfrak{A}$ compatível com a língua de $\varphi$, $\mathfrak{A}\vDash_{f}
         \varphi\BIM\mathfrak{A}\vDash_{f_{[x\slash{a}]}}\varphi$.
+        \begin{proof}
+            Onde $x$ aparecer, ela estará escopada, então \emph{ja íamos} substituir
+            o valor de $f$ lá. Como a validade das fórmulas é dada por recorrência,
+            e como tudo permanece o mesmo salvo em $x$, fica clara a ida, para a volta 
+            reaplica-se a inda.\eop
+        \end{proof}
     \end{lemma}
-    \begin{proof}
-        Onde $x$ aparecer, ela estará escopada, então \emph{ja íamos} substituir
-        o valor de $f$ lá. Como a validade das fórmulas é dada por recorrência,
-        e como tudo permanece o mesmo salvo em $x$, fica clara a ida, para a volta 
-        reaplica-se a inda.\eop
-    \end{proof}
 
     \begin{lemma}{Independência das interpretações irrelevantes:}
         Se $x$ não ocorrer em $varphi$ uma $\mathcal{L}$-fórmula
         com língua compatível com $\mathfrak{A}$ estrutura, então
         para todo $a$ em $|\mathfrak{A}|$, $\mathfrak{A}\vDash_{f}
         \varphi\BIM\mathfrak{A}\vDash_{f_{[x\slash{a}]}}\varphi$.
+        \begin{proof}
+            Na definição de validação $x$ não desempenha papel algum.\eop
+        \end{proof}
     \end{lemma}
-    \begin{proof}
-        Na definição de validação $x$ não desempenha papel algum.\eop
-    \end{proof}
 
     \begin{theorem}{Genericidade de sentenças para validação:}
         Dadas uma língua e uma estrutura compatíveis. Se $\varphi$ for uma 
@@ -254,19 +249,19 @@
         interpretação $f$ se e somente se valida sob qualquer interpretação 
         $g$ que leva as relações, funções e constantes nas mesmas que leva 
         $f$.
+        \begin{proof}
+            A volta é trivial, se valida para qualquer que coincide com $f$ em 
+            certa parte, valida para $f$, que de certo coincide com $f$ nesta 
+            parte.
+            \paragraph{}
+                Por outro lado, todas as ocorrências de variáveis são escopadas,
+                então, qualquer substituição de variáveis (presentes em $\varphi$) 
+                na intepretação não altera a validade da sentença. Adicionalmente,
+                qualquer substituição de variáveis irrelevantes não altera a 
+                validade. Pois, quaisquer substituições não alteram a validade.
+                Logo, toda interpretação leva a mesma validação.\eop
+        \end{proof}
     \end{theorem}
-    \begin{proof}
-        A volta é trivial, se valida para qualquer que coincide com $f$ em 
-        certa parte, valida para $f$, que de certo coincide com $f$ nesta 
-        parte.
-        \paragraph{}
-            Por outro lado, todas as ocorrências de variáveis são escopadas,
-            então, qualquer substituição de variáveis (presentes em $\varphi$) 
-            na intepretação não altera a validade da sentença. Adicionalmente,
-            qualquer substituição de variáveis irrelevantes não altera a 
-            validade. Pois, quaisquer substituições não alteram a validade.
-            Logo, toda interpretação leva a mesma validação.\eop
-    \end{proof}
 
     \begin{definition}{Satisfatibilidade}
         Finalmente, definiremos uma noção de satisfatibilidade ou validade
@@ -287,6 +282,10 @@
             $\varphi$ é válida em $\mathfrak{A}$. Note que uma fórmula 
             que não for sentença é válida só se por falta de contra 
             exemplo.
+        \paragraph{}
+            No caso em que $\mathfrak{A}\vDash\Sigma$, com $\Sigma$ uma
+            coleção de fórmulas, dizemos que $\mathfrak{A}$ \strong{modela}
+            $\Sigma$.
     \end{definition}
 
     O estudo das estruturas e as fórmulas que lá são satisfeitas é 
@@ -352,7 +351,7 @@
     \paragraph{}
         Considere um outro exemplo menos formal do mesmo princípio: 
         Seja $\psi=$``\emph{Todos os cavalos são animais}'' e 
-             $\varphi=$``\emph{todas as cabeças de cavalo são cabeças de animais}''
+            $\varphi=$``\emph{todas as cabeças de cavalo são cabeças de animais}''
         então $\psi\vdash\varphi$ é válida. Isso não depende de se existem cavalos,
         o quê são cavalos, o quê são cabeças, se cavalos tem quatro patas, 
         se cavalos tem cabeças, se cavalos são uma cor \emph{etc.} E isso 
@@ -381,163 +380,163 @@
                 \item $\SET{\varphi}{\varphi\rar\psi}\vdash\psi$,
                 \item $\SET{\varphi\lor\psi}{\neg\varphi}\vdash\psi$.
             \end{enumerate}
+            \begin{proof}
+                \begin{enumerate}[label=\alph*)]
+                    \item $ $
+                        \begin{prooftree}
+                            \AxiomC{$\mathfrak{A}\vDash{\varphi}$}
+                            \UnaryInfC{$\mathfrak{A}\vDash\varphi$}
+                            \UnaryInfC{$\mathfrak{A}\vDash{\varphi}\RAR\mathfrak{A}\vDash\varphi$}
+                            \UnaryInfC{${\varphi}\vdash\varphi$}
+                        \end{prooftree}
+                    \item $ $
+                        \begin{prooftree}
+                            \AxiomC{$\Gamma\vdash\varphi$}
+                            \UnaryInfC{$\mathfrak{A}\vDash\Gamma\RAR\mathfrak{A}\vDash\varphi$}
+
+                            \AxiomC{$\Gamma\subseteq\Lambda$}
+                            
+                            \AxiomC{$\mathfrak{A}\vDash\Lambda$}
+                            \UnaryInfC{$\lambda\in\Lambda\RAR\mathfrak{A}\vDash\lambda$}
+                            
+                            \BinaryInfC{$\gamma\in\Gamma \RAR\mathfrak{A}\vDash\gamma$}
+                            \UnaryInfC{$\mathfrak{A}\vDash\Gamma$}
+                        
+                            \BinaryInfC{$\mathfrak{A}\vDash\varphi$}
+                        \end{prooftree}
+                        $$\therefore\mathfrak{A}\vDash\Lambda\RAR\mathfrak{A}\vDash\varphi$$
+                        $$\text{Assim, } \Lambda\vdash\varphi$$
+
+                    \item $ $
+                        \begin{prooftree}
+                            \AxiomC{   $\mathfrak{A}\vDash{\varphi}$}
+                            \UnaryInfC{$\mathfrak{A}\vDash{\varphi}$ ou $\mathfrak{A}\vDash{\psi}$}
+                            \UnaryInfC{$\mathfrak{A}\vDash{\varphi\lor\psi}$}
+                        \end{prooftree}                                            
+                        $$\therefore{\varphi}\vdash\varphi\lor\psi $$
+
+                    \item $ $
+                        \begin{prooftree}
+                            \AxiomC{$\mathfrak{A}\vDash\SET{\varphi}{\psi}$}
+                            \UnaryInfC{$\mathfrak{A}\vDash\varphi$}
+                            \AxiomC{$\mathfrak{A}\vDash\SET{\varphi}{\psi}$}
+                            \UnaryInfC{$\mathfrak{A}\vDash\psi$}
+                            \BinaryInfC{$\mathfrak{A}\vDash\varphi$ e $\mathfrak{A}\vDash\psi$}
+                            \UnaryInfC{$\mathfrak{A}\vDash\varphi\land\psi$}
+                        \end{prooftree}
+                        $$\therefore\SET{\varphi}{\psi}\vdash\varphi\land\psi $$
+                    
+                    \item $ $
+                        \begin{prooftree}
+                            \AxiomC{$\mathfrak{A}\vDash{\varphi\land\psi}$}
+                            \UnaryInfC{$\mathfrak{A}\vDash{\varphi}$ e $\mathfrak{A}\vDash{\psi}$}
+                            \UnaryInfC{$\mathfrak{A}\vDash\SET{\varphi}{\psi}$}
+                        \end{prooftree}
+                        $$\therefore{\varphi\land\psi}\vdash\SET{\varphi}{\psi} $$
+                    
+                    \item $ $
+                        \begin{prooftree}
+                            \AxiomC{$\mathfrak{A}\vDash\emptyset$}
+                            \AxiomC{$\mathfrak{A}\not\vDash\varphi$}
+                            \BinaryInfC{Não $\mathfrak{A}\vDash\varphi$}
+                            \UnaryInfC{$\mathfrak{A}\vDash\neg\varphi$}
+                        \end{prooftree}
+                        $$\therefore\emptyset\vdash\varphi\lor\neg\varphi $$ 
+
+                    \item $ $
+                        \begin{prooftree}
+                            \AxiomC{$\mathfrak{A}\vDash\varphi$}
+                            \UnaryInfC{Não-não $\mathfrak{A}\vDash\varphi$}
+                            \UnaryInfC{Não $\mathfrak{A}\vDash\neg\varphi$}
+                            \UnaryInfC{$\mathfrak{A}\vDash\neg\neg\varphi$}
+                        \end{prooftree}
+                        $$\therefore\varphi\vdash\neg\neg\varphi $$ 
+
+                    \item $ $
+                        \begin{prooftree}
+                            \AxiomC{$\mathfrak{A}\vDash\neg\neg\varphi$}
+                            \UnaryInfC{Não $\mathfrak{A}\vDash\neg\varphi$}
+                            \UnaryInfC{Não-não $\mathfrak{A}\vDash\varphi$}
+                            \UnaryInfC{$\mathfrak{A}\vDash\varphi$}
+                        \end{prooftree}
+                        $$\therefore\neg\neg\varphi\vdash\varphi $$ 
+
+                    \item $ $
+                        \begin{prooftree}
+                            \AxiomC{${\varphi}\vdash\psi$}
+                            \UnaryInfC{$\mathfrak{A}\vDash{\varphi}\RAR\mathfrak{A}\vDash\psi$}
+                            \UnaryInfC{Não $\mathfrak{A}\vDash\varphi$ ou $\mathfrak{A}\vDash\psi$}
+                            \UnaryInfC{$\mathfrak{A}\vDash\neg\varphi$ ou $\mathfrak{A}\vDash\psi$}
+                            \UnaryInfC{$\mathfrak{A}\vDash\neg\varphi\lor\psi$}
+                            \AxiomC{$   \mathfrak{A}\vDash\emptyset$}
+                            \BinaryInfC{$\mathfrak{A}\vDash\emptyset\RAR\mathfrak{A}\vDash\varphi\rar\psi$}
+                            \UnaryInfC{$\emptyset\vdash\varphi\rar\psi$}
+                        \end{prooftree}
+
+                        \begin{prooftree}
+                            \AxiomC{$\emptyset\vdash\varphi\rar\psi$}
+                            \UnaryInfC{$\mathfrak{A}\vDash\emptyset\RAR\mathfrak{A}\vDash\varphi\rar\psi$}
+                            \UnaryInfC{$\mathfrak{A}\vDash\varphi\rar\psi$}
+                            \UnaryInfC{Não $\mathfrak{A}\vDash\varphi$ ou $\mathfrak{A}\vDash\psi$}
+                            \UnaryInfC{$\mathfrak{A}\vDash\varphi\RAR\mathfrak{A}\vDash\psi$}
+                            %\UnaryInfC{$\mathfrak{A}\vDash\SET{\varphi}$\RAR$\mathfrak{A}\vDash\psi$}
+                            \UnaryInfC{${\varphi}\vdash\psi$}
+                        \end{prooftree}
+                        $$\therefore {\varphi}\vdash\psi\BIM\emptyset\vdash\varphi\rar\psi $$
+
+                    \item $ $
+                        \begin{prooftree}
+                            \AxiomC{$\mathfrak{A}\vDash\forall x:\varphi$}
+                            \UnaryInfC{Para todo $\hat x$ de $|\mathfrak{A}|$: $\mathfrak{A}\vDash_{f[x\slash{\hat x}]} \varphi$}
+                            \AxiomC{$|\mathfrak{A}|\not=\emptyset$}
+                            \UnaryInfC{Existe $\hat x$ em $|\mathfrak{A}|$}
+                            \BinaryInfC{Existe $\hat x$ em $|\mathfrak{A}|$: $\mathfrak{A}\vDash_{f[x\slash{\hat x}]} \varphi$}
+                            \UnaryInfC{$\mathfrak{A}\vDash\exists x:\varphi$}
+                        \end{prooftree}
+                        $$\therefore \forall x:\varphi\vdash\exists x:\varphi $$
+                        
+                    \item $ $
+                        \begin{prooftree}
+                            \AxiomC{$\mathfrak{A}\vDash\forall x:\varphi$}
+                            \UnaryInfC{Para todo $\hat x$ em $|\mathfrak{A}|$: $\mathfrak{A}_{f[x\slash\hat x]}\vDash\varphi$}
+                            
+                            \AxiomC{$\mathfrak{A}\vDash\exists x:\neg\varphi$}
+                            \UnaryInfC{Existe $\hat x$ em $|\mathfrak{A}|$: $\mathfrak{A}_{f[x\slash\hat x]}\vDash\neg\varphi$}
+                            
+                            \BinaryInfC{$\bot$}
+                        \end{prooftree}
+                        $$\therefore \forall x:\varphi\vdash\neg\exists x:\neg\varphi $$
+                    \item $ $
+                        $$\therefore \exists x:\neg\varphi\vdash\neg\forall x:\varphi $$
+                    \item Se $x$ não ocorre em $\varphi$, então é trivial. Se $x$ ocorre em 
+                    $\varphi$, lembramos que é uma sentença, então $x$ sempre ocorre 
+                    quantificado em $\varphi$. Então $\vDash$ vai ignorar os quantificadores 
+                    em ``$\forall x:\phi$'' e ``$\exists x:\phi$''.
+                    
+                    \item $ $
+                        \begin{prooftree}
+                            \AxiomC{$\mathfrak{A}\vDash\varphi$}
+                            \AxiomC{$\mathfrak{A}\vDash\varphi\rar\psi$}
+                            \UnaryInfC{$\mathfrak{A}\not\vDash\varphi$ ou $\mathfrak{A}\vDash\psi$}
+                            \BinaryInfC{$\mathfrak{A}\vDash\psi$}
+                        \end{prooftree}
+                        $$\therefore\SET{\varphi}{\varphi\rar\psi}\vdash\psi $$
+                    
+                    \item $ $
+                        \begin{prooftree}
+                            \AxiomC{$\mathfrak{A}\vDash\neg\varphi$}
+                            \UnaryInfC{Não $\mathfrak{A}\vDash\varphi$}
+
+                            \AxiomC{$\mathfrak{A}\vDash\varphi\lor\psi$}
+                            \UnaryInfC{$\mathfrak{A}\vDash\varphi$ ou $\mathfrak{A}\vDash\psi$}
+                            
+                            \BinaryInfC{$\mathfrak{A}\vDash\psi$}
+                        \end{prooftree}
+                        $$\therefore\SET{\varphi\lor\psi}{\neg\varphi}\vdash\psi $$
+                \end{enumerate}
+                \eop
+            \end{proof}
         \end{proposition}
-        \begin{proof}
-            \begin{enumerate}[label=\alph*)]
-                \item $ $
-                    \begin{prooftree}
-                        \AxiomC{$\mathfrak{A}\vDash{\varphi}$}
-                        \UnaryInfC{$\mathfrak{A}\vDash\varphi$}
-                        \UnaryInfC{$\mathfrak{A}\vDash{\varphi}\RAR\mathfrak{A}\vDash\varphi$}
-                        \UnaryInfC{${\varphi}\vdash\varphi$}
-                    \end{prooftree}
-                \item $ $
-                    \begin{prooftree}
-                        \AxiomC{$\Gamma\vdash\varphi$}
-                        \UnaryInfC{$\mathfrak{A}\vDash\Gamma\RAR\mathfrak{A}\vDash\varphi$}
-
-                        \AxiomC{$\Gamma\subseteq\Lambda$}
-                        
-                        \AxiomC{$\mathfrak{A}\vDash\Lambda$}
-                        \UnaryInfC{$\lambda\in\Lambda\RAR\mathfrak{A}\vDash\lambda$}
-                        
-                        \BinaryInfC{$\gamma\in\Gamma \RAR\mathfrak{A}\vDash\gamma$}
-                        \UnaryInfC{$\mathfrak{A}\vDash\Gamma$}
-                    
-                        \BinaryInfC{$\mathfrak{A}\vDash\varphi$}
-                    \end{prooftree}
-                    $$\therefore\mathfrak{A}\vDash\Lambda\RAR\mathfrak{A}\vDash\varphi$$
-                    $$\text{Assim, } \Lambda\vdash\varphi$$
-
-                \item $ $
-                    \begin{prooftree}
-                        \AxiomC{   $\mathfrak{A}\vDash{\varphi}$}
-                        \UnaryInfC{$\mathfrak{A}\vDash{\varphi}$ ou $\mathfrak{A}\vDash{\psi}$}
-                        \UnaryInfC{$\mathfrak{A}\vDash{\varphi\lor\psi}$}
-                    \end{prooftree}                                            
-                    $$\therefore{\varphi}\vdash\varphi\lor\psi $$
-
-                \item $ $
-                    \begin{prooftree}
-                        \AxiomC{$\mathfrak{A}\vDash\SET{\varphi}{\psi}$}
-                        \UnaryInfC{$\mathfrak{A}\vDash\varphi$}
-                        \AxiomC{$\mathfrak{A}\vDash\SET{\varphi}{\psi}$}
-                        \UnaryInfC{$\mathfrak{A}\vDash\psi$}
-                        \BinaryInfC{$\mathfrak{A}\vDash\varphi$ e $\mathfrak{A}\vDash\psi$}
-                        \UnaryInfC{$\mathfrak{A}\vDash\varphi\land\psi$}
-                    \end{prooftree}
-                    $$\therefore\SET{\varphi}{\psi}\vdash\varphi\land\psi $$
-                
-                \item $ $
-                    \begin{prooftree}
-                        \AxiomC{$\mathfrak{A}\vDash{\varphi\land\psi}$}
-                        \UnaryInfC{$\mathfrak{A}\vDash{\varphi}$ e $\mathfrak{A}\vDash{\psi}$}
-                        \UnaryInfC{$\mathfrak{A}\vDash\SET{\varphi}{\psi}$}
-                    \end{prooftree}
-                    $$\therefore{\varphi\land\psi}\vdash\SET{\varphi}{\psi} $$
-                
-                \item $ $
-                    \begin{prooftree}
-                        \AxiomC{$\mathfrak{A}\vDash\emptyset$}
-                        \AxiomC{$\mathfrak{A}\not\vDash\varphi$}
-                        \BinaryInfC{Não $\mathfrak{A}\vDash\varphi$}
-                        \UnaryInfC{$\mathfrak{A}\vDash\neg\varphi$}
-                    \end{prooftree}
-                    $$\therefore\emptyset\vdash\varphi\lor\neg\varphi $$ 
-
-                \item $ $
-                    \begin{prooftree}
-                        \AxiomC{$\mathfrak{A}\vDash\varphi$}
-                        \UnaryInfC{Não-não $\mathfrak{A}\vDash\varphi$}
-                        \UnaryInfC{Não $\mathfrak{A}\vDash\neg\varphi$}
-                        \UnaryInfC{$\mathfrak{A}\vDash\neg\neg\varphi$}
-                    \end{prooftree}
-                    $$\therefore\varphi\vdash\neg\neg\varphi $$ 
-
-                \item $ $
-                    \begin{prooftree}
-                        \AxiomC{$\mathfrak{A}\vDash\neg\neg\varphi$}
-                        \UnaryInfC{Não $\mathfrak{A}\vDash\neg\varphi$}
-                        \UnaryInfC{Não-não $\mathfrak{A}\vDash\varphi$}
-                        \UnaryInfC{$\mathfrak{A}\vDash\varphi$}
-                    \end{prooftree}
-                    $$\therefore\neg\neg\varphi\vdash\varphi $$ 
-
-                \item $ $
-                    \begin{prooftree}
-                        \AxiomC{${\varphi}\vdash\psi$}
-                        \UnaryInfC{$\mathfrak{A}\vDash{\varphi}\RAR\mathfrak{A}\vDash\psi$}
-                        \UnaryInfC{Não $\mathfrak{A}\vDash\varphi$ ou $\mathfrak{A}\vDash\psi$}
-                        \UnaryInfC{$\mathfrak{A}\vDash\neg\varphi$ ou $\mathfrak{A}\vDash\psi$}
-                        \UnaryInfC{$\mathfrak{A}\vDash\neg\varphi\lor\psi$}
-                        \AxiomC{$   \mathfrak{A}\vDash\emptyset$}
-                        \BinaryInfC{$\mathfrak{A}\vDash\emptyset\RAR\mathfrak{A}\vDash\varphi\rar\psi$}
-                        \UnaryInfC{$\emptyset\vdash\varphi\rar\psi$}
-                    \end{prooftree}
-
-                    \begin{prooftree}
-                        \AxiomC{$\emptyset\vdash\varphi\rar\psi$}
-                        \UnaryInfC{$\mathfrak{A}\vDash\emptyset\RAR\mathfrak{A}\vDash\varphi\rar\psi$}
-                        \UnaryInfC{$\mathfrak{A}\vDash\varphi\rar\psi$}
-                        \UnaryInfC{Não $\mathfrak{A}\vDash\varphi$ ou $\mathfrak{A}\vDash\psi$}
-                        \UnaryInfC{$\mathfrak{A}\vDash\varphi\RAR\mathfrak{A}\vDash\psi$}
-                        %\UnaryInfC{$\mathfrak{A}\vDash\SET{\varphi}$\RAR$\mathfrak{A}\vDash\psi$}
-                        \UnaryInfC{${\varphi}\vdash\psi$}
-                    \end{prooftree}
-                    $$\therefore {\varphi}\vdash\psi\BIM\emptyset\vdash\varphi\rar\psi $$
-
-                \item $ $
-                    \begin{prooftree}
-                        \AxiomC{$\mathfrak{A}\vDash\forall x:\varphi$}
-                        \UnaryInfC{Para todo $\hat x$ de $|\mathfrak{A}|$: $\mathfrak{A}\vDash_{f[x\slash{\hat x}]} \varphi$}
-                        \AxiomC{$|\mathfrak{A}|\not=\emptyset$}
-                        \UnaryInfC{Existe $\hat x$ em $|\mathfrak{A}|$}
-                        \BinaryInfC{Existe $\hat x$ em $|\mathfrak{A}|$: $\mathfrak{A}\vDash_{f[x\slash{\hat x}]} \varphi$}
-                        \UnaryInfC{$\mathfrak{A}\vDash\exists x:\varphi$}
-                    \end{prooftree}
-                    $$\therefore \forall x:\varphi\vdash\exists x:\varphi $$
-                    
-                \item $ $
-                    \begin{prooftree}
-                        \AxiomC{$\mathfrak{A}\vDash\forall x:\varphi$}
-                        \UnaryInfC{Para todo $\hat x$ em $|\mathfrak{A}|$: $\mathfrak{A}_{f[x\slash\hat x]}\vDash\varphi$}
-                        
-                        \AxiomC{$\mathfrak{A}\vDash\exists x:\neg\varphi$}
-                        \UnaryInfC{Existe $\hat x$ em $|\mathfrak{A}|$: $\mathfrak{A}_{f[x\slash\hat x]}\vDash\neg\varphi$}
-                        
-                        \BinaryInfC{$\bot$}
-                    \end{prooftree}
-                    $$\therefore \forall x:\varphi\vdash\neg\exists x:\neg\varphi $$
-                \item $ $
-                    $$\therefore \exists x:\neg\varphi\vdash\neg\forall x:\varphi $$
-                \item Se $x$ não ocorre em $\varphi$, então é trivial. Se $x$ ocorre em 
-                $\varphi$, lembramos que é uma sentença, então $x$ sempre ocorre 
-                quantificado em $\varphi$. Então $\vDash$ vai ignorar os quantificadores 
-                em ``$\forall x:\phi$'' e ``$\exists x:\phi$''.
-                
-                \item $ $
-                    \begin{prooftree}
-                        \AxiomC{$\mathfrak{A}\vDash\varphi$}
-                        \AxiomC{$\mathfrak{A}\vDash\varphi\rar\psi$}
-                        \UnaryInfC{$\mathfrak{A}\not\vDash\varphi$ ou $\mathfrak{A}\vDash\psi$}
-                        \BinaryInfC{$\mathfrak{A}\vDash\psi$}
-                    \end{prooftree}
-                    $$\therefore\SET{\varphi}{\varphi\rar\psi}\vdash\psi $$
-                
-                \item $ $
-                    \begin{prooftree}
-                        \AxiomC{$\mathfrak{A}\vDash\neg\varphi$}
-                        \UnaryInfC{Não $\mathfrak{A}\vDash\varphi$}
-
-                        \AxiomC{$\mathfrak{A}\vDash\varphi\lor\psi$}
-                        \UnaryInfC{$\mathfrak{A}\vDash\varphi$ ou $\mathfrak{A}\vDash\psi$}
-                        
-                        \BinaryInfC{$\mathfrak{A}\vDash\psi$}
-                    \end{prooftree}
-                    $$\therefore\SET{\varphi\lor\psi}{\neg\varphi}\vdash\psi $$
-            \end{enumerate}
-            \eop
-        \end{proof}
         \paragraph{}
             O que estes resultados primários nos dizem é que, se tivermos uma prova formal 
             (em um sistema dedutivo razoável)
@@ -549,5 +548,83 @@
             A reciproca, {\emph{que toda sentênça consequente de $\Gamma$ é provável por 
             hipóteses de $\Gamma$}}, requer um trato cuidadoso com sistemas dedutíveis, 
             definição de prova, {\emph{etc.}} Mas é resultado conhecido que se $\Gamma\vdash\varphi$,
-            então {\emph{prova-se}} $\varphi$ com hipóteses de $\Gamma$, mas isso depende do 
-            sistema dedutivo.
+            então {\emph{prova-se}} $\varphi$ com hipóteses de $\Gamma$. Claro, dado um 
+            sistema dedutivo dentro de certas hipóteses.
+            \begin{definition}{Teoria}
+                Dada uma língua, um subconjunto de sentenças $\mathcal{T}$ é dito uma teoria
+                quando ele é não-vazio e $\vdash$-fechado. Isto é, se $\mathcal{T}\vdash\tau$ 
+                então $\tau$ já estava em $\mathcal{T}$. Ou seja, é uma coleção de sentenças 
+                que contém todas as suas consequências sintáticas.
+        \end{definition}
+        \paragraph{}
+            Tomemos agora um momento para tratar de \strong{Teorias}.
+        \begin{definition}{Teoria}
+            Dada uma língua $\mathcal{L}$, um conjunto de sentenças $\mathcal{S}$ é dito uma teoria
+            dentro desta exatamente quando ele for fechado por $\vdash$, em outras palavras
+            $$\text{Para qualquer $\tau$ em $\mathcal{L}$, }\mathcal{T}\vdash\tau\RAR\text{ $\tau$ já estava em $\mathcal{T}$ }$$
+        \end{definition}
+        \paragraph{}
+            \newcommand{\theoryof}[1]{\mathcal{T}_{#1}}
+            Dada uma língua $\mathcal{L}$, e um conjunto de sentenças não-vazio desta que batizamos ``axiomas'' 
+            $\mathcal{A}$, dizemos que um conjunto de sentenças $\mathcal{T}$ é a teoria de 
+            $\mathcal{A}$ exatamente quando para toda $\tau$ de $\mathcal{T}$, temos 
+            $\mathcal{A}\vdash\tau$, que podemos abreviar para $\theoryof{\mathcal{A}}$.
+        \paragraph{}
+            O fato de que, para um conjunto de axiomas conforme acima, $\theoryof{\mathcal{A}}$ é teoria 
+            verifica-se por:
+        \begin{proof*}
+            \begin{prooftree}
+                \AxiomC{$\theoryof{\mathcal{A}}\vdash\tau$}
+                \UnaryInfC{$\mathfrak{A}\vDash\theoryof{\mathcal{A}}\RAR\mathfrak{A}\vDash\tau$}
+
+                \AxiomC{$\mathcal{A}\subseteq\theoryof{\mathcal{A}}$}
+                \UnaryInfC{$\mathfrak{A}\vDash\theoryof{\mathcal{A}}\RAR\mathfrak{A}\vDash\mathcal{A}$}
+
+                \AxiomC{para cada $\sigma$ em $\theoryof{\mathcal{A}}$}
+                \UnaryInfC{$\mathcal{A}\vdash\sigma$}
+                \UnaryInfC{$\mathfrak{A}\vDash\mathcal{A}\RAR\mathfrak{A}\vDash\theoryof{\mathcal{A}}$}
+                
+                \BinaryInfC{$\mathfrak{A}\vDash\mathcal{A}\BIM\mathfrak{A}\vDash\theoryof{\mathcal{A}}$}
+                \BinaryInfC{$\mathfrak{A}\vDash\mathcal{A}\RAR\mathfrak{A}\vDash\tau$}
+
+                \UnaryInfC{$\mathcal{A}\vdash\tau$}
+                \UnaryInfC{$\tau$ está em $\theoryof{\mathcal{A}}$}
+            \end{prooftree}
+            \eop
+        \end{proof*}
+        \paragraph{}
+            Obviamente, toda $\mathcal{T}$ teoria é da forma $\theoryof{\mathcal{A}}$ para algum 
+            conjunto de axiomas conveniente (por exemplo a própria $\mathcal{T}$).
+
+        \begin{definition}{Consistência}
+            Dizemos que uma teoria $\theoryof{}$ sobre uma língua $\mathcal{L}$ é 
+            consistente se e só se ela é não trivial, isto é, existe uma 
+            $\mathcal{L}$-sentença $\varphi$ que não está em $\theoryof{}$.
+        \end{definition}
+        
+        \paragraph{}
+            A motivação da definição de consistência é evitar contradições: 
+            \begin{prooftree}
+                \AxiomC{$\neg\varphi\land\varphi$ em $\theoryof{}$}
+                \UnaryInfC{$\neg\varphi$ em $\theoryof{}$}
+
+                \AxiomC{$\neg\varphi\land\varphi$ em $\theoryof{}$}
+                \UnaryInfC{$\varphi$ em $\theoryof{}$}
+
+                \AxiomC{$\psi$ em $\mathcal{L}$ sentença}
+                \BinaryInfC{$\varphi\lor\psi$ em $\theoryof{}$}
+
+                \BinaryInfC{$\psi$ em $\theoryof{}$}
+            \end{prooftree}
+        \paragraph{}
+            Se a teoria não for trivial, então ela não pode ser 
+            contraditória. Se ela \emph{for} trivial, ela  
+            obviamente é.
+        \paragraph{}
+            Uma estrutura que modela uma teoria passa a ocupar um 
+            lugar especial em nossos estudos, afinal, uma teoria 
+            pretende descrever exaustivamente as propriedades 
+            \emph{a priori} de uma estrutura compatível através de 
+            uma manipulação que é puramente sintática, pois não temos 
+            acesso à estrutura específica quando tratamos de uma 
+            teoria (afinal, definimos ela com $\vdash$ e não $\vDash$).

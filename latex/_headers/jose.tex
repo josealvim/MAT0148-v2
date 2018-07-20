@@ -68,8 +68,12 @@
     }
     \newcommand{\ZF}{\text{\sc ZF}}
     \newcommand{\ZFC}{\text{\sc ZFC}}
-
+    \newcommand{\mathspace}{\text{ }}
+    \newcommand{\tranrel}{\mathspace\epsilon\mathspace}
     \newcommand{\strong}{\textbf}
+    \newcommand{\LSig}[2]{\Sigma^{#1}_{#2}}
+    \newcommand{\LPi} [2]{\Pi^{#1}_{#2}}
+    \newcommand{\LDel}[2]{\Delta^{#1}_{#2}}
 
 %DEFAULT SETS
     \newcommand{\N}{\mathbb{N}}
@@ -93,34 +97,34 @@
     \newcommand{\begannewenv}{\addtocounter{envcount}{1}}
 
     \newenvironment{definition}[1]{\begannewenv\nl\nl
-        \textbf{\arabic{envcount}}) 
+        %\textbf{\arabic{envcount}}) 
         {\sc Definição:} \textbf{#1}.
-        \addcontentsline{toc}{subsection}{Def. #1}\\\ind
+        \addcontentsline{toc}{subsection}{$\cdotp$ Def. #1}\\\ind
     }{
         \tripstar
     }
 
-    \newenvironment{lemma*}{\begannewenv\nl\nl
-        \textbf{\arabic{envcount}}) 
-        {\sc Lema:}
-    }{}
-
     \newenvironment{lemma}[1]{\begannewenv\nl\nl
-        \textbf{\arabic{envcount}}) 
+        %\textbf{\arabic{envcount}}) 
         {\sc Lema:} \textbf{#1}.
-        \addcontentsline{toc}{subsection}{Prp. #1}\\\ind
+        \addcontentsline{toc}{subsection}{$\cdotp$ Prp. #1}\\\ind
     }{}
 
     \newenvironment{proposition}[1]{\begannewenv\nl\nl
-        \textbf{\arabic{envcount}}) 
+        %\textbf{\arabic{envcount}}) 
         {\sc Proposição:} \textbf{#1}.
-        \addcontentsline{toc}{subsection}{Prp. #1}\\\ind
+        \addcontentsline{toc}{subsection}{$\cdotp$ Prp. #1}\\\ind
     }{}
 
     \newenvironment{theorem}[1]{\begannewenv\nl\nl
-        \textbf{\arabic{envcount}}) 
+        %\textbf{\arabic{envcount}}) 
         {\sc Teorema:} \textbf{#1}.
-        \addcontentsline{toc}{subsection}{Teo. #1}\\\ind
+        \addcontentsline{toc}{subsection}{$\cdotp$ Teo. #1}\\\ind
+    }{}
+
+    \newenvironment{lemma*}{\begannewenv\nl\nl
+        %\textbf{\arabic{envcount}}) 
+        {\sc Lema:}
     }{}
 
     \newenvironment{proof*}{\nl\nl\nl

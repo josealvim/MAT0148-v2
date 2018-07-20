@@ -1,0 +1,254 @@
+\chapter{Teoria de Modelos de Teorias de Conjuntos}
+    \cls
+    \paragraph{}
+        A teoria dos modelos das teorias de conjuntos está relacionada 
+        com, por um lado, estudo de grandes cardinais e seus ramos, e,
+        por outro, lógica e teoria de conjuntos em si.
+    \paragraph{}
+        Isto pois, para uma certa classe de teorias de primeira ordem 
+        expressivas o suficiente, existem sentenças que são independentes
+        da teoria, e é o caso que as teorias de conjuntos estão justamente 
+        entre incompletas.
+    \paragraph{}
+        No campo da teoria, isto nos diz que a uma teoria de conjuntos é,
+        de certa forma, agnóstica a respeito de certas proposições. Por 
+        exemplo, é necessário que não se possa provar a existência de 
+        cardinais excessivamente grandes, isto porque se um cardinal for 
+        $\beth$-fixo, a hierarquia cumulativa até o mesmo é um modelo 
+        da teoria de conjuntos.
+    \paragraph{}
+        Dado um modelo de, digamos $\ZF$ pode muito bem ser o caso que 
+        haja cardinais inacessíveis no mesmo, mas sem informações 
+        adicionais, é impossível provar que existem --- se a teoria for
+        consistente, que esperamos ser ---.
+    \paragraph{}
+        No campo prático temos ainda traços do abalo deste quarto golpe
+        narcísico que tomou a humanidade com os resultados de K. Gödel,
+        da mesma forma que em um dado modelo de $\ZF$ possa valer ou 
+        não valer $\varphi$, pode ser que problemas importantes ou 
+        interessante sejam, simplesmente, independentes da teoria sem que 
+        saibamos. É este justamente o caso da hipótese do contínuo, que 
+        novamente mostra a capacidade de $\R$ de apresentar-se como a besta
+        que de fato é.
+    \paragraph{}
+        A hipótese do contínuo não é \emph{um pouco} independente, por sinal.
+        Como enunciou Robert M. Solovay: 
+        ``\emph{$2^{\aleph_0}$ can be anything it ought to be}''\footnote{
+            The Theory of Models, Proceedings of the 1963 International Symposium at Berkeley. Amsterdam, North-Holland, 1965, Addison, Henkin, Tarski, eds., pg. 435.
+        }. Dizendo que $\mathfrak{c}$ pode ser (e é em algum modelo) 
+        $\aleph_\beta$ para um $\beta$ sucessor ou de cofinalidade incontável.
+        A hipótese do contínuo é ``tão'' independente que $\mathfrak{c}$ pode,
+        inclusive, ser fracamente inacessível. 
+    \paragraph{}
+        Provar a independência de uma proposição pode ser feita tanto 
+        sintaticamente, ou semanticamente. Enquanto a maneira sintática 
+        é mais econômica ontologicamente falando, a semantica é mais 
+        acessível à mente, por mais que devamos tomar cuidado para não 
+        cairmos em confusões linguísticas. 
+    \paragraph{}
+        Empregaremos uma abordagem principalmente semantica para tratar 
+        de $\ZF$, e por isso que surge a necessidade da teoria dos modelos.
+        Porém, para tratar de $\ZF$, vamos primeiro definir qual teoria de 
+        fato falamos.
+    \paragraph{}
+        A língua de nossa teoria é relativamente simples, é a lingua com 
+        dois\footnote{
+            Poderiamos fazer apenas com ${}\in$, mas não é necessário.
+        } símbolos relacionais $\TUPLE{{}={}}{{}\in{}}$ apenas. Já a 
+        teoria é a gerada por esses 7 axiomas e o Esquema de Substituição, 
+        que nos dá um axioma para cada fórmula conforme.
+    \begin{enumerate}[label=\arabic*. Ax.]
+        \item da Identidade:\\
+            $\forall x: [\exists! y: x=y] \land x=x$.
+        \item Extensionalidade:\\
+            $\forall x:\forall y:[\forall z: z\in x \bim z \in y]\bim x = y$.
+        \item da União:\\
+            $\forall x:\exists y: \forall z: [z\in y\bim\exists w\in x: z\in w]$.
+        \item da Potência:\\
+            $\forall x:\exists y: \forall z: z\in y \bim [\forall w: w\in z\bim w\in y]$.
+        \item Esquema da Substituição:\\
+            Se $\varphi$ uma fórmula com apenas $a,b,\vec{v}$ livres e $c,w,x,y,z$ não ocorrendo 
+            em $\varphi$. Então:
+            \begin{align*}
+                [\forall\vec{v}:\forall a:[\exists b:\varphi(a,b;\vec{v})]\bim&[\exists!b:\varphi(a,b;\vec{v})]]\rar\\
+                \rar&[\forall x:\exists y: \forall z: z\in y \bim \exists w: w\in x\land \varphi(w,z;\vec{v})]
+            \end{align*}
+        \item do Conjunto Indutivo:
+        \begin{align*}
+            \exists I:\exists x: x\in I \land&(\forall t: t\in x   \bim t\not=t)\\
+                                        \land&[(\exists w: w\in I) \rar \exists z:z\in I \land \forall t': t'\in z \bim t'=w\lor t'\in w].
+        \end{align*}
+        \item da Fundação:\\
+            $\forall x:(\exists x': x'\in x)\rar\exists y: (y\in x)\land[\forall t: (t\in x\land t\in y)\rar t\not=t]$.
+    \end{enumerate}
+    \section{Estruturas Transitivas}
+        \begin{definition}{Identidade Induzida}
+            Se tivermos uma relação $R$ definida sobre uma 
+            classe $A$, gostaríamos de ter uma relação de 
+            equivalência em $A$ que fosse congruente com 
+            $R$, definimos $\approx_R$ como sendo
+            $$ a \approx_R b \BIM \forall t\in A: tRa\bim tRb$$
+            \paragraph{}
+                Restrito ao domínio adequado.
+        \paragraph{}
+            Isto é, em $A$, dois identificados são idênticos à 
+            esquerda.
+        \end{definition}
+        \begin{definition}{Estrutura Transitiva}
+            Uma estrutura $\mathfrak{A} = \TUPLE{A}{\approx}{\epsilon{}}$
+            é dita uma \strong{estrutura transitiva} exatamente quando 
+            $\epsilon = \SET{\TUPLE{a,b}: a,b\in A\land a\in b}$, $\approx{}\!\!\!=\!\!\!{}\approx_\epsilon$ 
+            e $A$ é uma classe transitiva.
+        \end{definition}
+        \begin{definition}{Substrutura}
+            Dadas duas estruturas compatíveis
+            $\mathfrak{A}$ e $\mathfrak{B}$ 
+            dizemos que $\mathfrak{A}\subseteq\mathfrak{B}$ --- que $\mathfrak{A}$ 
+            é substrutura de $\mathfrak{B}$ --- exatamente quando 
+            $|\mathfrak{A}|\subseteq|\mathfrak{B}|$, as relações e funções de 
+            $\mathfrak{A}$ são as restrições das de $\mathfrak{B}$ e as 
+            constantes de $\mathfrak{B}$ são as mesmas que as de $\mathfrak{A}$.
+        \end{definition}
+        \begin{theorem}{Estrutura transitivas atendem fundação e extensionalidade}
+            Se $\mathfrak{A} = \TUPLE{A}{\approx}{\epsilon}$ for uma estrutura transitiva, então,
+            \begin{enumerate}[label=\alph*)]
+                \item $\mathfrak{A}\vDash\text{Ax. da Fundação}$
+                \item $\mathfrak{A}\vDash\text{Ax. da Extensionalidade}$
+            \end{enumerate}
+            \begin{proof}
+                \begin{enumerate}[label=\alph*)]
+                    \item
+                        Seja $x\in A$, com tal que $\exists y\in A: y\tranrel x$, 
+                        isso significa que $\exists y: y\in x$, assim, pelo axioma da fundação, 
+                        $\exists y\in x:\forall t: [t\in x\land t\in y]\rar t\not = t$. Como $A$ é 
+                        transitivo, temos que este $y$ existe \emph{em $A$}, então 
+                        $\exists y\tranrel x:\forall t: [t\tranrel x\land t\tranrel y]\rar t\not = t$.
+                    \paragraph{}
+                        Por outro lado, temos que $\forall a,b\in A:a\approx b \bim a = b$, pois, para
+                        a ida\footnote{a volta é trivial}: Como $A$ é transitivo, então $a,b\subset A$. Assim, se os membros de $a$ 
+                        em $A$ forem exatamente os de $b$ em $A$, então os membros de $a$ são os mesmos
+                        que os de $b$, e por extensionalidade, são iguais. Assim, temos
+                        $\exists y\tranrel x:\forall t: [t\tranrel x\land t\tranrel y]\rar t\not \approx t$,
+                        que é a tradução da fundação para a estrutura $\mathfrak{A}$.
+                    \item
+                        Se $a,b\in A$ então todos os membros \emph{deste} estão em $A$ também. Se os membros 
+                        de $a$ e $b$ que estão dentro de $A$ coincidem, então os fora de $A$ coincidem e 
+                        temos a extensionalidade. Assim, eles são iguais ($=$), mas se são iguais, como vimos,
+                        também são iguais ($\approx$). Vale então a extensionalidade.
+                \end{enumerate}
+            \end{proof}\eop
+        \end{theorem}
+        \paragraph{}
+            Neste teorema aparece insinuada uma propriedade de certas fórmulas que 
+            chamamos de Incondicionalidade, ou \emph{Absoluteness}.
+        \subsection{Incondicionalidade e Elementaridade}
+            \begin{definition}{Incondicionalidade}
+                    Sejam $\mathfrak{A}\subseteq\mathfrak{B}$ estruturas transitivas.
+                \paragraph{}
+                    Uma fórmula $\varphi$ da língua de $\ZF$ é dita \strong{absoluta entre 
+                    $\mathfrak{A}$ e $\mathfrak{B}$} exatamente quando, para toda 
+                    $f$ interpretação das variáveis da língua em $\mathfrak{A}$.
+                    $$ \mathfrak{A}\vDash_f \varphi \BIM \mathfrak{B}\vDash_f \varphi $$
+                \paragraph{}
+                    Um termo $t$ da língua é dito \strong{absoluta entre 
+                    $\mathfrak{A}$ e $\mathfrak{B}$} exatamente quando, para toda 
+                    $f$ interpretação das variáveis da língua em $\mathfrak{A}$.
+                    $$ \mathfrak{A}\vDash_f x = t \BIM \mathfrak{B}\vDash_f x = t $$
+                \paragraph{}
+                    Dizemos ainda que uma fórmula é preservada sob restrição de $\mathfrak{B}$
+                    para $\mathfrak{A}$ quando a implicação da direita para esquerda vale. E 
+                    Dizemos que uma fórmula é preservada sob extensão de $\mathfrak{A}$ para 
+                    $\mathfrak{B}$ quando a implicação da esquerda para a direita vale.
+            \end{definition}
+            \begin{definition}{Elementaridade}
+                Dadas $\mathfrak{A}\subseteq\mathfrak{B}$ estruturas compatíveis
+                Dizemos $\mathfrak{A}$ ser substrutura elementar de $\mathfrak{B}$,
+                ou que $\mathfrak{B}$ é extensão elementar de $\mathfrak{A}$, 
+                exatamente quando toda fórmula é absoluta entre $\mathfrak{A}$ e $\mathfrak{B}$.
+            \end{definition}
+            \paragraph{}
+                Fórmulas absolutas, pois, formam uma classe de fórmulas muito útil para o trato
+                de modelos, já que seus significados não mudam quando as extendemos ou as
+                restringimos. Que estas fórmulas não são todas as que existem é simple de ver:
+                Deixe
+                $\mathfrak{A} = \TUPLE{\SET{1}{2}}{\leq}$  e
+                $\mathfrak{B} = \TUPLE{\SET{1}{2}{3}}{\leq}$
+                É trivial ver que $\forall x,y,z: (x\not= y)\rar z=x\lor z=y$ 
+                não é absoluta entre as estruturas.
+            \paragraph{}
+                No entanto, a situação não é tão ruim assim, por mais que tamanho não 
+                seja absoluto entre estruturas, temos critérios para gerar fórmulas 
+                absolutas:
+            \begin{proposition}{Condições suficientes para incondicionalidade}
+                \begin{enumerate}[label=\alph*)]
+                    \item fórmulas atômicas são absolutas.
+                    \item conjunção, disjunção e negação de absolutas é a absoluta.
+                \end{enumerate}
+                \begin{proof}
+                    \begin{enumerate}[label=\alph*)]
+                        \item 
+                            Como uma é substrutura da outra, então as relações são as 
+                            restrições. Como a fórmula é atômica, e a interpretação é 
+                            em na substrutura, então vai ser verdade em numa estrutura
+                            exatamente quando for na outra.
+                        \item 
+                            Segue da definição de satisfação.
+                    \end{enumerate}
+                \end{proof}
+            \end{proposition}
+            \paragraph{}
+                Sairemos por uma tangente, para então voltar a tratar de fórmulas absolutas, \emph{etc.}
+        \subsection{Hierarquia de Lévy e o princípio de reflexão}
+            \begin{definition}{Fórmulas $\Sigma$, $\Pi$ e $\Delta$}
+                    Uma fórmula $\varphi$ é dita \strong{restrita} ou \strong{limitada} quando todos os 
+                    seus quantificadores são da forma $\forall x : x\in y \rar \psi$ ou 
+                    $\exists x : x\in y \land \psi$
+                    (isto é $\forall x\in y : \psi$ ou $\exists x\in y : \psi$ )
+                \paragraph{}
+                    Uma fórmula é dita $\Sigma_0$ e $\Pi_0$ exatamente quando ela é restrita; É dita
+                    $\Sigma_{n+1}$ quando é da forma $\exists x_1:\ldots:\exists x_k: \psi$ para 
+                    $(x_i)_{1\leq i\leq k}$ variáveis e uma 
+                    $\psi$ fórmula $\Pi_n$. Similarmente, é dita $\Pi_{n+1}$ exatamente quando 
+                    $\forall x_1:\ldots:\forall x_k\psi$ com $(x_i)_{1\leq i\leq k}$ variáveis 
+                    e uma $\psi$ fórmula $\Sigma_n$.
+                \paragraph{}
+                    Finalmente, uma fórmula $\varphi$ é dita $\LSig{\theoryof{}}{n}$ --- sigma-$n$ para 
+                    $\theoryof{}$ --- quando existe uma $\psi$ que é $\LSig{}{n}$ tal que $\theoryof{}\vdash\psi\bim\varphi$,
+                    $\LPi{\theoryof{}}{n}$ sendo similarmente definida.
+                    Um caso especial são as fórumlas $\LDel{\theoryof{}}{n}$, que são exatamente aquelas 
+                    fórmulas que são $\Sigma^{\theoryof{}}_n$ e $\Pi^{\theoryof{}}_n$ simultaneamente. 
+                    Novamente, um termo $t$
+                    é dito $\LSig{\theoryof{}}{n}$, $\LPi{\theoryof{}}{n}$ ou $\LDel{\theoryof{}}{n}$ 
+                    quando $x = t$ o for --- com $x$ não ocorrendo em $t$, é claro ---.
+            \end{definition}
+            \paragraph{}
+                O motivo do nosso interesse em catalogar certas fórmulas na hierarquia de Lévy é a relação que 
+                estas fórmulas possuem com as estruturas transitivas. A ver, as fórmulas 
+                $\LSig{\theoryof{}}{1}$ são preservadas por extensões, as $\LPi{\theoryof{}}{1}$ são 
+                preservada por restrições e as $\LDel{\theoryof{}}{1}$ são absolutas, quando se tratando de 
+                modelos da teoria $\theoryof{}$, claro.
+            \begin{theorem}{$\LSig{\theoryof{}}{1}$ preservam-se sob extensão, $\LPi{\theoryof{}}{1}$, sob restrição}
+                    Seja $\theoryof{}$ uma teoria da língua de conjuntos, $\mathfrak{A}\subseteq\mathfrak{B}$ estruturas 
+                    (transitivas) compatíveis com a língua e que modelam a teoria $\theoryof{}$, e, por fim, seja $f$ 
+                    uma interpretação das variáveis da teoria em $\mathfrak{A}$.
+                \paragraph{}
+                    Então, se $\varphi$ for $\LSig{\theoryof{}}{1}$,
+                    $$ \mathfrak{A}\vDash_f \varphi \RAR \mathfrak{B}\vDash_f \varphi $$
+                \paragraph{}
+                E se $\varphi$ for $\LPi{\theoryof{}}{1}$,
+                $$ \mathfrak{A}\vDash_f \varphi \LAR \mathfrak{B}\vDash_f \varphi $$
+                \begin{proof}
+                        Para as $\LSig{\theoryof{}}{1}$, seja $\varphi$ uma tal fórmula. Equivalente, 
+                        a um $\exists v_1:\ldots:\exists v_k:\psi$ com $\psi$ uma fórmula 
+                        $\LPi{\theoryof{}}{0}$.
+                    \paragraph{}
+                        Qualquer ocorrência de variável quantificada, ou está no fecho transitivo de alguma 
+                        variável livre, ou deve estar no de algum dos $v_i$-s. Afinal, tome um $x_j$ que 
+                        ocorra na fórmula. Se este não ocorre livre, ele está quantificado, ou ele é um dos 
+                        $v_i$ para algum $i$ conveniente, ou ele ocorre em $\psi$. Se ocorre em $\psi$ há 
+                        uma variável $v$ em que a ocorrência de $x_j$ é exatamente $Q x_j\in v$. Assim, ou 
+                        $x_j$ pertence a uma variável livre, ou repetimos o processo.
+                    \paragraph{}
+                        Desta forma, vamos considerar o que significa $\mathfrak{B}\vDash_f \varphi$
+                \end{proof}
+            \end{theorem}
