@@ -145,9 +145,9 @@
             \begin{definition}{Incondicionalidade}
                     Sejam $\mathfrak{A}\subseteq\mathfrak{B}$ estruturas transitivas.
                 \paragraph{}
-                    Uma fórmula $\varphi$ da língua de $\ZF$ é dita \strong{absoluta entre 
-                    $\mathfrak{A}$ e $\mathfrak{B}$} exatamente quando, para toda 
-                    $f$ interpretação das variáveis da língua em $\mathfrak{A}$.
+                    Uma fórmula $\varphi$ da língua de $\ZF$ é dita \strong{absoluta} ou
+                    \strong{incondicional} entre $\mathfrak{A}$ e $\mathfrak{B}$} exatamente 
+                    quando, para toda $f$ interpretação das variáveis da língua em $\mathfrak{A}$.
                     $$ \mathfrak{A}\vDash_f \varphi \BIM \mathfrak{B}\vDash_f \varphi $$
                 \paragraph{}
                     Um termo $t$ da língua é dito \strong{absoluta entre 
@@ -197,29 +197,124 @@
                 \end{proof}
             \end{proposition}
             \paragraph{}
-                Sairemos por uma tangente, para então voltar a tratar de fórmulas absolutas, \emph{etc.}
-        \subsection{Hierarquia de Lévy e o princípio de reflexão}
+            \begin{definition}{Fórmulas Completas}
+                    Uma fórmula $\varphi(x;\vec{v})$ é dita \strong{completa} 
+                    em $\mathfrak A\subseteq\mathfrak{B}$ com respeito a $x$ 
+                    exatamente quando é o caso que:
+                \paragraph{}
+                    Se $\hat{x}\in|\mathfrak{B}|$ e $\vec{u}$ forem parâmetros 
+                    em $|\mathfrak{A}|$, então $\mathfrak{B}\vDash\varphi(\hat x, 
+                    \vec u) \RAR b\in|\mathfrak{A}|$. Sendo que com ``
+                    $\mathfrak{B}\vDash\varphi(\hat x, \vec u)$'' queremos dizer
+                    ``$\mathfrak{B}\vDash_{f_{[x\slash\hat x, \vec v\slash\vec u]}}\varphi(\hat x, \vec u)$''
+                    pois $\varphi$ só tem os parâmetros e $x$ livres.
+                \paragraph{}
+                    Uma fórmula completa em relação a uma par estrutura-substrutura 
+                    e um variável é de tal forma que se não for verdade em baixo,
+                    não é por falta de testemunha. Da mesma forma que se uma sequência 
+                    em $\R$ não converge, não é porque está faltando o ponto de 
+                    convergência, como poderia ser o caso em $\Q$. 
+            \end{definition}
+            \begin{theorem}{$\exists x:\varphi$ para completas e absolutas}
+                Seja $\varphi(x;\vec v)$ absoluta entre $\mathfrak{A}\subseteq\mathfrak{B}$ transitivas, e 
+                completa para $x$ entre as mesmas estruturas. Nestas condições, 
+                $\exists x:\varphi(x,\vec v)$ é absoluta entre $\mathfrak{A}$ e $\mathfrak{B}$.
+                \begin{proof}
+                    \paragraph{}
+                        Primeiro, temos que:
+                    \begin{enumerate}[label=\alph*)]
+                        \item $\mathfrak{A}\vDash_f\varphi(x;\vec v) \BIM \mathfrak{B}\vDash_f\varphi(x;\vec v)$.
+                        \item $[(\vec u \subseteq|\mathfrak{A}|)\land(b\in|\mathfrak{B}|)]\RAR[\mathfrak{B}\vDash_f\varphi(b;\vec u) \RAR b\in|\mathfrak{A}]$.
+                    \end{enumerate}
+                    \paragraph{($\RAR$)}
+                        Então considere:
+                        \begin{prooftree}
+                            \AxiomC{$\mathfrak{A}\vDash_f\exists x:\varphi(x,\vec v)$}
+                            \UnaryInfC{Existe um $\hat x$ em $|\mathfrak{A}|$ tal que: $\mathfrak{A}\vDash_{f_{[x\slash{\hat x}]}}\varphi(x,\vec v)$}
+                            \UnaryInfC{Existe um $\hat x$ em $|\mathfrak{B}|$ tal que: $\mathfrak{A}\vDash_{f_{[x\slash{\hat x}]}}\varphi(x,\vec v)$}
+                            \UnaryInfC{Existe um $\hat x$ em $|\mathfrak{B}|$ tal que: $\mathfrak{B}\vDash_{f_{[x\slash{\hat x}]}}\varphi(x,\vec v)$}
+                            \UnaryInfC{$\mathfrak{B}\vDash_f\exists x:\varphi(x,\vec v)$}
+                        \end{prooftree}
+                    \paragraph{($\LAR$)}
+                    Por outro lado, tome que
+                        \begin{prooftree}
+                            \AxiomC{$\mathfrak{B}\vDash_f\exists x:\varphi(x,\vec v)$}
+                            \UnaryInfC{Existe um $\hat x$ em $|\mathfrak{B}|$ tal que: $\mathfrak{B}\vDash_{f_{[x\slash{\hat x}]}}\varphi(x,\vec v)$}
+                            \AxiomC{$f$ é uma $\mathfrak{A}$-valoração de variáveis}
+                            \UnaryInfC{$f[\vec v]\subseteq|\mathfrak{A}|$}
+                            \BinaryInfC{Existe um $\hat x$ em $|\mathfrak{A}|$ tal que: $\mathfrak{A}\vDash_{f_{[x\slash{\hat x}]}}\varphi(x,\vec v)$}
+                            \UnaryInfC{$\mathfrak{A}\vDash_f\exists x:\varphi(x,\vec v)$}
+                        \end{prooftree}
+                    \paragraph{}
+                        Assim, fica provado o teorema.\eop
+                \end{proof}
+            \end{theorem}
+            \begin{theorem}{Quantificação limitada de fórmulas absolutas}
+                Seja $\varphi$ absoluta entre $\mathfrak{A}\subseteq\mathfrak{B}$ estruturas transitivas, então $\exists x\in y: \varphi(x)$ e $\forall x\in y: \varphi(x)$
+                são ambas absolutas, quando $y$ não ocorre em $x$.
+                \begin{proof}
+                    Primeiro, $\exists x\in y: \varphi(x) \equiv \exists x:x\in y\land \varphi$:
+                    \begin{prooftree}
+                        \AxiomC{$x\in y$ é absoluta}
+                        \AxiomC{$\varphi(x)$ é absoluta}
+                        \BinaryInfC{$x\in y\land\varphi(x)$ é absoluta}
+                    \end{prooftree}
+                    \paragraph{}
+                        $x\in y\land\varphi(x)$ é completa para $x$ entre $\mathfrak{A}$ e $\mathfrak{B}$ pois:
+                        se $y\in\mathfrak{A}$ e $\mathfrak{B}$ crê que $x$ está em $y$ e satisfaz $\varphi$, 
+                        então, certamente $x$ está em $y$ que está em $\mathfrak{A}$.
+                    \paragraph{}
+                        Logo, pelo teorema anterior, $\exists x\in y: \varphi(x)$ é absoluta entre as estruturas.
+                    \paragraph{}
+                        Para o quantificador universal, basta ver que $\neg\varphi(x)$ também é absoluta, então 
+                        $\exists x: x\in y\land \neg \varphi(x)$ é absoluta, mas ela é equivalente a $\exists x:
+                        \neg(x\in y \rar \varphi(x))$ que equivale a $\neg\forall x: x\in y\rar\varphi(x)$. 
+                        Neste caso, sabemos que ela será absoluta, mas negação de absoluta também é. Então 
+                        $\forall x: x\in y\rar\varphi(x)$.\eop
+                \end{proof}
+            \end{theorem}
+            \begin{definition}{Fórmulas preservadas por Extenção/Restrição}
+                \paragraph{}
+                    Dizemos que uma fórmula $\varphi$ é \strong{preservada por extenções} --- ou é \strong{extendível} ---
+                    exatamente quando:
+                \begin{center}
+                    $\mathfrak{A}\subseteq\mathfrak{B}$ estruturas transitivas $\RAR ( \mathfrak{A}\vDash_f\varphi\RAR\mathfrak{B}\vDash_f\varphi)$
+                \end{center}
+                Toda vez que $f$ for uma $\mathfrak{A}$ valoração.
+                \paragraph{}
+                    Dizemos que uma fórmula $\varphi$ é \strong{preservada por restrições} --- ou é \strong{restringível} ---
+                    exatamente quando:
+                \begin{center}
+                    $\mathfrak{A}\subseteq\mathfrak{B}$ estruturas transitivas $\RAR ( \mathfrak{A}\vDash_f\varphi\LAR\mathfrak{B}\vDash_f\varphi)$
+                \end{center}
+                Toda vez que $f$ for uma $\mathfrak{A}$ valoração.
+            \end{definition}
+            \begin{lemma}{Quantificação sobre absoluta é Restringível/Extendível}
+                Trivialmente, se $\varphi$ for absoluta entre duas transitivas $\mathfrak{A}\subseteq\mathfrak{B}$, então $\exists x:\varphi$ é extendível e 
+                $\forall x:\varphi$ é restringível.
+            \end{lemma}
+        \subsection{Hierarquia de Lévy}
             \begin{definition}{Fórmulas $\Sigma$, $\Pi$ e $\Delta$}
-                    Uma fórmula $\varphi$ é dita \strong{restrita} ou \strong{limitada} quando todos os 
-                    seus quantificadores são da forma $\forall x : x\in y \rar \psi$ ou 
-                    $\exists x : x\in y \land \psi$
-                    (isto é $\forall x\in y : \psi$ ou $\exists x\in y : \psi$ )
-                \paragraph{}
-                    Uma fórmula é dita $\Sigma_0$ e $\Pi_0$ exatamente quando ela é restrita; É dita
-                    $\Sigma_{n+1}$ quando é da forma $\exists x_1:\ldots:\exists x_k: \psi$ para 
-                    $(x_i)_{1\leq i\leq k}$ variáveis e uma 
-                    $\psi$ fórmula $\Pi_n$. Similarmente, é dita $\Pi_{n+1}$ exatamente quando 
-                    $\forall x_1:\ldots:\forall x_k\psi$ com $(x_i)_{1\leq i\leq k}$ variáveis 
-                    e uma $\psi$ fórmula $\Sigma_n$.
-                \paragraph{}
-                    Finalmente, uma fórmula $\varphi$ é dita $\LSig{\theoryof{}}{n}$ --- sigma-$n$ para 
-                    $\theoryof{}$ --- quando existe uma $\psi$ que é $\LSig{}{n}$ tal que $\theoryof{}\vdash\psi\bim\varphi$,
-                    $\LPi{\theoryof{}}{n}$ sendo similarmente definida.
-                    Um caso especial são as fórumlas $\LDel{\theoryof{}}{n}$, que são exatamente aquelas 
-                    fórmulas que são $\Sigma^{\theoryof{}}_n$ e $\Pi^{\theoryof{}}_n$ simultaneamente. 
-                    Novamente, um termo $t$
-                    é dito $\LSig{\theoryof{}}{n}$, $\LPi{\theoryof{}}{n}$ ou $\LDel{\theoryof{}}{n}$ 
-                    quando $x = t$ o for --- com $x$ não ocorrendo em $t$, é claro ---.
+                Uma fórmula $\varphi$ é dita \strong{restrita} ou \strong{limitada} quando todos os 
+                seus quantificadores são da forma $\forall x : x\in y \rar \psi$ ou 
+                $\exists x : x\in y \land \psi$
+                (isto é $\forall x\in y : \psi$ ou $\exists x\in y : \psi$ )
+            \paragraph{}
+                Uma fórmula é dita $\Sigma_0$ e $\Pi_0$ exatamente quando ela é restrita; É dita
+                $\Sigma_{n+1}$ quando é da forma $\exists x_1:\ldots:\exists x_k: \psi$ para 
+                $(x_i)_{1\leq i\leq k}$ variáveis e uma 
+                $\psi$ fórmula $\Pi_n$. Similarmente, é dita $\Pi_{n+1}$ exatamente quando 
+                $\forall x_1:\ldots:\forall x_k\psi$ com $(x_i)_{1\leq i\leq k}$ variáveis 
+                e uma $\psi$ fórmula $\Sigma_n$.
+            \paragraph{}
+                Finalmente, uma fórmula $\varphi$ é dita $\LSig{\theoryof{}}{n}$ --- sigma-$n$ para 
+                $\theoryof{}$ --- quando existe uma $\psi$ que é $\LSig{}{n}$ tal que $\theoryof{}\vdash\psi\bim\varphi$,
+                $\LPi{\theoryof{}}{n}$ sendo similarmente definida.
+                Um caso especial são as fórumlas $\LDel{\theoryof{}}{n}$, que são exatamente aquelas 
+                fórmulas que são $\Sigma^{\theoryof{}}_n$ e $\Pi^{\theoryof{}}_n$ simultaneamente. 
+                Novamente, um termo $t$
+                é dito $\LSig{\theoryof{}}{n}$, $\LPi{\theoryof{}}{n}$ ou $\LDel{\theoryof{}}{n}$ 
+                quando $x = t$ o for --- com $x$ não ocorrendo em $t$, é claro ---.
             \end{definition}
             \paragraph{}
                 O motivo do nosso interesse em catalogar certas fórmulas na hierarquia de Lévy é a relação que 
@@ -227,28 +322,31 @@
                 $\LSig{\theoryof{}}{1}$ são preservadas por extensões, as $\LPi{\theoryof{}}{1}$ são 
                 preservada por restrições e as $\LDel{\theoryof{}}{1}$ são absolutas, quando se tratando de 
                 modelos da teoria $\theoryof{}$, claro.
-            \begin{theorem}{$\LSig{\theoryof{}}{1}$ preservam-se sob extensão, $\LPi{\theoryof{}}{1}$, sob restrição}
-                    Seja $\theoryof{}$ uma teoria da língua de conjuntos, $\mathfrak{A}\subseteq\mathfrak{B}$ estruturas 
-                    (transitivas) compatíveis com a língua e que modelam a teoria $\theoryof{}$, e, por fim, seja $f$ 
-                    uma interpretação das variáveis da teoria em $\mathfrak{A}$.
-                \paragraph{}
-                    Então, se $\varphi$ for $\LSig{\theoryof{}}{1}$,
-                    $$ \mathfrak{A}\vDash_f \varphi \RAR \mathfrak{B}\vDash_f \varphi $$
-                \paragraph{}
-                E se $\varphi$ for $\LPi{\theoryof{}}{1}$,
-                $$ \mathfrak{A}\vDash_f \varphi \LAR \mathfrak{B}\vDash_f \varphi $$
+            \begin{theorem}{Fórmulas $\LDel{\theoryof{}}{1}$ são $\theoryof{}$-absolutas}
                 \begin{proof}
-                        Para as $\LSig{\theoryof{}}{1}$, seja $\varphi$ uma tal fórmula. Equivalente, 
-                        a um $\exists v_1:\ldots:\exists v_k:\psi$ com $\psi$ uma fórmula 
-                        $\LPi{\theoryof{}}{0}$.
+                    \begin{lemma}{$\LDel{}{0}$ são absolutas}
+                        Trivialmente, pois são conjunções de outras absolutas ou quantificações limitadas de 
+                        fórmulas absolutas. 
+                    \end{lemma}
                     \paragraph{}
-                        Qualquer ocorrência de variável quantificada, ou está no fecho transitivo de alguma 
-                        variável livre, ou deve estar no de algum dos $v_i$-s. Afinal, tome um $x_j$ que 
-                        ocorra na fórmula. Se este não ocorre livre, ele está quantificado, ou ele é um dos 
-                        $v_i$ para algum $i$ conveniente, ou ele ocorre em $\psi$. Se ocorre em $\psi$ há 
-                        uma variável $v$ em que a ocorrência de $x_j$ é exatamente $Q x_j\in v$. Assim, ou 
-                        $x_j$ pertence a uma variável livre, ou repetimos o processo.
+                        Seja $\varphi$ uma fórmula $\LDel{\theoryof{}}{1}$. Como ela é equivalente a uma $\forall x_k:\psi$ com 
+                        $\psi\in\LSig{\theoryof{}}{0}$, ela é $\theoryof{}$-equivalente a uma quantificação universal de uma 
+                        fórmula absoluta, afinal $\psi$ é absoluta.
                     \paragraph{}
-                        Desta forma, vamos considerar o que significa $\mathfrak{B}\vDash_f \varphi$
+                        Por outro lado, ela é equivalente a uma $\exists x_j:\gamma$ com $\gamma\in\LPi{\theoryof{}}{0}$, que 
+                        nos dá que ela é $\theoryof{}$-equivalente a uma quantificação existêncial de uma absoluta, pois $\gamma$
+                        também é absoluta.
+                    \paragraph{}
+                        Assim, sendo $\mathfrak{A}\subseteq\mathfrak{B}$ estruturas transitivas e $f$ uma $\mathfrak{A}$-valoração, 
+                        temos que:
+                    \begin{enumerate}[label=\alph*)]
+                        \item $\theoryof{}\vdash\varphi\bim\forall x_k:\psi$.
+                        \item $\theoryof{}\vdash\varphi\bim\exists x_k:\gamma$.
+                        \item $\mathfrak{A}\vDash_f\exists x_k:\gamma\RAR\mathfrak{B}\vDash_f\exists x_k:\gamma$.
+                        \item $\mathfrak{A}\vDash_f\exists x_k:\psi  \RAR\mathfrak{B}\vDash_f\forall x_k:\psi$.
+                    \end{enumerate}
+                    \paragraph{}
+                        Se for o caso que $\mathfrak{A},\mathfrak{B}\vDash\theoryof{}$, então temos que
+                        $$\mathfrak{A}\vDash_f\varphi\BIM\mathfrak{B}\vDash_f\varphi$$\eop
                 \end{proof}
             \end{theorem}

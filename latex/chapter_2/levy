@@ -1,0 +1,58 @@
+\subsection{Hierarquia de Lévy e o princípio de reflexão}
+            \begin{definition}{Fórmulas $\Sigma$, $\Pi$ e $\Delta$}
+                    Uma fórmula $\varphi$ é dita \strong{restrita} ou \strong{limitada} quando todos os 
+                    seus quantificadores são da forma $\forall x : x\in y \rar \psi$ ou 
+                    $\exists x : x\in y \land \psi$
+                    (isto é $\forall x\in y : \psi$ ou $\exists x\in y : \psi$ )
+                \paragraph{}
+                    Uma fórmula é dita $\Sigma_0$ e $\Pi_0$ exatamente quando ela é restrita; É dita
+                    $\Sigma_{n+1}$ quando é da forma $\exists x_1:\ldots:\exists x_k: \psi$ para 
+                    $(x_i)_{1\leq i\leq k}$ variáveis e uma 
+                    $\psi$ fórmula $\Pi_n$. Similarmente, é dita $\Pi_{n+1}$ exatamente quando 
+                    $\forall x_1:\ldots:\forall x_k\psi$ com $(x_i)_{1\leq i\leq k}$ variáveis 
+                    e uma $\psi$ fórmula $\Sigma_n$.
+                \paragraph{}
+                    Finalmente, uma fórmula $\varphi$ é dita $\LSig{\theoryof{}}{n}$ --- sigma-$n$ para 
+                    $\theoryof{}$ --- quando existe uma $\psi$ que é $\LSig{}{n}$ tal que $\theoryof{}\vdash\psi\bim\varphi$,
+                    $\LPi{\theoryof{}}{n}$ sendo similarmente definida.
+                    Um caso especial são as fórumlas $\LDel{\theoryof{}}{n}$, que são exatamente aquelas 
+                    fórmulas que são $\Sigma^{\theoryof{}}_n$ e $\Pi^{\theoryof{}}_n$ simultaneamente. 
+                    Novamente, um termo $t$
+                    é dito $\LSig{\theoryof{}}{n}$, $\LPi{\theoryof{}}{n}$ ou $\LDel{\theoryof{}}{n}$ 
+                    quando $x = t$ o for --- com $x$ não ocorrendo em $t$, é claro ---.
+            \end{definition}
+            \paragraph{}
+                O motivo do nosso interesse em catalogar certas fórmulas na hierarquia de Lévy é a relação que 
+                estas fórmulas possuem com as estruturas transitivas. A ver, as fórmulas 
+                $\LSig{\theoryof{}}{1}$ são preservadas por extensões, as $\LPi{\theoryof{}}{1}$ são 
+                preservada por restrições e as $\LDel{\theoryof{}}{1}$ são absolutas, quando se tratando de 
+                modelos da teoria $\theoryof{}$, claro.
+            \begin{theorem}{$\LSig{\theoryof{}}{1}$ preservam-se sob extensão, $\LPi{\theoryof{}}{1}$, sob restrição}
+                    Seja $\theoryof{}$ uma teoria da língua de conjuntos, $\mathfrak{A}\subseteq\mathfrak{B}$ estruturas 
+                    (transitivas) compatíveis com a língua e que modelam a teoria $\theoryof{}$, e, por fim, seja $f$ 
+                    uma interpretação das variáveis da teoria em $\mathfrak{A}$.
+                \paragraph{}
+                    Então, se $\varphi$ for $\LSig{\theoryof{}}{1}$,
+                    $$ \mathfrak{A}\vDash_f \varphi \RAR \mathfrak{B}\vDash_f \varphi $$
+                \paragraph{}
+                E se $\varphi$ for $\LPi{\theoryof{}}{1}$,
+                $$ \mathfrak{A}\vDash_f \varphi \LAR \mathfrak{B}\vDash_f \varphi $$
+                \begin{proof}
+                        Seja $\varphi$ uma fórmula $\LSig{\theoryof{}}{1}$, ela é $\theoryof{}$-equivalente a uma 
+                        $\exists x_1:\ldots:\exists x_n:\psi$ com uma $\psi$ fórmula $\LPi{\theoryof{}}{0}$. Pois, 
+                        considere que
+                    $$ \mathfrak{A}\vDash_f\varphi $$
+                    Então, deve existir uma $g$ valoração em $\mathfrak{A}$ que temos
+                    $$ \mathfrak{A}\vDash_g\exists x_1:\ldots:\exists x_n:\psi$$
+                    E assim, há uma $h$ que
+                    $$ \mathfrak{A}\vDash_h\psi$$
+                    \paragraph{}
+                        Isso pois, como $\mathfrak{A}\vDash_g\exists x_1:\ldots:\exists x_n:\psi$, há uma testemunha para 
+                        $x_1$, digamos $\hat{x}_1$, então $h = g_{[(x_1\slash\hat{x}_1),\ldots,(x_n\slash\hat{x}_n)]}$ 
+                        é uma interpretação que valida $\psi$ em $\mathfrak{A}$.
+                    \paragraph{}
+                        Como as relações de $\mathfrak{A}$ são as restrições das de $\mathfrak{B}$, e, se supormos que 
+                        $\psi$ é validada por $h$ em $\mathfrak{A}$, então temos que $\mathfrak{B}\vDash_h\psi$. Assim, 
+                        temos que $mathfrak{B}\vDash_g\exists x_1:\ldots:\exists x_n:psi$, e por fim, que 
+                        $$\mathfrak{B}\vDash_f\varphi$$
+                \end{proof}

@@ -1,0 +1,217 @@
+\documentclass[12pt]{article}
+    \usepackage[includeheadfoot,a4paper]{geometry}
+    \usepackage{amsfonts, amssymb, eurosym, amsmath, textcomp}
+    
+    \usepackage{babel} %pacote para o português
+    \usepackage{cjhebrew}
+    
+    \usepackage{enumitem}
+    
+    \usepackage[utf8]{inputenc}  %acentuação
+    \usepackage[pdftex]{hyperref} %link de referência
+    
+    \usepackage{changepage}
+    
+    %\usepackage{colortbl}
+    %\setlength{\textwidth}{15cm}
+    %\setlength{\oddsidemargin}{0.5cm}
+    %\topskip=7.5mm
+    %\setlength{\textheight}{26cm}
+    %\setlength{\topmargin}{-2.1cm}
+    
+    \input{../projeto/jose}
+    
+    \newenvironment{keywords}{{\em Palavras-chave}: \begin{enumerate}[label=]\item$ $\small}{\end{enumerate}}
+    
+    \newenvironment{etapas}
+    {
+        \begin{enumerate}[label=]\item$ $
+        \end{enumerate}
+        \vspace{-1.5cm}
+        \begin{enumerate}[label={\bf\arabic*${}^a$ Etapa:}, align=left]
+    }
+    {\end{enumerate}}
+    
+    \title{{\bf Modelos a Valores Booleanos}\\\em e aplicações em Teoria dos Conjuntos}
+    \author{\large IME-USP - BRASIL\\\small {\em José Goudet Alvim}
+    {\em Hugo Luiz Mariano (orientador)} }
+    \date{2017-19}
+    
+    \begin{document}
+        \maketitle
+        \begin{keywords}
+            Teoria dos Conjuntos; 
+            Modelos de {\sc ZF}; 
+            Provas de Consistência e Independência; 
+            Álgebras Booleanas, de Heyting e seus Morfismos; 
+            Lógica
+        \end{keywords}
+        
+        \begin{abstract}
+                Neste trabalho de iniciação científica, estudaremos 
+                a teoria de modelos a valores booleanos de $\sc ZF$, 
+                a fim de entender e produzir provas de consistência 
+                e independência na teoria de conjuntos. Para tanto, 
+                trataremos de álgebras de Boole; de Heyting; Filtros; 
+                Morfismos; Teoria de Modelos restrita à nossa estrutura 
+                e Lógica, de forma cursória.
+        \end{abstract}
+    
+        \clearpage
+        
+        \section{Introdução}
+        \paragraph{}
+            A noção de {\em Forcing} foi introduzida por Paul Cohen em um esforço para
+            provar consistência e independência, em 1963, do {\em Axioma da Escolha} e 
+            da {\em Hipótese do Contínuo} sobre a Teoria de Conjuntos de Zermelo e 
+            Fraenkel. 
+            Desde então, ela foi reformulada e melhorada e, hoje, seus descendentes 
+            teóricos são ferramentas valiosas para a teoria de conjuntos, entre outras
+            áreas da matemática.
+        \paragraph{}
+            A Teoria de {\em Modelos a Valores Booleanos}, por sua vez, é criação 
+            principalmente de Dana Scott com contribuições de Robert M. Solovay e 
+            Petr Vop\v enka. Ela surge como uma opção equivalente, porém mais 
+            acessível, ao {\em forcing}.
+        \paragraph{}
+            A seguir, sobrevoaremos esses temas, para ter uma primeira vista destes conceitos
+            que aprofundaremos.
+        \subsection{Breve sumário da teoria}
+        \paragraph{}
+            Considerando o trabalho desenvolvido sobre álgebras de Boole e Heyting; filtros e morfismos ---
+            feito sob a supervisão do Prof. Hugo Luiz Mariano desde 2017 ---, temos 
+            construída uma base sólida sobre a qual podemos tratar dos temas abaixo.
+        \paragraph{}
+            Primeiro, devemos falar sobre o que é {\em ser} modelo (de uma teoria). 
+            Essencialmente, dizemos que uma estrutura é modelo de uma teoria se, de alguma forma,
+            esta teoria descreve a estrutura, ou, conversamente, o domínio e as relações sobre o mesmo
+            se conformam às fórmulas da teoria.
+        \paragraph{}
+            A ideia por trás dos modelos a valores booleanos é estabelecer um código interno à 
+            teoria de conjuntos para representar objetos em um universo sintético e uma tradução 
+            do nosso léxico de conjuntos para este universo inédito. Manipulações deste universo
+            sintético levam a modelos com propriedades interessantes, e usamos as mesmas para 
+            provar resultados sobre a teoria de conjuntos.
+        \paragraph{} 
+            Para entender o cerne da codificação de objetos sintéticos {\em dentro} da teoria 
+            de conjuntos, e portanto, dos modelos a valores booleanos de {\sc ZF}, vamos 
+            examinar um exemplo do que seria um modelo $2$-valorado:
+        \paragraph{}
+            Podemos nos indagar como identificar cada conjunto com um correspondente natural 
+            no universo das funções $2$-valoradas. Criamos um {\em proxy} que armazena 
+            informações sobre pertinência de {\em alguém} nesse Universo, isto é, é uma 
+            função característica.
+        \paragraph{}
+            Essa identificação, no entanto, não é única: se extendermos 
+            o domínio sem alterar o suporte, não estamos codificando um {\em outro} objeto. 
+            Além disso, ela não é homogênea: o seu domínio não está na classe que queremos 
+            {\em tornar} universo.
+        \paragraph{}
+            Queremos, também, que valham as leis de Leibniz.
+            Mas, sob a ótica da igualdade ``$=$'' de {\sc ZF}, duas 
+            representações do mesmo conjunto podem ser diferentes 
+            (uma ser extenção da outra, por exemplo). Queremos fundar uma estrutura 
+            que, sob uma intepretação, concorda com a Teoria dos 
+            conjuntos, para, portanto, ser um modelo.
+        \paragraph{}
+            Para tanto, criaremos uma relações de igualdade e pertinência 
+            diferentes na classe das funções homogêneas $2$-valoradas, que 
+            é a seguinte classe:\\
+        Para cada $\alpha$ ordinal:
+            $$V^{(2)}_\alpha=\{x:Func(x)\land Im(x)\subseteq 2\land\exists\beta<\alpha:Dom(x)\subseteq V^{(2)}_{\beta}\},$$
+            $$V^{(2)}=\{x\in V:\exists\alpha: x\in V^{(2)}_\alpha\}.$$
+        A definição da relação de igualdade e de ${}\in{}$ é mais complicada, então não será desenvolvida aqui. Mas, dispondo delas,
+        $\tuple{V^{(2)}}{\widetilde=}{\widetilde\in}\vDash{\sc ZF}$.
+        \paragraph{}
+            Este é um exemplo de um modelo a valores booleanos. A ideia geral é repetir 
+            este processo de recursão transfinita sobre uma algebra booleana completa 
+            $B$ qualquer no lugar do $2$, gerando uma classe $V^{(B)}$ de funções 
+            homogêneas B-valoradas, que vai carregar algum significado para as 
+            fórmulas da teoria de $ZF$, particularmente, nos interessa saber 
+            o que pensa $V^{(B)}$ sobre uma sentença, isto é, se 
+            $$\left\langle V^{(B)},\widetilde=,\widetilde\in\right\rangle\vDash\sigma.$$
+            Ou, alternativamente, se $V^{(B)}$ acredita que $\sigma$ vale.
+        \paragraph{}
+            A importância deste tipo de ferramenta é o fato de que, selecionando $B$ 
+            com cuidado, pode-se {\em manipular} nosso $V^{(B)}$ e suas 
+            $B$-verdades. Veremos que, para cada $B$ algebra booleana completa, $V^{(B)}$ 
+            é modelo de ZF, isto é, os teoremas de ZF valem todos em $V^{(B)}$. Veremos, 
+            também, que --- a depender de $B$ e $B'$ --- um número de coisas são verdade em 
+            $V^{(B)}$ e falsas em $V^{(B')}$, isto é: estes universos discordam em algumas verdades
+            fundamentais. Por exemplo, pode ser o caso de $V^{(B)}\vDash\mathfrak{c}=\aleph_1$ e
+            $V^{(B')}\vDash\mathfrak{c}=\aleph_2$. Que, no caso, equivale a provarmos a independência
+            da hipótese do contínuo.
+    
+        \section{Objetivos e Justificativa}
+            \paragraph{}
+                Provas de consistência e independência não são cobertas na graduação,
+                e explorar um dos mecânismos teóricos que nos fornece estratégias para alcança-las
+                é interessante tanto como motivador de estudo de teorias pré-requisitas --- 
+                conjuntos, lógica, modelos, álgebras e reticulados ---, bem como um fim em si.
+            \paragraph{} 
+                Esse tipo de estudo visa aproximar um aluno de graduação ao trabalho matemático 
+                em seu ambiente ``natural'': A pesquisa.
+            
+        \section{Plano de Trabalho e Cronograma}
+            \begin{etapas}
+                \item {\sc Teoria básica e preliminares} (já finalizada):
+                \begin{enumerate}[label=$*$]
+                    \item Posets e Reticulados.
+                    \item Álgebras de Heyting e Boole.
+                    \item Morfismos, Congruências e Filtros.
+                \end{enumerate}
+                \cite{Bell}, \cite{Jech}, \cite{Miraglia}.
+                
+                \item {\sc Modelos de teoria de conjuntos}:       
+                \begin{enumerate}[label=$*$]
+                    \item Intrudução à teoria de modelos para teoria de conjuntos.
+                    \item Exemplos (Modelos transitivos).
+                    \item Modelos a valores booleanos (definição e desenvolvimento).
+                \end{enumerate}
+                \cite{Bell}, \cite{Drake}, \cite{Jech}, \cite{Kunen}.
+                
+                \item {\sc Aplicações em teoria de conjuntos}:    
+                \begin{enumerate}[label=$*$]
+                    \item Validação.
+                    \item Consistência.
+                    \item Independência.
+                \end{enumerate}
+                \cite{Bell}, \cite{Jech}. (outros?)
+    
+                \item {\sc Relações fora da teoria} (se houver tempo para elas):
+                \begin{enumerate}[label=$*$]
+                    \item Relação com {\em forcing}.
+                    \item $\Omega$-{\sc sets}.
+                    \item Relação com validação em Categorias.
+                \end{enumerate}
+                \cite{Bell}, \cite{Jech}. (outros?)
+            \end{etapas}
+    
+        \begin{thebibliography}{MMMM}
+    
+            \bibitem [{\bf Bell}] {Bell} Bell, J. L. {\bf Set Theory, Boolean-Valued Models and Independence Proofs},
+                Oxford logic Guides {\bf v. 47}, Clarendon Press, 2005.
+    
+            \bibitem [{\bf Drake}] {Drake} Drake, Frank R. {\bf Set theory : an introduction to large cardinals}, 
+            Studies in logic and the foundations of mathematics {\bf v. 76}, American Elsevier Pub. Co., 1974.
+    
+            \bibitem [{\bf Jech}] {Jech} Jech, T. {\bf Set Theory: Third Millennium Edition, revised. and extended}, 
+                Springer Monographs in Mathematics, Springer-Verlag, 2003.
+    
+            \bibitem [{\bf Kunen}] {Kunen} Kunen K. {\bf Set Theory}, Studies in Logic {\bf v. 34}, 
+                Lightning Source, Milton Keyne, UK.
+    
+    
+            \bibitem [{\bf FMN}] {Miraglia} Neto, F. Miraglia. {\bf Cálculo Proposicional: Uma interação da Álgebra e da Lógica},
+                Coleção CLE -- {\bf v. 1}, Centro de Lógica, Epistemologia e História da Ciência, Campinas --- São Paulo, 1987. 
+        
+        \end{thebibliography}
+    \end{document}
+    
+    %Models, logics, and higher-dimensional categories : a tribute to the work of Mih aly Makkai
+    %The foundations of mathematics / Kenneth Kunen.
+    %Marker, D	Model theory : an introduction.
+    %Hodges, Wilfrid	Model theory.
+    %Chang, Chen Chu	Model theory.
+    %Shelah, Saharon	Proper forcing.
+    %Set theory and model theory : proceedings.
