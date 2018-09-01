@@ -38,6 +38,10 @@
         \newcommand{\POINT}{\left(\POINTnextarg}
         \newcommand{\POINTnextarg}{\@ifnextchar{\bgroup}{\POINTgobble}{\right)}}
         \newcommand{\POINTgobble}[1]{#1\@ifnextchar{\bgroup}{,\POINTgobble}{\right)}}
+
+        \newcommand{\FMLA}{{}^\ulcorner\FMLAnextarg}
+        \newcommand{\FMLAnextarg}{\@ifnextchar{\bgroup}{\FMLAgobble}{{}^\urcorner}}
+        \newcommand{\FMLAgobble}[1]{#1\@ifnextchar{\bgroup}{,\FMLAgobble}{{}^\urcorner}}
     \makeatother
 
 %ARROW-LIKE COMMANDS
@@ -133,3 +137,11 @@
     \newenvironment{proof}
         {\begin{proof*}\ind}
         {\end{proof*}}
+
+% BIBLIOGRAPHY MESSING UP
+\renewenvironment{thebibliography}{
+    \chapter*{Referências Bibliográficas}
+    \list{}{}
+}{}
+
+\newcommand{\bibreference}[1]{$ $\\\parbox[t]{\linegoal}{#1}\hfill}

@@ -350,3 +350,142 @@
                         $$\mathfrak{A}\vDash_f\varphi\BIM\mathfrak{B}\vDash_f\varphi$$\eop
                 \end{proof}
             \end{theorem}
+            \paragraph{}
+                Agora que temos uma condição suficiente para uma fórmula ser absoluta entre estruturas 
+                transitivas de uma teoria dada, transferimos o problema de identificar uma fórmula 
+                absoluta para o problema de identificar uma fórmula $\LDel{\theoryof{}}{1}$
+            \paragraph{}
+                Por \cite{DRAKE}, temos que, para um teoria $\theoryof{}$ tão forte quanto $\ZF$,
+                \begin{theorem}{Resultados acerca da Hierarquia de Lévy}
+                    \begin{enumerate}[label=(\alph*)]
+                        \item Se $\text{``}\varphi\text{''}\in\LSig{\theoryof{}}{n}$, então $\text{``}\forall x:\varphi\text{''} \in\LPi{\theoryof{}}{n+1}$ e 
+                            $\text{``}\exists x:\varphi\text{''}\in\LSig{\theoryof{}}{n}$, para toda $x$ variável da língua.
+
+                        \item Se $\text{``}\varphi\text{''}\in\LPi{\theoryof{}}{n}$,  então $\text{``}\forall x:\varphi\text{''} \in\LPi{\theoryof{}}{n}$ e 
+                            $\text{``}\exists x:\varphi\text{''}\in\LSig{\theoryof{}}{n+1}$, para toda $x$ variável da língua.
+                            
+                        \item Se $\text{``}\varphi\text{''}, \text{``}\psi\text{''}\in\LPi{\theoryof{}}{n}$, então  suas conjunções e disjunções são $\LPi{\theoryof{}}{n}$
+
+                        \item Se $\text{``}\varphi\text{''}, \text{``}\psi\text{''}\in\LSig{\theoryof{}}{n}$, então suas conjunções e disjunções são $\LSig{\theoryof{}}{n}$
+
+                        \item Se $\text{``}\varphi\text{''}\in\LSig{\theoryof{}}{n}$ e $\text{``}\psi\text{''}\in\LPi{\theoryof{}}{n}$, então suas conjunções e disjunções
+                            são $\LDel{\theoryof{}}{n+1}$,\\ 
+                            e $\text{``}\varphi\rar\psi\text{''}$ é $\LPi{\theoryof{}}{n}$\\
+                            e $\text{``}\psi\rar\varphi\text{''}$ é $\LSig{\theoryof{}}{n}$
+                        \item Quantificação limitada não altera classe de Lévy: portanto\\
+                                Se $\text{``}\varphi\text{''}\in\LSig{\theoryof{}}{n}$, temos que ``$\forall x\in y:\varphi$'' continua $\LSig{\theoryof{}}{n}$,
+                        \item Se $\varphi(x)$ for         $\LDel{\theoryof{}}{n}$,  então $\SET{x:\varphi(x)}$ é $\LPi{\theoryof{}}{n}$
+                        \item Se $\varphi(x)$ for         $\LDel{\theoryof{}}{n}$,  então $\SET{x\in y:\varphi(x)}$ é $\LDel{\theoryof{}}{n}$
+                        \item Se $x$ for um termo         $\LSig{\theoryof{}}{n}$   e $\theoryof{}\vdash\exists y: y = x$, então $t$ é $\LDel{\theoryof{}}{n}$
+                        \item Se $\varphi(x)$ e $t$ forem $\LDel{\theoryof{}}{n}$   e $\theoryof{}\vdash\exists y: y = t$, então todos são $\LDel{\theoryof{}}{n}$:\\
+                                $\bullet$ $\SET{x\in y:\varphi(x)}$ é $\LDel{\theoryof{}}{n}$   \\
+                                $\bullet$ $\exists x\in t: \varphi(x)$                          \\
+                                $\bullet$ $\forall x\in t: \varphi(x)$                          
+                        \item Se $\varphi$ e $t$ forem $\LSig{\theoryof{}}{n}$, então $\SET{t:\varphi}$ é $\LDel{\theoryof{}}{n+1}$
+                        \end{enumerate}
+                    \paragraph{}
+                    \begin{lemma}{Algumas Fórmulas e Termos $\LDel{\ZF}{0}$ ou $\LDel{\ZF}{1}$}
+                        {
+
+                        $$\LDel{\ZF}{0}:$$ 
+                        $
+                            x = y           ,
+                            x \subseteq y   ,
+                            \emptyset       ,
+                            \SET{x}{y}      ,
+                            \TUPLE{x}{y}    .
+                        $
+                        
+                        } {
+                        
+                        $$\LDel{\ZF}{1}:$$ $   
+                            Trans(x)        ,
+                            Ord(x)          ,
+                            x<y(x)          ,
+                            \omega          ,
+                            Fun(f)          ,
+                            Dom(f)          ,
+                            Im(f)           ,
+                            f(x)            ,
+                            f^{-1}(x)       ,
+                            f\restriction X ,
+                            \bigcup x       ,
+                            X\times Y       ,
+                            x+1             .
+                        $
+                        
+                        }
+                    \end{lemma}
+                \end{theorem}
+    \section{O Universo Construtível}
+            Um modelo especial de $\ZF$ é o Universo Construtível, que satisfaz uma restrição adicional sobre sua estrutura fina. É um exemplo 
+            de modelo onde vale o axioma da escolha e a hipótese generalizada do contínuo, e gostaríamos de passar por ele justamente para 
+            contrapôr os modelos a valores Booleanos.
+        \paragraph{}
+            Chamamos o universo construtível de $L$, que é uma classe transitiva da hierarquia acumulada $V$. A definição de $L$ dentro da 
+            língua depende de uma internalização da lógica e da teoria dos modelos transitivos. Mas, moralmente, queremos:
+
+        $$ L_{\alpha+1} = \SET{x : \exists \varphi \text { fórmula da teoria: }\exists \vec{p} \in L_\alpha^{<\omega}: x = \SET{t\in V_\alpha : \varphi(t; \vec{p})}} $$
+        $$ (\lambda = \bigcup \lambda) \RAR L_\lambda = \bigcup_{\alpha<\lambda}L_\alpha $$
+
+        \paragraph{}
+            Evidentemente, se ``$\varphi \text{ fórmula da teoria}$'' não estiver formalizado \textit{dentro} da teoria, não 
+            temos esperaça alguma desta definição fazer sentido. Pois, o primeiro passo que devemos tomar é achar uma Gödelização
+            apropriada das fórmulas como \textit{conjuntos} de fato. 
+        \paragraph{}
+            Suponha que possuamos códigos para $\FMLA{\forall}$, $\FMLA{\exists}$, $\FMLA{\!\!=\!\!}$, $\FMLA{\!\!\in\!\!}$, 
+            $\FMLA{\neg}$, $\FMLA{\!\lor\!}$, $\FMLA{\!\land\!}$ e $\FMLA{\!\!\rar\!\!}$.
+            Então, definimos a codificação das fórmulas da seguinte maneira, similar a de \cite{Drake}:
+
+        \begin{align*}
+            \FMLA{\texttt{Q} x_i:\varphi} &= \TUPLE{\FMLA{\texttt{Q}}}{i}{\FMLA{\varphi}}           \text{, onde \texttt{X} for um quantificador;}  \\
+            \FMLA{x_i  = x_j}             &= \TUPLE{\FMLA{\!\!=\!\!}}{i}{j}                                                                         \\
+            \FMLA{x_i\in x_j}             &= \TUPLE{\FMLA{\!\!\in\!\!}}{i}{j}                                                                       \\
+            \FMLA{\neg\varphi}            &= \TUPLE{\FMLA{\neg}}{\FMLA{\varphi}}{\FMLA{\varphi}}                                                    \\
+            \FMLA{\varphi\texttt{X}\psi}  &= \TUPLE{\FMLA{\texttt{X}}}{\FMLA{\varphi}}{\FMLA{\psi}} \text{, onde \texttt{X} for um conectivo;}      
+        \end{align*}
+
+        \paragraph{}
+            Fixar códigos para os componentes simples não poderia ser mais fácil: temos apenas 8 deles, e $8 = \SET{\emptyset}{1}{2}{3}{4}{5}{6}{7}$.
+            Não desejamos impor a nossa bijeção favorita, qualquer uma serve. Agora que temos uma especificação de como é uma ``fórmula'' internalizada, 
+            podemos escrever uma fórmula \textit{de fato} que afirma que um dado \textit{conjunto} é uma \textit{representação} de um fórumla.
+        
+        \begin{align*}
+            Repr(\varphi, \chi, n) \equiv &[n \in \omega] \land [Fun(\chi)] \land [Dom(\chi) = n+1] \land [\chi(n) = \varphi] \land \forall k\in n+1:\{\\
+                &[\exists a,b  \in k     : [\chi(k) = \TUPLE{ \FMLA{\!\!\rar\!\!} }{\chi(a)}{\chi(b)}] ] \lor \\
+                &[\exists a,b  \in k     : [\chi(k) = \TUPLE{ \FMLA{\neg}         }{\chi(a)}{\chi(a)}] ] \lor \\
+                &[\exists a,b  \in k     : [\chi(k) = \TUPLE{ \FMLA{  \!\lor\!  } }{\chi(a)}{\chi(b)}] ] \lor \\
+                &[\exists a,b  \in k     : [\chi(k) = \TUPLE{ \FMLA{  \!\land\!  }}{\chi(a)}{\chi(b)}] ] \lor \\
+                &[\exists a,i  \in k     : [\chi(k) = \TUPLE{ \FMLA{\forall}      }{   i   }{\chi(a)}] ] \lor \\
+                &[\exists a,i  \in k     : [\chi(k) = \TUPLE{ \FMLA{\exists}      }{   i   }{\chi(a)}] ] \lor \\
+                &[\exists i, j \in \omega: [\chi(k) = \TUPLE{ \FMLA{\!\!\in\!\!}  }{   i   }{   j   }] ] \lor \\
+                &[\exists i, j \in \omega: [\chi(k) = \TUPLE{ \FMLA{\!\! = \!\!}  }{   i   }{   j   }] ] \}
+        \end{align*}
+
+        \paragraph{}
+            Apesar de longa, $Repr$ é bem simples: ela afirma que $\chi$ é testemunha da construção de $\varphi$ em $n$ passos. Fica claro que 
+            um determinado conjunto $X$ é fórmula se e só se $\exists n\in\omega:\exists \chi \in V_\omega: Repr(X, \chi, n)$. 
+
+        \paragraph{}
+            Agora, deixe:
+
+        \begin{align*}
+            Q_i(\chi) &= \SET{ I : \exists X: \exists Q\in\SET{\FMLA{ \forall },\FMLA{  \exists  }}: \chi(I) = \TUPLE{Q}{i}{X}}\\
+            O_i(\chi) &= \SET{ I : \exists j: \exists R\in\SET{\FMLA{\!\!=\!\!},\FMLA{\!\!\in\!\!}}: \chi(I) = \TUPLE{R}{i}{j} \lor \chi(I) = \TUPLE{R}{j}{i}}
+        \end{align*}
+
+        \begin{align*}
+            Bound(\varphi, i)\equiv&[\exists\chi:\exists n: Repr(\varphi,\chi,n)\land\\
+                &(O_i(\chi) \not = \emptyset) \land (Q_i(\chi)\not = \emptyset) \land \max O_i(\chi) < \min Q_i(\chi)]\\
+            Free(\varphi,  i)\equiv&[\exists\chi:\exists n: Repr(\varphi,\chi,n)\land\\
+                &(O_i(\chi) \not = \emptyset) \land (\neg Bound(\varphi, i))]
+        \end{align*}
+
+        \paragraph{}
+            Ou seja, $Bound(\varphi, i)$ diz que $x_i$ ocorre na fórmula, e $x_i$ é quantificado, 
+            e é quantificado antes de ocorrer. E $Free(\varphi, i)$ diz que $x_i$ ocorre na fórmula 
+            e não é quantificado antes de ocorrer.
+
+        \paragraph{}
+            Em tendo internalizado as fórmulas da teoria, o próximo passo é internalizar a teoria de modelos da teoria, ou pelo menos um pedaço desta.
+            queremos uma fórmula que diga algo similar a $ \mathfrak A \vDash_f \varphi $, mas interna à lingua.
