@@ -449,18 +449,20 @@
             Fixar códigos para os componentes simples não poderia ser mais fácil: temos apenas 8 deles, e $8 = \SET{\emptyset}{1}{2}{3}{4}{5}{6}{7}$.
             Não desejamos impor a nossa bijeção favorita, qualquer uma serve. Agora que temos uma especificação de como é uma ``fórmula'' internalizada, 
             podemos escrever uma fórmula \textit{de fato} que afirma que um dado \textit{conjunto} é uma \textit{representação} de um fórumla.
-        
-        \begin{align*}
-            Repr(\varphi, \chi, n) \equiv &[n \in \omega] \land [Fun(\chi)] \land [Dom(\chi) = n+1] \land [\chi(n) = \varphi] \land \forall k\in n+1:\{\\
-                &[\exists a,b  \in k     : [\chi(k) = \TUPLE{ \FMLA{\!\!\rar\!\!} }{\chi(a)}{\chi(b)}] ] \lor \\
-                &[\exists a,b  \in k     : [\chi(k) = \TUPLE{ \FMLA{\neg}         }{\chi(a)}{\chi(a)}] ] \lor \\
-                &[\exists a,b  \in k     : [\chi(k) = \TUPLE{ \FMLA{  \!\lor\!  } }{\chi(a)}{\chi(b)}] ] \lor \\
-                &[\exists a,b  \in k     : [\chi(k) = \TUPLE{ \FMLA{  \!\land\!  }}{\chi(a)}{\chi(b)}] ] \lor \\
-                &[\exists a,i  \in k     : [\chi(k) = \TUPLE{ \FMLA{\forall}      }{   i   }{\chi(a)}] ] \lor \\
-                &[\exists a,i  \in k     : [\chi(k) = \TUPLE{ \FMLA{\exists}      }{   i   }{\chi(a)}] ] \lor \\
-                &[\exists i, j \in \omega: [\chi(k) = \TUPLE{ \FMLA{\!\!\in\!\!}  }{   i   }{   j   }] ] \lor \\
-                &[\exists i, j \in \omega: [\chi(k) = \TUPLE{ \FMLA{\!\! = \!\!}  }{   i   }{   j   }] ] \}
-        \end{align*}
+            
+        \begin{definition}{Construção de uma Fórmula}
+            \begin{align*}
+                Repr(\varphi, \chi, n) \equiv &[n \in \omega] \land [Fun(\chi)] \land [Dom(\chi) = n+1] \land [\chi(n) = \varphi] \land \forall k\in n+1:\{\\
+                    &[\exists a,b  \in k     : [\chi(k) = \TUPLE{ \FMLA{\!\!\rar\!\!} }{\chi(a)}{\chi(b)}] ] \lor \\
+                    &[\exists a,b  \in k     : [\chi(k) = \TUPLE{ \FMLA{\neg}         }{\chi(a)}{\chi(a)}] ] \lor \\
+                    &[\exists a,b  \in k     : [\chi(k) = \TUPLE{ \FMLA{  \!\lor\!  } }{\chi(a)}{\chi(b)}] ] \lor \\
+                    &[\exists a,b  \in k     : [\chi(k) = \TUPLE{ \FMLA{  \!\land\!  }}{\chi(a)}{\chi(b)}] ] \lor \\
+                    &[\exists a,i  \in k     : [\chi(k) = \TUPLE{ \FMLA{\forall}      }{   i   }{\chi(a)}] ] \lor \\
+                    &[\exists a,i  \in k     : [\chi(k) = \TUPLE{ \FMLA{\exists}      }{   i   }{\chi(a)}] ] \lor \\
+                    &[\exists i, j \in \omega: [\chi(k) = \TUPLE{ \FMLA{\!\!\in\!\!}  }{   i   }{   j   }] ] \lor \\
+                    &[\exists i, j \in \omega: [\chi(k) = \TUPLE{ \FMLA{\!\! = \!\!}  }{   i   }{   j   }] ] \}
+            \end{align*}
+        \end{definition}
 
         \paragraph{}
             Apesar de longa, $Repr$ é bem simples: ela afirma que $\chi$ é testemunha da construção de $\varphi$ em $n$ passos. Fica claro que 
@@ -469,23 +471,35 @@
         \paragraph{}
             Agora, deixe:
 
-        \begin{align*}
-            Q_i(\chi) &= \SET{ I : \exists X: \exists Q\in\SET{\FMLA{ \forall },\FMLA{  \exists  }}: \chi(I) = \TUPLE{Q}{i}{X}}\\
-            O_i(\chi) &= \SET{ I : \exists j: \exists R\in\SET{\FMLA{\!\!=\!\!},\FMLA{\!\!\in\!\!}}: \chi(I) = \TUPLE{R}{i}{j} \lor \chi(I) = \TUPLE{R}{j}{i}}
-        \end{align*}
+        \begin{definition}{Satisfatibilidade Internalizada}
+            \begin{align*}
+                || A \vDash_f \varphi ||\equiv&\exists w:\exists \chi,n,r\in V_\omega:[Repr(\varphi,\chi,n)\land Fun(w)\land (Dom(w) = n+1)\land\\
+                    &\land [r = rank(\varphi)] \land [f\in w(n)]\land\forall k \in n+1:[\\
+                            [&\exists i, j\in\omega     : \chi(k) = \TUPLE{\FMLA{\!\!=\!\!}}{  i    }{    j  } \land w(k) = \SET{f \in A^r : f(i)  = f(j)}]\lor\\
+                        \lor[&\exists i, j\in\omega     : \chi(k) = \TUPLE{\FMLA{\!\!\in\!\!}}{i    }{    j  } \land w(k) = \SET{f \in A^r : f(i)\in f(j)}]\lor\\
+                        \lor[&\exists a, b\in   k       : \chi(k) = \TUPLE{\FMLA{\!\lor\! }}{\chi(a)}{\chi(b)} \land w(k) = w(a)\cup w(b)]\lor\\
+                        \lor[&\exists a, b\in   k       : \chi(k) = \TUPLE{\FMLA{\!\land\!}}{\chi(a)}{\chi(b)} \land w(k) = w(a)\cap w(b)]\lor\\
+                        \lor[&\exists a, b\in   k       : \chi(k) = \TUPLE{\FMLA{\!\rar\!}}{\chi(a)}{\chi(b) } \land w(k) = (A^r - w(a))\cup w(b)]\lor\\
+                        \lor[&\exists a, b\in   k       : \chi(k) = \TUPLE{\FMLA{\!\neg\!}}{\chi(a)}{\chi(a) } \land w(k) = (A^r - w(a))]\lor\\
+                        \lor[&\exists a\in k, i\in\omega: \chi(k) = \TUPLE{\FMLA{\exists }}{   i   }{\chi(a) } \land w(k) = \SET{v\in A^r : \exists x\in A: v_{[i\slash x]}\in w(a) }]\lor\\
+                        \lor[&\exists a\in k, i\in\omega: \chi(k) = \TUPLE{\FMLA{\forall }}{   i   }{\chi(a) } \land w(k) = \SET{v\in A^r : \forall x\in A: v_{[i\slash x]}\in w(a) }]]]
+            \end{align*}
+            
+            \paragraph{}
+                Onde $v_{[i\slash x]} = v - \TUPLE{i}{v(i)} \cup \SET{\TUPLE{i}{x}}$, ou seja, substituição do valor de $v$ em $i$ por $x$.
+            \paragraph{}
+                $|| A \vDash_f \varphi ||$ quer dizer, essencialmente, que existe uma sequência de conjuntos de testemunhas para a veracidade 
+                da fórmula e $f$ é uma das testemunhas.
+    
+        \end{definition}
 
-        \begin{align*}
-            Bound(\varphi, i)\equiv&[\exists\chi:\exists n: Repr(\varphi,\chi,n)\land\\
-                &(O_i(\chi) \not = \emptyset) \land (Q_i(\chi)\not = \emptyset) \land \max O_i(\chi) < \min Q_i(\chi)]\\
-            Free(\varphi,  i)\equiv&[\exists\chi:\exists n: Repr(\varphi,\chi,n)\land\\
-                &(O_i(\chi) \not = \emptyset) \land (\neg Bound(\varphi, i))]
-        \end{align*}
+        \begin{definition}{L}
+            Com isso, temos o suficiente para expressar a classe dos Construtíveis,
+            $$ L_{\alpha+1} = \SET{x : \exists \varphi:\exists r\in\omega:\exists f\in L_\alpha^r: x = \SET{t\in L_\alpha : || A \vDash_{f_{[0\slash t]}} \varphi ||}} $$ 
+            $$ (\lambda     = \bigcup\lambda) \rar L_\lambda = \bigcup_{\alpha < \lambda} L_\alpha $$ 
+            $$ L = \bigcup_{\alpha\in Ord} L_\alpha $$
+        \end{definition}
 
         \paragraph{}
-            Ou seja, $Bound(\varphi, i)$ diz que $x_i$ ocorre na fórmula, e $x_i$ é quantificado, 
-            e é quantificado antes de ocorrer. E $Free(\varphi, i)$ diz que $x_i$ ocorre na fórmula 
-            e não é quantificado antes de ocorrer.
-
-        \paragraph{}
-            Em tendo internalizado as fórmulas da teoria, o próximo passo é internalizar a teoria de modelos da teoria, ou pelo menos um pedaço desta.
-            queremos uma fórmula que diga algo similar a $ \mathfrak A \vDash_f \varphi $, mas interna à lingua.
+            O primeiro resultado importante sobre os Construtíveis é, claro, que $L$ é modelo de $\ZF$, que iremos verificar a seguir. Na sequência, iremos verificar 
+            que $L \vDash \ZF+AC+CH$. Que é grande coisa.
