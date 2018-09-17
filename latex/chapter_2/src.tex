@@ -383,39 +383,39 @@
                                 $\bullet$ $\forall x\in t: \varphi(x)$                          
                         \item Se $\varphi$ e $t$ forem $\LSig{\theoryof{}}{n}$, então $\SET{t:\varphi}$ é $\LDel{\theoryof{}}{n+1}$
                         \end{enumerate}
-                    \paragraph{}
-                    \begin{lemma}{Algumas Fórmulas e Termos $\LDel{\ZF}{0}$ ou $\LDel{\ZF}{1}$}
-                        {
-
-                        $$\LDel{\ZF}{0}:$$ 
-                        $
-                            x = y           ,
-                            x \subseteq y   ,
-                            \emptyset       ,
-                            \SET{x}{y}      ,
-                            \TUPLE{x}{y}    .
-                        $
-                        
-                        } {
-                        
-                        $$\LDel{\ZF}{1}:$$ $   
-                            Trans(x)        ,
-                            Ord(x)          ,
-                            x<y(x)          ,
-                            \omega          ,
-                            Fun(f)          ,
-                            Dom(f)          ,
-                            Im(f)           ,
-                            f(x)            ,
-                            f^{-1}(x)       ,
-                            f\restriction X ,
-                            \bigcup x       ,
-                            X\times Y       ,
-                            x+1             .
-                        $
-                        
-                        }
-                    \end{lemma}
+%                    \begin{lemma}{Algumas Fórmulas e Termos $\LDel{\ZF}{0}$ ou $\LDel{\ZF}{1}$}
+%                        {
+%
+%                        $$\LDel{\ZF}{0}:$$ 
+%                        $
+%                            x = y           ,
+%                            x \subseteq y   ,
+%                            \emptyset       ,
+%                            \SET{x}{y}      ,
+%                            \TUPLE{x}{y}    .
+%                        $
+%                        
+%                        } {
+%                        
+%                        $$\LDel{\ZF}{1}:$$ $   
+%                            Trans(x)        ,
+%                            Ord(x)          ,
+%                            x<y(x)          ,
+%                            \omega          ,
+%                            Fun(f)          ,
+%                            Dom(f)          ,
+%                            Im(f)           ,
+%                            f(x)            ,
+%                            f^{-1}(x)       ,
+%                            f\restriction X ,
+%                            \bigcup x       ,
+%                            X\times Y       ,
+%                            x+1             ,
+%                            V_\omega        ,
+%                            ||A\vDash_f\varphi||.
+%                        $
+%                        }
+%                    \end{lemma}
                 \end{theorem}
     \section{O Universo Construtível}
             Um modelo especial de $\ZF$ é o Universo Construtível, que satisfaz uma restrição adicional sobre sua estrutura fina. É um exemplo 
@@ -503,3 +503,55 @@
         \paragraph{}
             O primeiro resultado importante sobre os Construtíveis é, claro, que $L$ é modelo de $\ZF$, que iremos verificar a seguir. Na sequência, iremos verificar 
             que $L \vDash \ZF+AC+CH$. Que é grande coisa.
+
+        \begin{lemma}{$L$ é transitivo}
+            Basta ver que $L_\alpha$ é transitivo. Se $x\in L_{\alpha+1}$ então $\exists\varphi\in V_\omega\exists f\in L_\alpha^{<\omega}: x 
+            = \SET{t\in L_\alpha : ||L_\alpha\vDash_f_{[0\slash t]}\varphi||}$, oras então certamente $x \subseteq L_\alpha$. Similarmente, 
+            se $\lambda$ for ordinal limite, $L_\lambda$ será união de transitivos, e portanto transitivo. Unindo $L_\alpha$ para todos os 
+            os ordinais, temos uma classe transitiva.
+        \end{lemma}
+        \begin{lemma}{$\alpha < \beta \rar L_\alpha \subset L_\beta$}
+            Basta provar para o caso sucessor. Assim sendo, suponha que para todos ordinais menores que $\alpha$, vale o lema e seja $x\in L_\alpha$, 
+            então existe fórmula e parâmetros em algum $L_\gamma$ menor que $\gamma<\alpha$ tais que $x = \SET{t \in L_\gamma: ||L_\alpha\vDash_f\varphi}$. 
+            Como $L_{\alpha+1}]$ é definido com parâmetros em $L_\alpha$, que contém os $L$-s inferiores, então $\varphi(t)\land t\in L_\gamma$ dá 
+            exatamente $x$, mas está em $L_{\alpha+1}$.
+        \end{lemma}
+
+        \begin{theorem}{$L\vDash\ZF$}
+                Para começar, notemos que $L_\emptyset = \emptyset$, pois $\emptyset$ é ordinal limite e união vazia é vazia. Então $L_1$ contém o vazio, e portanto, 
+                $L\not = \emptyset$. Então está provado que $L\vDash \exists x: x=x$
+            \paragraph{}
+                Como $L$ é estrutura transitiva, já temos os Axiomas da Fundação e da Extensionalidade.
+            \paragraph{}
+                Sejam $a, b\in L$, pela definição de $L$, $\exists \alpha,\beta\in Ord:(a\in L_\alpha)\land(b\in L_\beta)$. Com isso, seja $\gamma$ o maior entre 
+                eles. Como $a,b\in L_\gamma$ então $\SET{t\in L_\gamma: ||L_\gamma\vDash_f t = y \lor t = x||}$ com $f(x) = a \land f(y) = b$ claramente nos dá que 
+                o par de dois conjuntos está em $L_{\gamma+1}$, provando o Axioma do Par.
+            \paragraph{}
+                Para o Axioma da Soma, precisamos fazer uma definição:
+            \begin{definition}{Rank Construtível}
+                Seja $\rho_c(x)=\min\SET{\alpha\in Ord: x\in L_\alpha}$, para todo $x$ que ocorre em $L$ este chamado Rank Construtível está definido.
+            \end{definition}
+            \paragraph{}
+                Continuando a prova, seja $X\in L$, então $X\in L_{\rho_c(x)}$, por substituição em $\ZF$ temos que $R = \SET{\alpha : \exists x\in X:\alpha = \rho_c(x)}$ 
+                é conjunto. Seja $\gamma = \sup(R)$, Então em $L_\gamma$ ocorrem todos os elementos de $x$, e pela transitividade de $L_\gamma$, todos os elementos deles.
+                Considere então a fórmula $\varphi(t; X)\equiv \exists x\in X: t\in x$, ela dá $\bigcup X$ em $L_{\gamma+1}$ quando tomando parâmetro $X$.
+            \paragraph{}
+                Para o axioma das partes, seja $x\in L$, então $x\in L_{\alpha+1}$ para algum $\alpha$ conveniente. Então existe uma $\psi$ fórmula interna, e $f$ 
+                parâmetros tal que $x = \SET{t \in L_\alpha : ||L_\alpha \vDash_f \psi||}$, então $x\subseteq L_\alpha$. Assim, considere a fórmula $\varphi(
+                t;x,f,\psi,\alpha)\equiv\exists g\in L_\alpha^{<\omega}:\exists\phi:t=\SET{y\in L_\alpha:||L_\alpha\vDash_g\phi||\land||L_\alpha\vDash_f\psi||}$.
+            \paragraph{}
+                Haverá parâmetros para esta fórmula em algum $L_\beta$ que nos dê algo similar a $\wp(x)$? Em $(\alpha+\omega+1)$ com certeza haverá, pois, 
+                lá já teremos todas as $f$ parâmetros em $L_\alpha$, todas as fórmulas, $x$ e $\alpha$, certamente. E como convencer-nos de que será realmente 
+                as partes de $x$? Se $(y\subset x)\restriction L$, então há uma fórmula que concretiza $y$ no nível que $x$ ocorre que é mais específica que 
+                a fórmula que seleciona $x$. Não perdemos, assim, generalidade em escrever $[\wp(x)]\restriction L$ como sendo aquela fórmula.
+            \paragraph{}
+                Quanto ao Axioma do Infinito, sabemos que o vazio está em $L$, vamos assumir que até um ordinal $\alpha$, todos os ordinais finitos estão. Eles
+                aparecem em uma etapa $\beta$ da construção do $L$. Sabemos que o par $\SET{\alpha}{\alpha}$ existe na etapa $\beta+1$, que o par $\SET{\alpha}{\SET{\alpha}{\alpha}}$
+                existe na etapa $\beta+2$ e que em alguma etapa existe $\bigcup\SET{\alpha}{\SET{\alpha}{\alpha}}$, que é justamente o sucessor de $\alpha$. Logo,
+                existe um conjunto indutivo em $L$, pois ser indutivo é $\LDel{}{1}$. 
+            \paragraph{}
+                Seja $\varphi$ uma fórmula da língua de $\ZF$, existe uma fórmula internalizada $\FMLA{\varphi}$ que a representa\footnote{
+                    É claro que não podemos provar isto na língua, mas sabemos como a fórmula se escreve e podemos facilmente ver que é o 
+                    caso que há, em alguma meta-teoria.
+                }.
+        \end{theorem}

@@ -628,3 +628,21 @@
             uma manipulação que é puramente sintática, pois não temos 
             acesso à estrutura específica quando tratamos de uma 
             teoria (afinal, definimos ela com $\vdash$ e não $\vDash$).
+    \section{Relativização}
+        \paragraph{}
+            Um último tema, agora já tratando da línguagem de $\ZF$, é 
+            o tema da relativização de fórmulas. Uma $\varphi$ fórmula 
+            com quantificadores e sem termos de abstração tem uma 
+            \textit{restrição} a um determinado termo $X$, escrevemos 
+            $\varphi\restriction X$ para a fórumla $\varphi$ com todos 
+            os quantificadores limitados por $X$.
+        \paragraph{}
+            Então $\forall x: \exists y: y = P(x)$ torna-se $\forall 
+            x\in X: \exists y\in X: y = P(x)$. Por enquanto isso parece 
+            um tanto artificial, mas é interessante observar como 
+            fórumlas se comportam em domínios específicos da teoria.
+        \paragraph{}
+            Um resultado importante é o Princípio da Reflexção, que 
+            vale em $\ZF$ e diz que existem alturas arbitrariamente 
+            altas da hierarquia cumulativa tal que, para uma dada 
+            $\varphi$, $\forall x_1, x_2, \ldots, x_n \in X:\varphi(x_1, x_2, \ldots, x_n) \bim \varphi(x_1, x_2, \ldots, x_n)\restriction V_\kappa
