@@ -548,10 +548,12 @@
                 Quanto ao Axioma do Infinito, sabemos que o vazio está em $L$, vamos assumir que até um ordinal $\alpha$, todos os ordinais finitos estão. Eles
                 aparecem em uma etapa $\beta$ da construção do $L$. Sabemos que o par $\SET{\alpha}{\alpha}$ existe na etapa $\beta+1$, que o par $\SET{\alpha}{\SET{\alpha}{\alpha}}$
                 existe na etapa $\beta+2$ e que em alguma etapa existe $\bigcup\SET{\alpha}{\SET{\alpha}{\alpha}}$, que é justamente o sucessor de $\alpha$. Logo,
-                existe um conjunto indutivo em $L$, pois ser indutivo é $\LDel{}{1}$. 
+                existe um conjunto indutivo em $L$, pois ser indutivo é $\LDel{}{1}$, isto é, ser indutivo ``aqui fora'' é o mesmo que ser indutivo ``lá dentro''. 
             \paragraph{}
-                Seja $\varphi$ uma fórmula da língua de $\ZF$, existe uma fórmula internalizada $\FMLA{\varphi}$ que a representa\footnote{
-                    É claro que não podemos provar isto na língua, mas sabemos como a fórmula se escreve e podemos facilmente ver que é o 
-                    caso que há, em alguma meta-teoria.
-                }.
+                Sejam $X\in L_\alpha+1$ e $\psi$ uma fórmula da língua de $\ZF$ nas hipóteses do Esquema de Substituição. 
+                Isto é, $\forall y,z:\psi(y;x)\land\psi(z;x)\rar y = z$. Temos que existe um conjunto 
+                $Y   = \SET{y: \exists x\in X: \psi(y,x) }$. Se relativizarmos a fórmula, teremos ainda um conjunto:
+                $Y' = \SET{y: \exists x\in X: \psi(y,x)\restriction L}$. Este conjunto não tem obrigação nenhuma de 
+                estar em $L$ (tome, por exemplo, $\psi$ que só aceita $y$ fora de $L$), mas $Y_c=Y'\cap L$ tem.
+                
         \end{theorem}
