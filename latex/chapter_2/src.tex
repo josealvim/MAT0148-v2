@@ -473,7 +473,7 @@
 
         \begin{definition}{Satisfatibilidade Internalizada}
             \begin{align*}
-                || A \vDash_f \varphi ||\equiv&\exists w:\exists \chi,n,r\in V_\omega:[Repr(\varphi,\chi,n)\land Fun(w)\land (Dom(w) = n+1)\land\\
+                Sat(A,\varphi,f)\equiv&\exists w:\exists \chi,n,r\in V_\omega:[Repr(\varphi,\chi,n)\land Fun(w)\land (Dom(w) = n+1)\land\\
                     &\land [r = rank(\varphi)] \land [f\in w(n)]\land\forall k \in n+1:[\\
                             [&\exists i, j\in\omega     : \chi(k) = \TUPLE{\FMLA{\!\!=\!\!}}{  i    }{    j  } \land w(k) = \SET{f \in A^r : f(i)  = f(j)}]\lor\\
                         \lor[&\exists i, j\in\omega     : \chi(k) = \TUPLE{\FMLA{\!\!\in\!\!}}{i    }{    j  } \land w(k) = \SET{f \in A^r : f(i)\in f(j)}]\lor\\
@@ -488,34 +488,45 @@
             \paragraph{}
                 Onde $v_{[i\slash x]} = v - \TUPLE{i}{v(i)} \cup \SET{\TUPLE{i}{x}}$, ou seja, substituição do valor de $v$ em $i$ por $x$.
             \paragraph{}
-                $|| A \vDash_f \varphi ||$ quer dizer, essencialmente, que existe uma sequência de conjuntos de testemunhas para a veracidade 
+                $Sat(A,\varphi,f)$ quer dizer, essencialmente, que existe uma sequência de conjuntos de testemunhas para a veracidade 
                 da fórmula e $f$ é uma das testemunhas.
     
         \end{definition}
 
         \begin{definition}{L}
             Com isso, temos o suficiente para expressar a classe dos Construtíveis,
-            $$ L_{\alpha+1} = \SET{x : \exists \varphi:\exists r\in\omega:\exists f\in L_\alpha^r: x = \SET{t\in L_\alpha : || A \vDash_{f_{[0\slash t]}} \varphi ||}} $$ 
+            $$ L_{\alpha+1} = \SET{x : \exists \varphi:\exists r\in\omega:\exists f\in L_\alpha^r: x = \SET{t\in L_\alpha : Sat(A,\varphi,f_{[0\slash t]})}} $$ 
             $$ (\lambda     = \bigcup\lambda) \rar L_\lambda = \bigcup_{\alpha < \lambda} L_\alpha $$ 
             $$ L = \bigcup_{\alpha\in Ord} L_\alpha $$
         \end{definition}
-
+        \begin{definition}{Rank Construtível}
+            Seja $\rho_c(x)=\min\SET{\alpha\in Ord: x\in L_\alpha}$, para todo $x$ que ocorre em $L$ este chamado Rank Construtível está definido.
+            É claro que $\rho_c$ é homomorfismo, isto é, preserva pertinência. Ainda não podemos dizer o que ele faz com ordinais, por exemplo.
+        \end{definition}
         \paragraph{}
             O primeiro resultado importante sobre os Construtíveis é, claro, que $L$ é modelo de $\ZF$, que iremos verificar a seguir. Na sequência, iremos verificar 
             que $L \vDash \ZF+AC+CH$. Que é grande coisa.
 
         \begin{lemma}{$L$ é transitivo}
             Basta ver que $L_\alpha$ é transitivo. Se $x\in L_{\alpha+1}$ então $\exists\varphi\in V_\omega\exists f\in L_\alpha^{<\omega}: x 
-            = \SET{t\in L_\alpha : ||L_\alpha\vDash_f_{[0\slash t]}\varphi||}$, oras então certamente $x \subseteq L_\alpha$. Similarmente, 
+            = \SET{t\in L_\alpha : Sat(A,\varphi,f_{[0\slash t]})}$, oras então certamente $x \subseteq L_\alpha$. Similarmente, 
             se $\lambda$ for ordinal limite, $L_\lambda$ será união de transitivos, e portanto transitivo. Unindo $L_\alpha$ para todos os 
             os ordinais, temos uma classe transitiva.
         \end{lemma}
         \begin{lemma}{$\alpha < \beta \rar L_\alpha \subset L_\beta$}
             Basta provar para o caso sucessor. Assim sendo, suponha que para todos ordinais menores que $\alpha$, vale o lema e seja $x\in L_\alpha$, 
-            então existe fórmula e parâmetros em algum $L_\gamma$ menor que $\gamma<\alpha$ tais que $x = \SET{t \in L_\gamma: ||L_\alpha\vDash_f\varphi}$. 
+            então existe fórmula e parâmetros em algum $L_\gamma$ menor que $\gamma<\alpha$ tais que $x = \SET{t \in L_\gamma:Sat(A,\varphi,f)}$. 
             Como $L_{\alpha+1}]$ é definido com parâmetros em $L_\alpha$, que contém os $L$-s inferiores, então $\varphi(t)\land t\in L_\gamma$ dá 
             exatamente $x$, mas está em $L_{\alpha+1}$.
         \end{lemma}
+        \begin{lemma}{Conjunto contido em $L$ está contido em um membro de $L$}
+            Seja $X\subset L$ um conjunto em $V$. Por substituição, o é conjunto $\SET{\alpha: \exists x\in X:\alpha = \rho_c(x)}$. 
+            Como é conjunto de ordinais, ele possuí um supremo, que chamaremos de $\gamma$, então, por definição, todos os membros 
+            de $x$ ocorrem em $L_\gamma$, assim, $X\subset L_\gamma\in L_{\gamma+1}$. Está provado.
+        \end{lemma}
+        \begin{theorem}{$\ZF\vdash(\varphi\restriction L)\bim Sat(A,\varphi,f)$}
+            
+        \end{theorem}
 
         \begin{theorem}{$L\vDash\ZF$}
                 Para começar, notemos que $L_\emptyset = \emptyset$, pois $\emptyset$ é ordinal limite e união vazia é vazia. Então $L_1$ contém o vazio, e portanto, 
@@ -524,21 +535,16 @@
                 Como $L$ é estrutura transitiva, já temos os Axiomas da Fundação e da Extensionalidade.
             \paragraph{}
                 Sejam $a, b\in L$, pela definição de $L$, $\exists \alpha,\beta\in Ord:(a\in L_\alpha)\land(b\in L_\beta)$. Com isso, seja $\gamma$ o maior entre 
-                eles. Como $a,b\in L_\gamma$ então $\SET{t\in L_\gamma: ||L_\gamma\vDash_f t = y \lor t = x||}$ com $f(x) = a \land f(y) = b$ claramente nos dá que 
+                eles. Como $a,b\in L_\gamma$ então $\SET{t\in L_\gamma: Sat(L_\gamma, \FMLA{t = y \lor t = x},f)}$ com $f(x) = a \land f(y) = b$ claramente nos dá que 
                 o par de dois conjuntos está em $L_{\gamma+1}$, provando o Axioma do Par.
             \paragraph{}
-                Para o Axioma da Soma, precisamos fazer uma definição:
-            \begin{definition}{Rank Construtível}
-                Seja $\rho_c(x)=\min\SET{\alpha\in Ord: x\in L_\alpha}$, para todo $x$ que ocorre em $L$ este chamado Rank Construtível está definido.
-            \end{definition}
-            \paragraph{}
-                Continuando a prova, seja $X\in L$, então $X\in L_{\rho_c(x)}$, por substituição em $\ZF$ temos que $R = \SET{\alpha : \exists x\in X:\alpha = \rho_c(x)}$ 
+                Para o Axioma da Soma, seja $X\in L$, então $X\in L_{\rho_c(x)}$, por substituição em $\ZF$ temos que $R = \SET{\alpha : \exists x\in X:\alpha = \rho_c(x)}$ 
                 é conjunto. Seja $\gamma = \sup(R)$, Então em $L_\gamma$ ocorrem todos os elementos de $x$, e pela transitividade de $L_\gamma$, todos os elementos deles.
                 Considere então a fórmula $\varphi(t; X)\equiv \exists x\in X: t\in x$, ela dá $\bigcup X$ em $L_{\gamma+1}$ quando tomando parâmetro $X$.
             \paragraph{}
                 Para o axioma das partes, seja $x\in L$, então $x\in L_{\alpha+1}$ para algum $\alpha$ conveniente. Então existe uma $\psi$ fórmula interna, e $f$ 
-                parâmetros tal que $x = \SET{t \in L_\alpha : ||L_\alpha \vDash_f \psi||}$, então $x\subseteq L_\alpha$. Assim, considere a fórmula $\varphi(
-                t;x,f,\psi,\alpha)\equiv\exists g\in L_\alpha^{<\omega}:\exists\phi:t=\SET{y\in L_\alpha:||L_\alpha\vDash_g\phi||\land||L_\alpha\vDash_f\psi||}$.
+                parâmetros tal que $x = \SET{t \in L_\alpha : Sat(L_\alpha, \psi, f)}$, então $x\subseteq L_\alpha$. Assim, considere a fórmula $\varphi(
+                t;x,f,\psi,\alpha)\equiv\exists g\in L_\alpha^{<\omega}:\exists\phi:t=\SET{y\in L_\alpha:Sat(L_\alpha,\phi,g)\land Sat(L_\alpha,\psi,f)}$.
             \paragraph{}
                 Haverá parâmetros para esta fórmula em algum $L_\beta$ que nos dê algo similar a $\wp(x)$? Em $(\alpha+\omega+1)$ com certeza haverá, pois, 
                 lá já teremos todas as $f$ parâmetros em $L_\alpha$, todas as fórmulas, $x$ e $\alpha$, certamente. E como convencer-nos de que será realmente 
