@@ -417,6 +417,52 @@
 %                        }
 %                    \end{lemma}
                 \end{theorem}
+                \begin{theorem}{$V\vDash_f\varphi^A\BIM A\vDash_f\varphi$}
+                    As hipóteses são $f\in A^{<\omega}$, $A\subseteq V$ transitivo e $V\vDash\ZF$.
+                    \paragraph{}
+                        A prova é na complexidade de $\varphi$ e vamos provar apenas para o conectivo $\land$ e $\neg$ e 
+                        para o quantificador existêncial $\exists$. Para fórmulas atômicas, temos que, pelo fato de $A$ 
+                        ser estrutura transitivia, então $\LDel{}{0}$ são absolutas.
+                    \paragraph{}
+                        Suponha que para todo $\psi$ de complexidade $n$ ou menor vale o teorema, vamos provar o passo 
+                        indutivo em três casos: Ou $\varphi\equiv\psi\land\sigma$; ou $\varphi\equiv\neg\psi$; ou 
+                        $\varphi\equiv\exists x_i: \psi$, todas com $\psi$ de complexidade $n$ e $\sigma$ mais simples.
+                    \paragraph{}
+                        No caso $\land$, temos:
+                        $$ 
+                             V\vDash_f (\psi\land\sigma)^A \BIM 
+                             V\vDash_f \psi^A\land\sigma^A \BIM 
+                            (V\vDash_f \psi^A)\land(V\vDash_f \sigma^A) \BIM 
+                            (A\vDash_f \psi)\landV(\vDash_f \sigma) \BIM 
+                             A\vDash_f \psi\land\sigma
+                        $$
+                    \paragraph{}
+                        No caso $\neg$, temos:
+                        $$ 
+                            V\vDash_f (\neg\psi)^A \BIM 
+                            V\vDash_f \neg(\psi)^A \BIM 
+                            \neg(V\vDash_f \psi^A) \BIM 
+                            \neg(A\vDash_f \psi  ) \BIM 
+                            A\vDash_f \neg\psi
+                        $$
+                    \paragraph{}
+                        No caso $\exists$, temos:
+                        $$
+                            V\vDash_f(\exists x_i:\psi)^A\BIM
+                            V\vDash_f\exists x_i\in A:\psi^A \BIM
+                            V\vDash_f\exists x_i:x_i\in A\land\psi^A \BIM
+                        $$
+                        $$
+                            \BIM\exists \hat x\in V: (V\vDash_{f_{[x_i\slash\hat x]}}x_i\in A\land\psi^A) \BIM \exists \hat x\in V :[(V\vDash_{f_{[x_i\slash\hat x]}}x_i\in A)\land(V\vDash_{f_{[x_i\slash\hat x]}}\psi^A)]\BIM
+                        $$
+                        $$
+                            \BIM\exists \hat x\in A: (V\vDash_{f_{[x_i\slash\hat x]}}\psi^A) \BIM \exists \hat x\in A: (A\vDash_{f_{[x_i\slash\hat x]}}\psi) \BIM A\vDash_f\exists x_i:\psi
+                        $$
+                        \eop
+                \end{theorem}
+                \paragraph{}
+                    Isso nos dá a profundidade da relação das estruturas transitivas de $\ZF$ com um modelo base. Uma estrutura transitiva modela 
+                    exatamente o que a sua estrutura ambiente crê que ela modela.
     \section{O Universo Construtível}
             Um modelo especial de $\ZF$ é o Universo Construtível, que satisfaz uma restrição adicional sobre sua estrutura fina. É um exemplo 
             de modelo onde vale o axioma da escolha e a hipótese generalizada do contínuo, e gostaríamos de passar por ele justamente para 
@@ -490,8 +536,70 @@
             \paragraph{}
                 $Sat(A,\varphi,f)$ quer dizer, essencialmente, que existe uma sequência de conjuntos de testemunhas para a veracidade 
                 da fórmula e $f$ é uma das testemunhas.
-    
         \end{definition}
+        \begin{lemma}{Resultados sobre $Sat$}
+            Se $f\in A^{<\omega}$, $A$ estrutura transitiva e $\varphi,\psi$ forem fórmulas. 
+            $$Sat[A,\FMLA{\varphi}, f]\land Sat[A,\FMLA{\psi}, f] \bim Sat[A,\FMLA{\varphi\land\psi}, f]$$
+            $$Sat[A,\FMLA{\varphi}, f]\lor  Sat[A,\FMLA{\psi}, f] \bim Sat[A,\FMLA{\varphi\lor \psi}, f]$$
+            $$Sat[A,\FMLA{\varphi}, f]\rar  Sat[A,\FMLA{\psi}, f] \bim Sat[A,\FMLA{\varphi\rar \psi}, f]$$
+            $$\neg Sat[A,\FMLA{\varphi}, f]                       \bim Sat[A,\FMLA{\neg\varphi     }, f]$$
+            $$\exists\hat x\in A: Sat[A,\FMLA{\varphi}, f_{[x_i\slash\hat x]}]\bim Sat[A,\FMLA{\exists x_i:\varphi}, f]$$
+            $$\forall\hat x\in A: Sat[A,\FMLA{\varphi}, f_{[x_i\slash\hat x]}]\bim Sat[A,\FMLA{\forall x_i:\varphi}, f]$$
+            \begin{proof}
+                    Para $\land$, suponha que $Sat$ valha para $\varphi$ e para $\psi$. Que existe a construção é trivial, para $w$, 
+                    basta concatenar as $w$-s que existem e na última etapa interceptar a os últimos valores dos $w$-s. Por outro 
+                    lado, se valer para $\varphi\land\psi$ então restringir as construções e $w$ é praticamente trivial.
+                \paragraph{}
+                    Para $\lor$, a ida é igual é a mesma, mas une-se ao invés de se interceptar. Para a volta, sabemos que $f$ está 
+                    em alguma etapa final das duas $w$ que os $Sat$s nos dão, assim sabemos que $f$ estará na união, e portanto 
+                    valerá $Sat(A,\FMLA{\varphi\lor \psi}, f)$.
+                \paragraph{}
+                    Para $\rar$, ao invés de se unir as etapas finais de testemunhas, unimos o complementar de uma com a outra. Para 
+                    a volta, sabemos $f$ ou não é testemunha $\varphi$, ou é testemunha de $\psi$, então fica claro que vale a volta.
+                \paragraph{}
+                    Para $\neg$, se $f$ não valida $Sat(A,\FMLA{\varphi}, f)$, então é porque $f$ não está entre as testemunhas da 
+                    última etapa de $w$. Isto é se e só se $f$ estiver no complementar das testemunas que é se e somente se   
+                    $Sat(A,\FMLA{\neg\varphi}, f)$.
+                \paragraph{}
+                    Para o existencial, se existe um elemento de $A$ que faz $f$ estar na testemunhas, então pela definição de $Sat$
+                    temos que valerá o $Sat$ de $\FMLA{\exists x_i:\varphi}$. E, adicionalmente, vale a volta. Similarmente vale o 
+                    mesmo para o quantificador universal.
+                    \eop
+            \end{proof}
+        \end{lemma}
+        \begin{theorem}{$A\vDash_f\varphi \BIM V\vDash Sat(A,{}^\ulcorner{\varphi}^\urcorner,f)$}
+            As hipóteses são: seja $A\subset V$ uma estrutura transitiva, e 
+            $V\vDash \ZF$, $\varphi$ uma fórmula da língua de $\ZF$ e $f\in A^{<\omega}$. 
+            Novamente a prova é por indução na complexidade da 
+            fórmula. Novamente, o caso atômico é simples e, por isso, não o 
+            faremos aqui. Provaremos o caso da conjunção, negação e quantificador 
+            existêncial.
+            \begin{proof}
+                \paragraph{}
+                    Seja $A$ uma estrutura transitiva e seja sempre $f$ uma $A$-valoração 
+                    das variáveis pertinententes. A prova é por indução na complexidade 
+                    de $\varphi$. Para fórmulas atômicas temos que a igualdade e pertinência 
+                    em $A$ são só as restrições das relações à classe, então $V\vDash_f x = y$ exatamente 
+                    quando $Sat(A,\FMLA{x = y},f)$ e similarmente para $(x\in y)$.
+                \paragraph{}
+                    Assim, assumamos que valha a bi-implicação para o caso de fórmulas de complexidade 
+                    até $n$. Seja agora, $\psi$ e $\sigma$ fórmulas de complexidade até $n$.
+                \paragraph{}
+                    Vamos provar a bi-implicação da etapa sucessora só para $\land,\neg,\exists$ pois 
+                    é suficiente, afinal $\vDash$ é muito bem comportado. Para $\land$ temos:
+                $$A\vDash_f\psi\land\sigma \BIM (A\vDash_f\psi)\land(A\vDash_f\sigma)\BIM Sat(A,\FMLA{\psi},f)\land Sat(A,\FMLA{\sigma},f)\BIM Sat(A,\FMLA{\psi\land\sigma},f)$$
+                \paragraph{}
+                    Para o caso de  $\neg$,
+                $$A\vDash_f\neg\psi\BIM\neg(A\vDash_f\psi)\BIM\neg Sat(A,\FMLA{\psi},f)\BIM Sat(A,\FMLA{\neg\psi},f)$$
+                \paragraph{}
+                    E no caso do quantificador $\exists$,
+                $$A\vDash_f\exists x_i:\psi\BIM\exists\hat x\in A:(A\vDash_{f_{[x_i\slash\hat x]}}\psi)\BIM\exists\hat x\in A:Sat[A,\FMLA{\varphi}, f_{[x_i\slash\hat x]}]\BIM Sat[A,\FMLA{\exists x_i:\varphi}, f]$$
+                \eop
+            \end{proof}
+        \end{theorem}
+        \paragraph{}
+            Com este teorema, temos uma correspondência muito forte entre: \textit{O ambiente achar que uma susbtrutura transitiva modela algo}, a
+            \textit{substrutura transtitiva modelar algo} e a \textit{codificação da noção interna de modelos de fórmulas Gödelizadas}.
 
         \begin{definition}{L}
             Com isso, temos o suficiente para expressar a classe dos Construtíveis,
@@ -513,53 +621,94 @@
             se $\lambda$ for ordinal limite, $L_\lambda$ será união de transitivos, e portanto transitivo. Unindo $L_\alpha$ para todos os 
             os ordinais, temos uma classe transitiva.
         \end{lemma}
-        \begin{lemma}{$\alpha < \beta \rar L_\alpha \subset L_\beta$}
-            Basta provar para o caso sucessor. Assim sendo, suponha que para todos ordinais menores que $\alpha$, vale o lema e seja $x\in L_\alpha$, 
-            então existe fórmula e parâmetros em algum $L_\gamma$ menor que $\gamma<\alpha$ tais que $x = \SET{t \in L_\gamma:Sat(A,\varphi,f)}$. 
-            Como $L_{\alpha+1}]$ é definido com parâmetros em $L_\alpha$, que contém os $L$-s inferiores, então $\varphi(t)\land t\in L_\gamma$ dá 
-            exatamente $x$, mas está em $L_{\alpha+1}$.
-        \end{lemma}
         \begin{lemma}{Conjunto contido em $L$ está contido em um membro de $L$}
             Seja $X\subset L$ um conjunto em $V$. Por substituição, o é conjunto $\SET{\alpha: \exists x\in X:\alpha = \rho_c(x)}$. 
             Como é conjunto de ordinais, ele possuí um supremo, que chamaremos de $\gamma$, então, por definição, todos os membros 
             de $x$ ocorrem em $L_\gamma$, assim, $X\subset L_\gamma\in L_{\gamma+1}$. Está provado.
         \end{lemma}
-        \begin{theorem}{$\ZF\vdash(\varphi\restriction L)\bim Sat(A,\varphi,f)$}
-            
-        \end{theorem}
 
         \begin{theorem}{$L\vDash\ZF$}
-                Para começar, notemos que $L_\emptyset = \emptyset$, pois $\emptyset$ é ordinal limite e união vazia é vazia. Então $L_1$ contém o vazio, e portanto, 
-                $L\not = \emptyset$. Então está provado que $L\vDash \exists x: x=x$
+                Provaremos que $L$ modela: O axioma do Vazio; O axioma do Par; O axioma 
+                da União; Os axiomas da Substituição; O axioma do Infinito; O axioma das 
+                Partes; O axioma da Fundação; O axioma da Extensionalidade. É largamente 
+                conhecido que o esquema de Separação pode ser obtido através dos outros.
+            \paragraph{Extensionalidade e Fundação}
+                Pelo fato que $L$ é estrutura transitiva, temos, de graça, os axiomas de 
+                Extensionalidade e Fundação.
+            \paragraph{Axioma do Vazio}
+                $$L\vDash\exists x:x=x\BIM V\vDash(\exists x:x=x)^L\BIM\exists x\in L: x = x\bim L\not = \emptyset$$
+                É claramente o caso de $L$ não ser vazio, pois $L_1$ não é vazio. Aqui entra com força os meta-teoremas 
+                que provamos sobre fórmulas relativizadas e $\vDash$.
+            \paragraph{Axioma do Par}\nl
+                Queremos
+                $$L\vDash\forall x:\forall y:\exists z:\forall t: t\in z \bim (t = x\lor t = y)$$
+                Que será o caso exatamente quando 
+                $$V\vDash\forall x\in L:\forall y\in L:\exists z\in L:\forall t\in L: t\in z \bim (t = x\lor t = y) $$
+                Mas é claro que $V\vDash\ZF$, então vamos apenas provar a fórmula acima em $\ZF$.
             \paragraph{}
-                Como $L$ é estrutura transitiva, já temos os Axiomas da Fundação e da Extensionalidade.
-            \paragraph{}
-                Sejam $a, b\in L$, pela definição de $L$, $\exists \alpha,\beta\in Ord:(a\in L_\alpha)\land(b\in L_\beta)$. Com isso, seja $\gamma$ o maior entre 
-                eles. Como $a,b\in L_\gamma$ então $\SET{t\in L_\gamma: Sat(L_\gamma, \FMLA{t = y \lor t = x},f)}$ com $f(x) = a \land f(y) = b$ claramente nos dá que 
-                o par de dois conjuntos está em $L_{\gamma+1}$, provando o Axioma do Par.
-            \paragraph{}
-                Para o Axioma da Soma, seja $X\in L$, então $X\in L_{\rho_c(x)}$, por substituição em $\ZF$ temos que $R = \SET{\alpha : \exists x\in X:\alpha = \rho_c(x)}$ 
-                é conjunto. Seja $\gamma = \sup(R)$, Então em $L_\gamma$ ocorrem todos os elementos de $x$, e pela transitividade de $L_\gamma$, todos os elementos deles.
-                Considere então a fórmula $\varphi(t; X)\equiv \exists x\in X: t\in x$, ela dá $\bigcup X$ em $L_{\gamma+1}$ quando tomando parâmetro $X$.
-            \paragraph{}
-                Para o axioma das partes, seja $x\in L$, então $x\in L_{\alpha+1}$ para algum $\alpha$ conveniente. Então existe uma $\psi$ fórmula interna, e $f$ 
-                parâmetros tal que $x = \SET{t \in L_\alpha : Sat(L_\alpha, \psi, f)}$, então $x\subseteq L_\alpha$. Assim, considere a fórmula $\varphi(
-                t;x,f,\psi,\alpha)\equiv\exists g\in L_\alpha^{<\omega}:\exists\phi:t=\SET{y\in L_\alpha:Sat(L_\alpha,\phi,g)\land Sat(L_\alpha,\psi,f)}$.
-            \paragraph{}
-                Haverá parâmetros para esta fórmula em algum $L_\beta$ que nos dê algo similar a $\wp(x)$? Em $(\alpha+\omega+1)$ com certeza haverá, pois, 
-                lá já teremos todas as $f$ parâmetros em $L_\alpha$, todas as fórmulas, $x$ e $\alpha$, certamente. E como convencer-nos de que será realmente 
-                as partes de $x$? Se $(y\subset x)\restriction L$, então há uma fórmula que concretiza $y$ no nível que $x$ ocorre que é mais específica que 
-                a fórmula que seleciona $x$. Não perdemos, assim, generalidade em escrever $[\wp(x)]\restriction L$ como sendo aquela fórmula.
-            \paragraph{}
-                Quanto ao Axioma do Infinito, sabemos que o vazio está em $L$, vamos assumir que até um ordinal $\alpha$, todos os ordinais finitos estão. Eles
-                aparecem em uma etapa $\beta$ da construção do $L$. Sabemos que o par $\SET{\alpha}{\alpha}$ existe na etapa $\beta+1$, que o par $\SET{\alpha}{\SET{\alpha}{\alpha}}$
-                existe na etapa $\beta+2$ e que em alguma etapa existe $\bigcup\SET{\alpha}{\SET{\alpha}{\alpha}}$, que é justamente o sucessor de $\alpha$. Logo,
-                existe um conjunto indutivo em $L$, pois ser indutivo é $\LDel{}{1}$, isto é, ser indutivo ``aqui fora'' é o mesmo que ser indutivo ``lá dentro''. 
-            \paragraph{}
-                Sejam $X\in L_\alpha+1$ e $\psi$ uma fórmula da língua de $\ZF$ nas hipóteses do Esquema de Substituição. 
-                Isto é, $\forall y,z:\psi(y;x)\land\psi(z;x)\rar y = z$. Temos que existe um conjunto 
-                $Y   = \SET{y: \exists x\in X: \psi(y,x) }$. Se relativizarmos a fórmula, teremos ainda um conjunto:
-                $Y' = \SET{y: \exists x\in X: \psi(y,x)\restriction L}$. Este conjunto não tem obrigação nenhuma de 
-                estar em $L$ (tome, por exemplo, $\psi$ que só aceita $y$ fora de $L$), mas $Y_c=Y'\cap L$ tem.
-                
+                Sejam $x,y\in L_{\alpha}$ seja $z = \SET{t\in L_{\alpha}: Sat(L_\alpha, \FMLA{x_0 = x_1 \lor x_0 = x_2}, f)}$
+                onde $f=\SET{\TUPLE{\FMLA{x_0}}{t}}{\TUPLE{\FMLA{x_1}}{x}}{\TUPLE{\FMLA{x_2}}{y}}$, que, por razões óbvias, vamos 
+                abreviar como $[t,x,y]$ e continuaremos tratando valorações desta forma. Fica claro que com esta valoração 
+                $z$ está em $L_{\alpha+1}$, e portanto em $L$. Não é difícil ver que $z$ é de fato o par em $L$.
+            \paragraph{Axioma da Soma}\nl
+                Queremos 
+                $$L\vDash\forall x\exists y:\forall z: z\in y \bim \exists t: t\in y\land z\in t$$
+                Deixe, $x\in L$, logo em $L_\alpha+1$ para algum $\alpha$. Deixe agora $\varphi\equiv\exists x_2\in x_1:x_0\in x_2$, e 
+                $$ y = \SET{t\in L_\alpha : Sat(L_\alpha, \FMLA{\varphi}, f_{[x_0\slash z, x_1\slash x]})}$$
+
+                Sabemos que $V\vDash_f y\in L$ e que $V\vDash_f\forall t: t\in y\bim\exists y\in x: t\in y$, então segue que 
+                $V\vDash_f(\forall t: t\in y\bim\exists y\in x: t\in y)^L$, pois o universal restringe-se e o existencial 
+                já está em $L$ pois $x$ está, e temos transitividade. Logo, $L\vDash_f\forall t: t\in y\bim\exists y\in x: t\in y$
+                que era o que queríamos: uma testemunha da validade do axioma para cada $x$ dado.
+            \paragraph{Axioma das Partes}\nl
+                Queremos
+                $$L\vDash\forall x:\exists y:\forall z:(\forall t\in z\rar t\in x)\rar z\in y$$
+                Seja $x\in L$, e deixe $y = \SET{z\in L: (z\subseteq x)^L}$. Vemos que $y$ é 
+                claramente um conjunto, resta verificar que ele está em $L$ e teremos o que 
+                buscamos. Seja  
+                $$\beta = \bigcup_{z\in y}\rho_c(z)+1$$
+                \paragraph{}
+                    Então sabemos que $y = \SET{z\in L_\beta : (z\subseteq x)^L}$, sabemos também que 
+                    $\rho_c(x)<\beta$ afinal $x\in y$. Como $L_{\rho_c (x)}\subset L_\beta\subset L$, 
+                    então uma é subestrutura transitiva da outra. Assim, $y = \SET{z\in L_\beta : 
+                    (z\subseteq x)^{L_\beta}}$, que sabemos ser meta-equivalente a
+                $$y = \SET{z\in L_\beta : Sat(L_\beta, \FMLA{x_0\subseteq x_1}, [z, x])}$$
+                \paragraph{}
+                    Então $y\in L$, e então está provado.
+            \paragraph{Axioma da Substituição}\nl
+                Queremos
+                $$L\vDash[\forall x, y, z:\psi(y, x)\land\psi(z,x)\rar z=y]\rar[\forall x:\exists X:\forall y: y\in X\bim\exists t\in x:\psi(y,t)]$$
+                Suponha uma fórmula $\psi$ nas condições do axioma. Deixe $x\in L$ e $X=\SET{y\in L:(\psi(y,x))^L}$
+
         \end{theorem}
+        
+
+
+%\paragraph{}
+%    Sejam $a, b\in L$, pela definição de $L$, $\exists \alpha,\beta\in Ord:(a\in L_\alpha)\land(b\in L_\beta)$. Com isso, seja $\gamma$ o maior entre 
+%    eles. Como $a,b\in L_\gamma$ então $\SET{t\in L_\gamma: Sat(L_\gamma, \FMLA{t = y \lor t = x},f)}$ com $f(x) = a \land f(y) = b$ claramente nos dá que 
+%    o par de dois conjuntos está em $L_{\gamma+1}$, como provando o Axioma do Par.
+%\paragraph{}
+%    Para o Axioma da Soma, seja $X\in L$, então $X\in L_{\rho_c(x)}$, por substituição em $\ZF$ temos que $R = \SET{\alpha : \exists x\in X:\alpha = \rho_c(x)}$ 
+%    é conjunto. Seja $\gamma = \sup(R)$, Então em $L_\gamma$ ocorrem todos os elementos de $x$, e pela transitividade de $L_\gamma$, todos os elementos deles.
+%    Considere então a fórmula $\varphi(t; X)\equiv \exists x\in X: t\in x$, ela dá $\bigcup X$ em $L_{\gamma+1}$ quando tomando parâmetro $X$.
+%\paragraph{}
+%    Para o axioma das partes, seja $x\in L$, então $x\in L_{\alpha+1}$ para algum $\alpha$ conveniente. Então existe uma $\psi$ fórmula interna, e $f$ 
+%    parâmetros tal que $x = \SET{t \in L_\alpha : Sat(L_\alpha, \psi, f)}$, então $x\subseteq L_\alpha$. Assim, considere a fórmula $\varphi(
+%    t;x,f,\psi,\alpha)\equiv\exists g\in L_\alpha^{<\omega}:\exists\phi:t=\SET{y\in L_\alpha:Sat(L_\alpha,\phi,g)\land Sat(L_\alpha,\psi,f)}$.
+%\paragraph{}
+%    Haverá parâmetros para esta fórmula em algum $L_\beta$ que nos dê algo similar a $\wp(x)$? Em $(\alpha+2\omega)$ com certeza haverá, pois, 
+%    lá já teremos todas as $f$ parâmetros em $L_\alpha$, todas as fórmulas, $x$ e $\alpha$, certamente. E como convencer-nos de que será realmente 
+%    as partes de $x$? Se $(y\subset x)^ L$, então há uma fórmula que concretiza $y$ no nível que $x$ ocorre que é mais específica que 
+%    a fórmula que seleciona $x$. Não perdemos, assim, generalidade em escrever $[\wp(x)]^ L$ como sendo aquela fórmula.
+%\paragraph{}
+%    Quanto ao Axioma do Infinito, sabemos que o vazio está em $L$, vamos assumir que até um ordinal $\alpha$, todos os ordinais finitos estão. Eles
+%    aparecem em uma etapa $\beta$ da construção do $L$. Sabemos que o par $\SET{\alpha}{\alpha}$ existe na etapa $\beta+1$, que o par $\SET{\alpha}{\SET{\alpha}{\alpha}}$
+%    existe na etapa $\beta+2$ e que em alguma etapa existe $\bigcup\SET{\alpha}{\SET{\alpha}{\alpha}}$, que é justamente o sucessor de $\alpha$. Logo,
+%    existe um conjunto indutivo em $L$, pois ser indutivo é $\LDel{}{1}$, isto é, ser indutivo ``aqui fora'' é o mesmo que ser indutivo ``lá dentro''. 
+%\paragraph{}
+%    Sejam $X\in L_\alpha+1$ e $\psi$ uma fórmula da língua de $\ZF$ nas hipóteses do Esquema de Substituição. 
+%    Isto é, $\forall y,z:\psi(y;x)\land\psi(z;x)\rar y = z$. Temos que existe um conjunto 
+%    $Y   = \SET{y: \exists x\in X: \psi(y,x)}$. Se relativizarmos a fórmula, teremos ainda um conjunto:
+%    $Y' = \SET{y: \exists x\in X: \psi(y,x)^ L}$. Este conjunto não tem obrigação nenhuma de 
+%    estar em $L$ (tome, por exemplo, $\psi$ que só aceita $y$ fora de $L$), mas $Y_c=Y'\cap L$ tem.
