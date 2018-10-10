@@ -382,7 +382,9 @@
                                 $\bullet$ $\exists x\in t: \varphi(x)$                          \\
                                 $\bullet$ $\forall x\in t: \varphi(x)$                          
                         \item Se $\varphi$ e $t$ forem $\LSig{\theoryof{}}{n}$, então $\SET{t:\varphi}$ é $\LDel{\theoryof{}}{n+1}$
-                        \end{enumerate}
+                        \item Se $\psi$ for $\LSig{\ZF}{1}$ atendendo as hipóteses do teorema da recursão transfinita, então a fórmula da função recursiva é 
+                        $\LDel{\ZF}{1}$.
+                    \end{enumerate}
 %                    \begin{lemma}{Algumas Fórmulas e Termos $\LDel{\ZF}{0}$ ou $\LDel{\ZF}{1}$}
 %                        {
 %
@@ -512,11 +514,11 @@
 
         \paragraph{}
             Apesar de longa, $Repr$ é bem simples: ela afirma que $\chi$ é testemunha da construção de $\varphi$ em $n$ passos. Fica claro que 
-            um determinado conjunto $X$ é fórmula se e só se $\exists n\in\omega:\exists \chi \in V_\omega: Repr(X, \chi, n)$. 
+            um determinado conjunto $X$ é fórmula se e só se $\Phi(X)\equiv\exists n\in\omega:\exists \chi \in V_\omega: Repr(X, \chi, n)$. Vamos chamar  
+            $\Phi = \SET{t\in V_\omega: \Phi(t)}$ e 
 
-        \paragraph{}
-            Agora, deixe:
-
+            $\Phi\restriction n = \SET{\varphi\in\Phi: \exists\chi\in V_\omega: Repr(\varphi, \chi, n)\land\forall m < n: \neg[\exists \chi \in V_\omega: Repr(\varphi, \chi, m)]}$ 
+            o conjunto de fórmulas de complexidade $n$ 
         \begin{definition}{Satisfatibilidade Internalizada}
             \begin{align*}
                 Sat(A,\varphi,f)\equiv&\exists w:\exists \chi,n,r\in V_\omega:[Repr(\varphi,\chi,n)\land Fun(w)\land (Dom(w) = n+1)\land\\
@@ -626,63 +628,166 @@
             Como é conjunto de ordinais, ele possuí um supremo, que chamaremos de $\gamma$, então, por definição, todos os membros 
             de $x$ ocorrem em $L_\gamma$, assim, $X\subset L_\gamma\in L_{\gamma+1}$. Está provado.
         \end{lemma}
-
-        \begin{theorem}{$L\vDash\ZF$}
-                Provaremos que $L$ modela: O axioma do Vazio; O axioma do Par; O axioma 
-                da União; Os axiomas da Substituição; O axioma do Infinito; O axioma das 
-                Partes; O axioma da Fundação; O axioma da Extensionalidade. É largamente 
-                conhecido que o esquema de Separação pode ser obtido através dos outros.
-            \paragraph{Extensionalidade e Fundação}
-                Pelo fato que $L$ é estrutura transitiva, temos, de graça, os axiomas de 
-                Extensionalidade e Fundação.
-            \paragraph{Axioma do Vazio}
-                $$L\vDash\exists x:x=x\BIM V\vDash(\exists x:x=x)^L\BIM\exists x\in L: x = x\bim L\not = \emptyset$$
-                É claramente o caso de $L$ não ser vazio, pois $L_1$ não é vazio. Aqui entra com força os meta-teoremas 
-                que provamos sobre fórmulas relativizadas e $\vDash$.
-            \paragraph{Axioma do Par}\nl
-                Queremos
-                $$L\vDash\forall x:\forall y:\exists z:\forall t: t\in z \bim (t = x\lor t = y)$$
-                Que será o caso exatamente quando 
-                $$V\vDash\forall x\in L:\forall y\in L:\exists z\in L:\forall t\in L: t\in z \bim (t = x\lor t = y) $$
-                Mas é claro que $V\vDash\ZF$, então vamos apenas provar a fórmula acima em $\ZF$.
+        \begin{lemma}{$L_\alpha\subseteq V_\alpha$}
+            É óbvio que $L_\emptyset = V_\emptyset$. Suponha, agora, que $L_\alpha\subseteq V_\alpha$ vale para $\alpha$.
+            Pela definição $L_{\alpha+1}\subseteq\wp(L_\alpha)$, e $V_{\alpha+1}=\wp(V_\alpha)$. Então 
+            $$L_{\alpha+1}\subseteq\wp(L_\alpha)\subseteq\wp(V_\alpha)=V_{\alpha+1}$$
             \paragraph{}
-                Sejam $x,y\in L_{\alpha}$ seja $z = \SET{t\in L_{\alpha}: Sat(L_\alpha, \FMLA{x_0 = x_1 \lor x_0 = x_2}, f)}$
-                onde $f=\SET{\TUPLE{\FMLA{x_0}}{t}}{\TUPLE{\FMLA{x_1}}{x}}{\TUPLE{\FMLA{x_2}}{y}}$, que, por razões óbvias, vamos 
-                abreviar como $[t,x,y]$ e continuaremos tratando valorações desta forma. Fica claro que com esta valoração 
-                $z$ está em $L_{\alpha+1}$, e portanto em $L$. Não é difícil ver que $z$ é de fato o par em $L$.
-            \paragraph{Axioma da Soma}\nl
-                Queremos 
-                $$L\vDash\forall x\exists y:\forall z: z\in y \bim \exists t: t\in y\land z\in t$$
-                Deixe, $x\in L$, logo em $L_\alpha+1$ para algum $\alpha$. Deixe agora $\varphi\equiv\exists x_2\in x_1:x_0\in x_2$, e 
-                $$ y = \SET{t\in L_\alpha : Sat(L_\alpha, \FMLA{\varphi}, f_{[x_0\slash z, x_1\slash x]})}$$
+                E
+        \end{lemma}
 
-                Sabemos que $V\vDash_f y\in L$ e que $V\vDash_f\forall t: t\in y\bim\exists y\in x: t\in y$, então segue que 
-                $V\vDash_f(\forall t: t\in y\bim\exists y\in x: t\in y)^L$, pois o universal restringe-se e o existencial 
-                já está em $L$ pois $x$ está, e temos transitividade. Logo, $L\vDash_f\forall t: t\in y\bim\exists y\in x: t\in y$
-                que era o que queríamos: uma testemunha da validade do axioma para cada $x$ dado.
-            \paragraph{Axioma das Partes}\nl
-                Queremos
-                $$L\vDash\forall x:\exists y:\forall z:(\forall t\in z\rar t\in x)\rar z\in y$$
-                Seja $x\in L$, e deixe $y = \SET{z\in L: (z\subseteq x)^L}$. Vemos que $y$ é 
-                claramente um conjunto, resta verificar que ele está em $L$ e teremos o que 
-                buscamos. Seja  
-                $$\beta = \bigcup_{z\in y}\rho_c(z)+1$$
+        \begin{theorem}{$L\vDash\ZF+GCH+AC+V=L$}
+                Provaremos que $L$ modela: O axioma do Vazio; O axioma do Par; O axioma 
+                da União; Os axiomas da Substituição Enfraquecido; O axioma do Infinito; 
+                O axioma das Partes; O axioma da Fundação; O axioma da Extensionalidade;
+                O Esquema de Separação. Então provaremos o Axioma da Escolha e depois a 
+                Hipótese Generalizada do Contínuo.
+            \begin{proof}
+                \paragraph{Extensionalidade e Fundação}
+                    Pelo fato que $L$ é estrutura transitiva, temos, de graça, os axiomas de 
+                    Extensionalidade e Fundação.
+                \paragraph{Axioma do Vazio}
+                    $$L\vDash\exists x:x=x\BIM V\vDash(\exists x:x=x)^L\BIM\exists x\in L: x = x\bim L\not = \emptyset$$
+                    É claramente o caso de $L$ não ser vazio, pois $L_1$ não é vazio. Aqui entra com força os meta-teoremas 
+                    que provamos sobre fórmulas relativizadas e $\vDash$.
+                \paragraph{Axioma do Par}\nl
+                    Queremos
+                    $$L\vDash\forall x:\forall y:\exists z:\forall t: t\in z \bim (t = x\lor t = y)$$
+                    Que será o caso exatamente quando 
+                    $$V\vDash\forall x\in L:\forall y\in L:\exists z\in L:\forall t\in L: t\in z \bim (t = x\lor t = y) $$
+                    Mas é claro que $V\vDash\ZF$, então vamos apenas provar a fórmula acima em $\ZF$.
+                \paragraph{}
+                    Sejam $x,y\in L_{\alpha}$ seja $z = \SET{t\in L_{\alpha}: Sat(L_\alpha, \FMLA{x_0 = x_1 \lor x_0 = x_2}, f)}$
+                    onde $f=\SET{\TUPLE{\FMLA{x_0}}{t}}{\TUPLE{\FMLA{x_1}}{x}}{\TUPLE{\FMLA{x_2}}{y}}$, que, por razões óbvias, vamos 
+                    abreviar como $[t,x,y]$ e continuaremos tratando valorações desta forma. Fica claro que com esta valoração 
+                    $z$ está em $L_{\alpha+1}$, e portanto em $L$. Não é difícil ver que $z$ é de fato o par em $L$.
+                \paragraph{Axioma da Soma}\nl
+                    Queremos 
+                    $$L\vDash\forall x\exists y:\forall z: z\in y \bim \exists t: t\in y\land z\in t$$
+                    Deixe, $x\in L$, logo em $L_\alpha+1$ para algum $\alpha$. Deixe agora $\varphi\equiv\exists x_2\in x_1:x_0\in x_2$, e 
+                    $$ y = \SET{t\in L_\alpha : Sat(L_\alpha, \FMLA{\varphi}, f_{[x_0\slash z, x_1\slash x]})}$$
+
+                    Sabemos que $V\vDash_f y\in L$ e que $V\vDash_f\forall t: t\in y\bim\exists y\in x: t\in y$, então segue que 
+                    $V\vDash_f(\forall t: t\in y\bim\exists y\in x: t\in y)^L$, pois o universal restringe-se e o existencial 
+                    já está em $L$ pois $x$ está, e temos transitividade. Logo, $L\vDash_f\forall t: t\in y\bim\exists y\in x: t\in y$
+                    que era o que queríamos: uma testemunha da validade do axioma para cada $x$ dado.
+                \paragraph{Axioma das Partes}\nl
+                    Queremos
+                    $$L\vDash\forall x:\exists y:\forall z:(\forall t\in z\rar t\in x)\rar z\in y$$
+                    Seja $x\in L$, e deixe $y = \SET{z\in L: (z\subseteq x)^L}$. Vemos que $y$ é 
+                    claramente um conjunto, resta verificar que ele está em $L$ e teremos o que 
+                    buscamos. Seja  
+                    $$\beta = \bigcup_{z\in y}\rho_c(z)+1$$
                 \paragraph{}
                     Então sabemos que $y = \SET{z\in L_\beta : (z\subseteq x)^L}$, sabemos também que 
                     $\rho_c(x)<\beta$ afinal $x\in y$. Como $L_{\rho_c (x)}\subset L_\beta\subset L$, 
                     então uma é subestrutura transitiva da outra. Assim, $y = \SET{z\in L_\beta : 
                     (z\subseteq x)^{L_\beta}}$, que sabemos ser meta-equivalente a
-                $$y = \SET{z\in L_\beta : Sat(L_\beta, \FMLA{x_0\subseteq x_1}, [z, x])}$$
+                    $$y = \SET{z\in L_\beta : Sat(L_\beta, \FMLA{x_0\subseteq x_1}, [z, x])}$$
                 \paragraph{}
                     Então $y\in L$, e então está provado.
-            \paragraph{Axioma da Substituição}\nl
-                Queremos
-                $$L\vDash[\forall x, y, z:\psi(y, x)\land\psi(z,x)\rar z=y]\rar[\forall x:\exists X:\forall y: y\in X\bim\exists t\in x:\psi(y,t)]$$
-                Suponha uma fórmula $\psi$ nas condições do axioma. Deixe $x\in L$ e $X=\SET{y\in L:(\psi(y,x))^L}$
-
-        \end{theorem}
-        
-
+                \paragraph{Axioma Enfraquecido da Substituição}\nl
+                    Queremos
+                    $$L\vDash[\forall x, y, z:\psi(y, x)\land\psi(z,x)\rar z=y]\rar[\forall x:\exists X:\forall y:\exists t\in x:\psi(y,t)\rar y\in X]$$
+                    Suponha uma fórmula $\psi$ nas condições do axioma. Deixe $p,x\in L$ e deixe $X=\SET{y\in L:(\exists t\in x: \psi(y,x; p))^L}$, 
+                    que sabemos existir. Como $X$ é conjunto, 
+                    $$\alpha = \bigcup_{y\in X}\rho_c(y)\text{ é ordinal}$$
+                \paragraph{}
+                    Segue que todos os $y$ em $X$ estão em $L_\alpha$. E como $L$ é transitivo, 
+                    então $X = \SET{y\in L_\alpha :\exists t\in x: \psi^L(y,x)}$. Oras, dado um $y\in L$, se existir um $t\in x$ para o qual
+                    $\psi^L(y,t)$ então necessariamente $y$ está em $L_\alpha$, pelo menos $V$ pensa isso. Mas como $V$ e $L$ concordam sobre 
+                    pertinência, $y\in L_\alpha$. Encontramos, pois, um conjunto onde vive a imagem de $x$ pela $\psi$ aos olhos de $L$.
+                \paragraph{Axioma da Separação}\nl
+                    Queremos
+                    $$L\vDash\forall x\exists y:\forall z:z\in y\bim z\in x\land \psi(z)$$
+                \paragraph{}
+                    Deixe então $x\in L$ e $y=\SET{z\in L:(z\in x\land\psi(z))^L}$. Reduzindo, temos $y=\SET{z\in L:z\in x\land\psi^L(z))}$, 
+                    que, neste caso, nos dá: $y=\SET{z\in L_{\rho_c(x)}:z\in x\land\psi^L(z)}$. Invocamos, agora, o primcípio da reflexão, que 
+                    nos dará uma $\alpha > \rho_c(x)$ onde $V_\alpha$ reflete a situação de 
+                \begin{enumerate}
+                    \item $\psi^L(z)$ 
+                    \item $\exists\delta:z\in L_\delta$.
+                    \item $z\in L_\gamma$
+                \end{enumerate}
+                \paragraph{}
+                    Temos então que
+                \begin{enumerate}
+                    \item $\forall x\in V_\alpha: \psi^L(x) \bim {(\psi^L)}^{V_\alpha}(x)$
+                    \item $\forall x\in V_\alpha:[\exists\delta :x\in L_\delta] \bim [\exists\delta<\alpha :x\in (L_\delta)^{V_\alpha}]$
+                    \item $\forall x\in V_\alpha: \forall\gamma<\alpha: [x\in L_\gamma] \bim [x\in (L_\gamma)^{V_\alpha}]$
+                \end{enumerate}
+                \paragraph{}
+                    Em $1.$ podemos subsituír ${(\psi^L)}^{V_\alpha}$ por $\psi^{L\cap V_\alpha}$. Conclui-se, também, que 
+                    $\forall x\in V_\alpha:x\in L\bim\exists\delta<\alpha:x\in L_\delta$.
+                \paragraph{}
+                    O $\alpha$ dado deve ser ordinal limite, pois se $\zeta<\alpha$, então $\zeta\in L\cap V_\alpha$. Como $\forall\beta\in 
+                    Ord:\rho_c(\beta) = \beta+1$, então, $\zeta+1\in V_\alpha$. Então $L_\alpha = \bigcup_{\delta < \alpha}L_\delta$.
+                \paragraph{}
+                    Então 
+                    $$
+                            [x\in L\cap V_\alpha]\bim[x\in V_\alpha\land\exists\delta\in L_\delta]\bim
+                    $$ $$
+                        \bim[x\in V_\alpha\land\exists\delta<\alpha:x\in L_\delta^{V_\alpha}]\bim[x\in V_\alpha\land\exists\delta<\alpha:x\in L_\delta]\bim
+                    $$ $$
+                        \bim[x\in V_\alpha\cap\bigcup_{\delta<\alpha}L_\delta]\bim[x\in V_\alpha\cap L_\alpha]\bim[x\in L_\alpha]
+                    $$
+                \paragraph{}
+                    Assim, temos que:
+                    $$y=\SET{z\in L:(z\in x\land\psi(z))^L} = \SET{z\in L_\alpha:z\in x\land\psi^{L_\alpha}(z)} =$$
+                    $$\SET{z\in L_\alpha:Sat(L_\alpha, \FMLA{x_0\in x_1\land\psi(x_0)},[z, x])}$$
+                \paragraph{}
+                    Assim, temos que $y\in L$, temos então o conjunto desejado.
+                \eop
+            \end{proof}
+            \begin{lemma}{$x=L_\alpha$ é $\LDel{\ZF}{1}$}
+                Segue do fato de que a definição de $L_\alpha$ é por recursão em uma fórmula que é $\LDel{\ZF}{1}$. \cite{Drake} faz isto 
+                com mais cuidado, mas a demonstração não agrega muito a nossa discussão.
+            \end{lemma}
+            \begin{theorem}{$L\vDash V = L$}
+                    Como $x = L_\alpha$ é absoluto, e, similarmente, $x\inL_\alpha$ também o é, se $A$ é transitivo e modelo de $\ZF$, por 
+                    definição, temos $(x\in L)^A\bim\exists\alpha\in A:x\in L_\alpha$. Se $Ord\subset A$ então $(x\in L)^A\bim x\in L$, e 
+                    assim, temos que se temos um modelo $A$ de $\ZF$ com todos os ordinais, $L$ é sub modelo menor ainda. Portanto $L$ é 
+                    o menor modelo transitivo de $\ZF$ contendo todos os ordinais.
+                \paragraph{} 
+                    Como $L$ modela $\ZF$ e contém todos os ordianis, ``por fora'' constatamos que $L^L = L$, então 
+                    $V\vDash \forall x\in L: x\in L^L$, mas sabemos que isso é $V\vDash(\forall x x\in L)^L$ e então
+                    sabemos que $L\vDash\forall x: x\in L$, que é justamente $L\vDash V=L$.
+            \end{theorem}
+            \begin{lemma}{Ordem Conveniente}
+                Existe uma fórmula $\varphi(x,y)$ que é $\LSig{}{1}$ tal que:
+                \begin{enumerate}
+                    \item $\ZF\vdash BF(\varphi(x,y))$
+                    \item $\ZF\vdash\varphi(x,y)\text{ ordena totalmente }L$
+                    \item $\varphi$ é $\LDel{\ZF+V=L}{1}$
+                \end{enumerate} 
+                Onde $BF(\varphi(x,y))$ diz 
+                $$\forall x:[\exists v:(x\not = \emptyset \rar v\in x \land \forall y\in x: \neg \varphi(y,v) )\land \exists u:(x\subset u\land \forall a,b: [b\in u \land \varphi(a,b)]\rar w\in u)]$$
+                \paragraph{}
+                    Ou seja, todo conjunto tem um $\varphi$-minimal e a relação é sempre ``\textit{left-narrow}'', ou ``\textit{set-like}''.
+                \paragraph{}
+                    A ordem é a lexicográfica, primeiro, dizemos que um construtível é menor que o outro já de pronto se o seu 
+                    rank construtível for menor que o do outro. 
+                \paragraph{}
+                    Então nos focamos no caso que os dois conjuntos estão surgem 
+                    no mesmo nível $\alpha+1$. Como as fórmulas são bem ordenadas (e inclusive \cite{Drake} dá uma ordem $\LDel{\ZF}{1}$)
+                    podemos dizer que um conjunto é menor que outro de mesmo que rank construtível que ele quando a fórmula mínima que 
+                    define o primeiro é menor que a mínima que define o segundo.
+                \paragraph{}
+                    No caso em que ambos os ranks e as fórmulas mínimas coincidem, então deve ser o caso que os parâmetros diferem entre 
+                    si. No caso, se assumirmos que $L_\alpha$ pode ser bem ordenado, então segue que $L_\alpha^{<\omega}$ também pode 
+                    ser -- e com uma fórmula decente --. Neste caso, podemos dizer que dois conjuntos $x,y$ de mesmo rank e fórmula 
+                    minimal estão relacionados por $\varphi$ quando o parâmetro de $x$ for menor que o de $y$.
+            \end{lemma}
+            \begin{theorem}{$L\vDash AC$}
+                Todo $L$ pode ser bem ordenado, mas $L$ é transitivo, então certamente qualquer $x$ pode ser bem ordenado. Então 
+                dado uma família não vazia $X\in L$ de conjuntos não vazios, considere 
+                $\SET{x\in \bigcup X: \exists y\in X: x = \min{y}}$. Claramente existe, então está provado.\eop
+            \end{theorem}
+            \paragraph{}
+                Para provar a Hipótese Generalizada do Contínuo, precisamos de dois lemas antes:
+            \begin{lemma}{$\ZF+AC\vdash\forall\alpha>\omega:|L_\alpha| = |\alpha|}
+            \end{lemma}
+            
 
 %\paragraph{}
 %    Sejam $a, b\in L$, pela definição de $L$, $\exists \alpha,\beta\in Ord:(a\in L_\alpha)\land(b\in L_\beta)$. Com isso, seja $\gamma$ o maior entre 

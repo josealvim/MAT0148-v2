@@ -1,0 +1,61 @@
+        \paragraph{}
+            A fim de provar o Axioma da Escolha vamos bem ordenar o Universo. 
+        \begin{definition}{Ordem Lexicográfica}
+                As fórmulas de complexidade 1 estão bem ordenadas: elas são da forma 
+                $\TUPLE{\FMLA{\!=\!}  }{i}{j}$ ou $\TUPLE{\FMLA{\!\in\!}}{i}{j}$. 
+                Sejam $\varphi = \TUPLE{T}{i}{j}$ e $\psi = \TUPLE{T}{k}{l}$, fórmulas 
+                do mesmo tipo. Dizemos
+                \begin{align*}
+                    \varphi\leq_\emptyset\psi\bim&\exists a,b,c,d,e,f:(\varphi=\TUPLE{a}{b}{c})\land(\psi = \TUPLE{d}{e}{f})\land\\
+                    &[(a<d)\lor[(a=d)\land(\varphi,\psi\in\Phi\restriction 1)\land\\
+                    &[(\varphi = \psi)\lor([\varphi\not=\psi]\land[(i<k)\lor([i=k]\land[j<l])])]]]
+                \end{align*} 
+            \paragraph{}
+                Seja 
+                \begin{align*}
+                    G(\leq_\alpha, \preceq)\equiv&([\leq_\alpha = \emptyset] \land \forall x,y\in\Phi: x\preceq y\bim x\leq_\emptyset y)\\
+                    \lor&([\leq_\alpha \not= \emptyset] \land \forall x,y\in\Phi: x\preceq y\bim x\leq_\alpha y \lor [(x\not\leq_\alpha y)\land \exists a,b,c,d,e,f\in V_\omega:\\
+                    (\varphi=&\TUPLE{a}{b}{c}) \land (\psi = \TUPLE{d}{e}{f}) \land [([a = d] \land [\\
+                        ([a =&\FMLA{\forall}]\land([(b = e) \land (c\leq_\alpha f)] \lor [(b\not = e)\land(b < e)]))\lor\\
+                        ([a =&\FMLA{\exists}]\land([(b = e) \land (c\leq_\alpha f)] \lor [(b\not = e)\land(b < e)]))\lor\\
+                        ([a =&\FMLA{\!\!\lor\!\!}] \land([(b = e) \land (c\leq_\alpha f)] \lor [(b\not = e)\land(b \leq_\alpha e)]))\lor\\
+                        ([a =&\FMLA{\!\!\land\!\!}]\land([(b = e) \land (c\leq_\alpha f)] \lor [(b\not = e)\land(b \leq_\alpha e)]))\lor\\
+                        ([a =&\FMLA{\!\!\rar\!\!}]\land([(b = e) \land (c\leq_\alpha f)] \lor [(b\not = e)\land(b \leq_\alpha e)]))])\lor\\
+                        (a < &d)]])
+                \end{align*}
+                Ela é claramente $\LSig{\ZF}{1}$, então $\ZF$ garante fórmula $\LDel{\ZF}{1}$ que leva Ordinais na aplicação recursiva de 
+                $G$ nas restrições, isto é uma $F(\alpha) = G^{\alpha+1}(\emptyset)$. Teremos $\leq_\Phi = F(\omega)$ é uma Boa Ordem $\LDel{\ZF}{1}$.
+        \end{definition}
+        \begin{definition}{Boa Ordem em $L$}
+
+            Dado $x\in L$, Seja $\rho_c(x) = \alpha+1$, e defina 
+            $$A(x) = \SET{\TUPLE{\varphi}{f}\in\Phi\times L_{\alpha}^{<\omega}: x = \SET{t\in L_\alpha: Sat(L_\alpha, \varphi, f)}}$$
+        \paragraph{}
+            Suponha, agora, que $L_\alpha$ é bem ordenado por uma $\prec_\alpha$. É trivial ver que existe uma $\sqsubset_\alpha$ que 
+            bem ordena $\Phi\times L_{\alpha}^{<\omega}$. Desta forma, deixe $B(x) = \min A(x)$. Definamos agora,
+            $$ x < y \bim [\rho_c(x) < \rho_c(y)]\lor([\rho_c(x) = \rho_c(y)] \land [B(x) \sqsubset_\alpha B(y)])$$
+        \paragraph{}
+            Esta colagem bem ordena $L$.
+        \end{definition}
+        \begin{theorem}{$L\vDash AC$}
+            A equivalência entre o Axioma da Escolha e todo conjunto ser bem ordenável é largamente conhecida, então está provado que 
+            $L\vDash AC$\eop
+        \end{theorem}
+        \begin{theorem}{$L\vDash 2^\kappa \subseteq L_{k^+}$}
+            Seja $x\in L_\alpha$ e $y\in\wp^L(x)$, então há uma $\beta\in Ord$, uma $\varphi$ e $f\in L_\beta^{<\omega}$ com 
+            $y = \SET{t \in L_\beta: Sat(L_\beta, \varphi, f) }$ 
+        \end{theorem}
+\begin{theorem}{$L\vDash V = L$}
+            Partindo de um modelo base $V$ obtemos a classe $L$ de construtíveis, queremos mostrar que se tomarmos 
+            $L$ como modelo base e tomarmos os construtíveis \textit{dele}, teremos o universo inteiro. Isto é, queremos
+            $${(V=L)}^L$$
+            \paragraph{}
+                Isso equivale a dizer que $(\forall x:\exists\alpha:x\in L_\alpha)^L$, que por sua vez é 
+                dizer $\forall x\in L:\exists\alpha\in L:x\in L_\alpha^L$. Sabe-se que $L_\alpha$ é um termo
+                $\LDel{\ZF}{1}$.
+            \paragraph{}
+                Tendo isso, temos que $V\vDash_f x\in L_\alpha\BIM V\vDash_f x\in L_\alpha^L\BIM L\vDash_f x\in L$, e então
+                $$\texttt{verdade}\BIM V\vDash\forall x\in L :\exists\alpha\in Ord\subset L: x\in L_\alpha\BIM $$
+                $$L\vDash\forall x:\exists\alpha\in Ord: x\in L_\alpha\BIM L\vDash\forall x: x\in L\BIM$$
+                $$L\vDash V = L$$
+        \end{theorem}
