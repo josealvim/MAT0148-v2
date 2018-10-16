@@ -435,7 +435,7 @@
                              V\vDash_f (\psi\land\sigma)^A \BIM 
                              V\vDash_f \psi^A\land\sigma^A \BIM 
                             (V\vDash_f \psi^A)\land(V\vDash_f \sigma^A) \BIM 
-                            (A\vDash_f \psi)\landV(\vDash_f \sigma) \BIM 
+                            (A\vDash_f \psi)\land V(\vDash_f \sigma) \BIM 
                              A\vDash_f \psi\land\sigma
                         $$
                     \paragraph{}
@@ -738,7 +738,8 @@
                 \paragraph{}
                     Assim, temos que $y\in L$, temos então o conjunto desejado.
                 \eop
-            \end{proof}
+                \end{proof}
+            \end{theorem}
             \begin{lemma}{$x=L_\alpha$ é $\LDel{\ZF}{1}$}
                 Segue do fato de que a definição de $L_\alpha$ é por recursão em uma fórmula que é $\LDel{\ZF}{1}$. \cite{Drake} faz isto 
                 com mais cuidado, mas a demonstração não agrega muito a nossa discussão.
@@ -784,9 +785,15 @@
                 $\SET{x\in \bigcup X: \exists y\in X: x = \min{y}}$. Claramente existe, então está provado.\eop
             \end{theorem}
             \paragraph{}
-                Para provar a Hipótese Generalizada do Contínuo, precisamos de dois lemas antes:
-            \begin{lemma}{$\ZF+AC\vdash\forall\alpha>\omega:|L_\alpha| = |\alpha|}
-            \end{lemma}
+                Para provar a Hipótese Generalizada do Contínuo, primeiro, notemos que $\forall\sigma\geq\omega:|L_\sigma| = |\sigma|$.
+                Isto é feito indutivamente. Como $V_\omega = L_\omega$, e o primeiro é enumerável, para $\omega$ já temos. Então, para 
+                a etapa sucessora, adicionamos, no pior caso, 
+                $$|\omega\times L_\sigma^{<\omega}|=\omega|\bigcup_{n<\omega}L_\sigma^n| = \omega\bigcup_{n<\omega}|L_\sigma^n| = \omega|\sigma| = |\sigma|$$
+            \paragraph{}
+                Para a etapa limite, simplesmente $$|L_\lambda| = |\bigcup_{\alpha < \lambda}L_\alpha| = \bigcup_{\alpha<\lambda}|L_\alpha| = \bigcup_{\alpha<\lambda}|\alpha| = |\lambda|$$
+            \begin{theorem}{$L\vDash GCH$}
+                [Faltando]
+            \end{theorem}
             
 
 %\paragraph{}
