@@ -10,3 +10,117 @@
 
         \end{tikzpicture}
     \end{center}
+
+    \begin{definition}{$Sat_{\V{B}}$}
+            Vamos emprestar a notação de Drake,
+        $$ Sat(\V{B}, \varphi, f) $$ 
+        \paragraph{}
+            Passa a ser uma \textit{função}:
+        $$ Sat_{\V{B}}:\Phi\times{\V{B}}^{<\omega} \longrightarrow B$$
+        Definida por recursão na complexidade das fórmulas:
+        \paragraph{}
+            Se $B = \TUPLE{|B|}{\lor}{\land}{\neg}{1}{0}$, então
+        \begin{align*}
+            Sat(\V{B}, \FMLA{\varphi\land\psi}, f) &=      Sat(\V{B}, \FMLA{\varphi},f) \land Sat(\V{B}, \FMLA{\psi},f)\\
+            Sat(\V{B}, \FMLA{\varphi\lor\psi},  f) &=      Sat(\V{B}, \FMLA{\varphi},f) \lor  Sat(\V{B}, \FMLA{\psi},f)\\
+            Sat(\V{B}, \FMLA{\varphi\rar\psi},  f) &= \neg Sat(\V{B}, \FMLA{\varphi},f) \lor  Sat(\V{B}, \FMLA{\psi},f)\\
+            Sat(\V{B}, \FMLA{\neg\psi},         f) &=                                   \neg  Sat(\V{B}, \FMLA{\psi},f)\\
+            Sat(\V{B}, \FMLA{\forall x_i: \psi},f) &= \bigwedge_{x\in\V{B}}                   Sat(\V{B}, \psi, f_{[x_i\slash{x}]})\\
+            Sat(\V{B}, \FMLA{\exists x_i: \psi},f) &= \bigvee_{  x\in\V{B}}                   Sat(\V{B}, \psi, f_{[x_i\slash{x}]})
+        \end{align*}
+        \paragraph{}
+            Para as fórmulas atômicas temos um problema bem maior. 
+            O que tentávamos fazer acima era emular a definição 
+            de $\vDash$ para estruturas mas internamente. Entrentanto, 
+            como $\V{B}$ não é nem um pouco transitivo, a definição 
+            de $=$ e de $\in$ não pode ser a simples restrição das 
+            relações em $V$.
+        \paragraph{}
+            Queremos, como dissemos, representar objetos de um 
+            universo potencialmente diferente do universo base. 
+            Mas, veremos, há muitos representantes redundantes,
+            a relação de igualdade e de pertinência devem como 
+            que quocientar estes representantes e simplesmente 
+            identificar coisas que reconhecemos como diferentes
+            no nosso universo. De qualquer forma, define-se por
+            recursão:
+        $$ Sat(\V{B}, \FMLA{x\in y}, f) = \bigvee_{\hat z\in Dom(f[y])} (f[y])(\hat z)\land Sat(\V{B}, \FMLA{x = z}, f_{[z\slash\hat z]} )$$
+        \paragraph{}
+            Onde $f[y]$ é o elemento valorado como $y$ por $f$. 
+            Bom, ainda falta definir a igualdade, que usamos 
+            para definir pertinência.
+        \begin{align*}
+            Sat(\V{B}, &\FMLA{x = y}, f) = \\
+                &\left[\bigwedge_{\hat u \in Dom(f[x])} (f[x])(\hat u) \rar Sat(\V{B}, \FMLA{u \in y}, f_{[u\slash\hat u]}) \right] \land \\
+                &\left[\bigwedge_{\hat v \in Dom(f[y])} (f[y])(\hat v) \rar Sat(\V{B}, \FMLA{v \in x}, f_{[v\slash\hat v]}) \right]
+        \end{align*}
+    \end{definition}
+    \paragraph{}
+        O complicado desta definição é a forma amarrada que 
+        ela se dá: a recursão acontece de maneira estranha,
+        e precisamos mostrar que a relação da recursão é bem
+        fundanda. \cite{Bell} faz isto com algum detalhe, e,
+        por ser apenas uma tecnicalidade e não ilustra nada 
+        da teoria em si, não reporduziremos a curta prova de
+        que o que definimos acima é de fato função e existe,
+        antes de qualquer outra coisa.
+    \paragraph{}
+        Em termos de discussão que podemos fazer nesta etapa,
+        há alguns pontos particularmente interessantes: 
+        primeiramente, o motivo de exigirmos álgebras booleanas
+        \textit{completas} é que estes \textit{sups} e 
+        \textit{infs} precisam existir sempre.
+    \paragraph{}
+        Em segundo lugar, a definição de $Sat$, que funciona 
+        muito bem para fórmulas compostas, e faz mais ou menos 
+        o que se espera dela. Mas, nos casos de fórmulas 
+        atômicas, age de maneira estranha mas familiar:
+    \paragraph{}
+        Dois objetos de, digamos, ``${\V{B}}\slash{\tilde=}$''
+        são iguais quando seus representantes entram em uma 
+        sorte de acordo: $\V{B}$ acredita que se um representante
+        diz que um outro objeto pertence ao seu cliente, então 
+        o objeto pertence ao cliente do outro. E \textit{vice 
+        versa}. É fato que $\V{2}$ é essencialmente igual a $V$, 
+        assim, o que dá sabor a esta mistura é, realmente, $B$,
+        que permite que coisas ``mais ou menos'' pertençam a 
+        outras, \textit{etc}.
+    \paragraph{}
+        Uma discussão importante também é a dos morfismos de 
+        álgebras booleanas completas. Em parte por conta de 
+        propriedades futuras e importantes, mas também para 
+        nos familiarizarmos com a estrutura.
+
+    \begin{proposition}{Morfismos de Álgebras induzem morfismos entre $\V{B}$s}
+        Sejam $A$ e $B$ duas álgebras booleanas completas e seja 
+        $$\omega: A\longrightarrow B$$
+        Um morfismo de álgebras booleanas que preserva \textit{sups} arbitrários.
+        Define-se indutivamente uma série de funções compatíveis $\Omega_\alpha$:
+        Suponha que, dado um $\alpha$
+        $$[F:\bigcup_{\beta<\alpha}\V{A}_\beta\longrightarrow\V{B}] \land [F(x) = \varphi\circ x\circ F]$$
+        Então deixe 
+        \begin{align*}
+            \Omega_\alpha : &\V{A}_\alpha \longrightarrow \V{B}\\
+                            & x           \longmapsto \begin{cases}
+                F(x),                 \text{ caso } \exists\beta<\alpha:x\in\V{A}_\beta\\
+                \omega\circ x\circ F, \text{ caso contrário.}
+            \end{cases}
+        \end{align*}
+        \paragraph{}
+            Com $\Omega_\alpha$ assim definido, podemos iterar partindo de $\emptyset$ 
+            --- a função vazia --- obtendo uma sequência $\Omega_\alpha$ de funções.
+            Elas vão ser, por construção, compatíveis, então consideramos a colagem:
+            $$\Omega = \bigcup_{\alpha\in Ord}\Omega_\alpha$$
+        \paragraph{}
+            Fica claro que ela é de $\V{A}$ em $\V{B}$. Veremos mais a diante que 
+            este mapa tem uma sorte de qualidades que dependem de quão decente é 
+            nosso morfismo $\omega$. Ele se relaciona com a, agora familiar, 
+            Hierarquia de Lévy, submodelos, entre outras coisas.\eop
+    \end{proposition}
+    \paragraph{}
+        De qualquer forma, nosso objetivo inicial é mostrar que, para qualquer 
+        álgebra booleana completa $B$, temos que $\TUPLE{\V{B}}{\tilde =}{\tilde \in}\vDash\ZF$
+        onde 
+        $$\tilde =   = \SET{\TUPLE{f}{g}\in{\V{B}}\times{\V{B}}: Sat(\V{B}, \FMLA{x  = y}, [f,g])}$$
+        $$\tilde \in = \SET{\TUPLE{f}{g}\in{\V{B}}\times{\V{B}}: Sat(\V{B}, \FMLA{x\in y}, [f,g])}$$
+    

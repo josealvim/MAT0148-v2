@@ -1,4 +1,4 @@
-\chapter{$V^{(B)}$}
+\chapter{Modelos a Valores Booleanos}
 %    \epigraph{\justify
 %            A successful attempt to express 
 %            logical propositions by symbols, 
@@ -16,139 +16,198 @@
         com propriedades diferentes de $L$, 
         por exemplo, onde não valha o Axioma 
         da Escolha, ou a Hipótese do Contínuo.
-    \begin{definition}{$ V^{(B)} $}
-        Seja $B$ uma Álgebra Booleana Completa
-        $$ V^{(B)}_{\alpha} = \SET{ f : \exists\beta<\alpha:\exists D\subseteq V^{(B)}_{\beta} : f\in D^B } $$
-        $$ V^{(B)} = \SET{f : \exists\alpha: f\in V^{(B)}_{\alpha}} $$
+    \paragraph{}
+        Por questões cabalísticas, não podemos 
+        de fato definir a verdade do $V$ de 
+        maneira internalizada satisfatória
+        \cite{Tarski}. E, por consequência,
+        não é possível fazê-lo para $V^{(B)}$
+        inteiro --- pois poderiamos trazer de 
+        volta a definição para $V$. Nossa 
+        abordagem é fazer a teoria de modelos 
+        booleanos em submodelos base.
+    \paragraph{}
+        Ao longo deste capítulo, $B$ e $B'$ 
+        serão álgebras Booleanas completas, 
+        $B$ será munida das operações 
+        $*$ para o \textit{meet}, $+$ para 
+        o \textit{join}, $-$ para o 
+        complemento e $\leq$ para a ordem 
+        induzida. A implicação escreveremos 
+        dupla $\RAR$.
+    \begin{definition}{$ M^{(B)} $}
+        Seja $B$ uma Álgebra Booleana Completa, 
+        e seja $M\in V$ um conjunto transitivo 
+        que modela $\ZF$.
+
+        $$ \M{B}_{\alpha} = \SET{ f : \exists\beta\in M:\beta<\alpha\land\exists D\subseteq \M{B}_{\beta} : f\in D^B } $$
+        $$ \M{B} = \SET{f : \exists\alpha: f\in \M{B}_{\alpha}} $$
     \end{definition}
     \paragraph{}
-        Esta classe que definimos acima é 
-        uma espécie de homogenização da 
-        ideia de função característica. No 
-        sentido de que a função $\chi$ 
-        leva um conjunto em um representante
-        de determinada classe de funções: as 
-        funções características daquele 
-        conjunto. O que estamos fazendo em 
-        $V^{(B)}$ é criar um tipo 
-        estratificado que, cujos membros são 
-        funções dos membros anteriores em uma 
-        álgebra booleana completa dada.
+        Acima definimos um conjunto (pois a partir 
+        de certo $\alpha$ não se adiciona mais 
+        conjuntos) onde cada um de seus elementos 
+        é uma função de um pedaço de um nível 
+        anterior $B$-valorada.
     \paragraph{}
         A maneira de pensar sobre esta classe
         é que seus membros são representantes 
-        de objetos --- que podem até não estar
-        no modelo base --- cujas propriedades 
-        queremos capturar. Cada representante
-        decide \textit{quanto} o representado 
-        por membros anteriores \textit{pertence}
-        ao conjunto que ele representa em um
-        determinado modelo diferente.
+        de objetos ideais cujas propriedades 
+        queremos capturar dentro da teoria de $\ZF$. 
+        Cada representante decide 
+        \textit{quanto} os objetos representados 
+        por anteriores \textit{pertence}
+        ao objeto que ele representa.
     \paragraph{}
-        Trivialmente $\alpha<\beta\bim\V{B}_\alpha\subset\V{B}_\beta$
-    \begin{definition}{$Sat_{\V{B}}$}
-            Vamos emprestar a notação de Drake,
-        $$ Sat(\V{B}, \varphi, f) $$ 
-        \paragraph{}
-            Passa a ser uma \textit{função}:
-        $$ Sat_{\V{B}}:\Phi\times{\V{B}}^{<\omega} \longrightarrow B$$
-        Definida por recursão na complexidade das fórmulas:
-        \paragraph{}
-            Se $B = \TUPLE{|B|}{\lor}{\land}{\neg}{1}{0}$, então
-        \begin{align*}
-            Sat(\V{B}, \FMLA{\varphi\land\psi}, f) &=      Sat(\V{B}, \FMLA{\varphi},f) \land Sat(\V{B}, \FMLA{\psi},f)\\
-            Sat(\V{B}, \FMLA{\varphi\lor\psi},  f) &=      Sat(\V{B}, \FMLA{\varphi},f) \lor  Sat(\V{B}, \FMLA{\psi},f)\\
-            Sat(\V{B}, \FMLA{\varphi\rar\psi},  f) &= \neg Sat(\V{B}, \FMLA{\varphi},f) \lor  Sat(\V{B}, \FMLA{\psi},f)\\
-            Sat(\V{B}, \FMLA{\neg\psi},         f) &=                                   \neg  Sat(\V{B}, \FMLA{\psi},f)\\
-            Sat(\V{B}, \FMLA{\forall x_i: \psi},f) &= \bigwedge_{x\in\V{B}}                   Sat(\V{B}, \psi, f_{[x_i\slash{x}]})\\
-            Sat(\V{B}, \FMLA{\exists x_i: \psi},f) &= \bigvee_{  x\in\V{B}}                   Sat(\V{B}, \psi, f_{[x_i\slash{x}]})
-        \end{align*}
-        \paragraph{}
-            Para as fórmulas atômicas temos um problema bem maior. 
-            O que tentávamos fazer acima era emular a definição 
-            de $\vDash$ para estruturas mas internamente. Entrentanto, 
-            como $\V{B}$ não é nem um pouco transitivo, a definição 
-            de $=$ e de $\in$ não pode ser a simples restrição das 
-            relações em $V$.
-        \paragraph{}
-            Queremos, como dissemos, representar objetos de um 
-            universo potencialmente diferente do universo base. 
-            Mas, veremos, há muitos representantes redundantes,
-            a relação de igualdade e de pertinência devem como 
-            que quocientar estes representantes e simplesmente 
-            identificar coisas que reconhecemos como diferentes
-            no nosso universo. De qualquer forma, define-se por
-            recursão:
-        $$ Sat(\V{B}, \FMLA{x\in y}, f) = \bigvee_{\hat z\in Dom(f[y])} (f[y])(\hat z)\land Sat(\V{B}, \FMLA{x = z}, f_{[z\slash\hat z]} )$$
-        \paragraph{}
-            Onde $f[y]$ é o elemento valorado como $y$ por $f$. 
-            Bom, ainda falta definir a igualdade, que usamos 
-            para definir pertinência.
-        \begin{align*}
-            Sat(\V{B}, &\FMLA{x = y}, f) = \\
-                &\left[\bigwedge_{\hat u \in Dom(f[x])} (f[x])(\hat u) \rar Sat(\V{B}, \FMLA{u \in y}, f_{[u\slash\hat u]}) \right] \land \\
-                &\left[\bigwedge_{\hat v \in Dom(f[y])} (f[y])(\hat v) \rar Sat(\V{B}, \FMLA{v \in x}, f_{[v\slash\hat v]}) \right]
-        \end{align*}
+        Trivialmente $\alpha<\beta\bim\M{B}_\alpha\subset\M{B}_\beta$
+    \paragraph{}
+        Já mencionamos que objetos em $\M{B}$ 
+        representam objetos ideais, mas não 
+        explicamos exatamente o que queremos 
+        dizer com isso. É evidente que $\M{B}$
+        não é transitivo, nem tem um conjunto 
+        indutivo, logo não há esperança de 
+        $\M{B}$ ser modelo transitivo de $\ZF$.
+    \paragraph{}
+        Mas, com uma relação não-\textit{standard}
+        de pertinência e uma igualdade 
+        adequadamente definida, é possível que 
+        seja um modelo de $\ZF$. Como estamos 
+        distorcendo a igualdade, os elementos de 
+        $\M{B}$ não são os objetos do modelo, 
+        estritamente falando, mas são coisas 
+        habitando classes de equivalência que, 
+        estas sim, são os verdadeiros objetos 
+        do modelo.
+    \paragraph{}
+        Vamos, pois, definir uma ($B$) medida 
+        de igualdade e de pertinência de maneira 
+        recursiva: Primeiro considere a relação
+    $$ \TUPLE{a}{b} \prec \TUPLE{\alpha}{\beta} \bim [a = \alpha \land b\in Dom(\beta)] \lor [a\in Dom(\alpha) \land b = \beta] $$
+    \paragraph{}
+        Queremos mostrar que, sobre 
+        $\mathbb{M} = \M{B}\times\M{B}$, 
+        esta relação é bem fundada --- 
+        isto é, todo subconjunto de 
+        $\mathbb{M}$ tem um elemento $\prec$-minimal 
+        e $\prec$ é ``pequeno à esquerda''.
+    \begin{lemma}{$\prec$ é Bem Fundada}
+        Seja $B$ álgebra Booleana Completa, $M$ um 
+        modelo interno transitivo de $\ZF$, então 
+        $\prec$ é \textit{set-like} e minimalizável em 
+        $\mathbb{M} = \M{B}\times\M{B}$.
+        \begin{proof}
+            \paragraph{}
+                Primeiro lidemos com \textit{minimalizável},
+                que significa dizer há um elemento minimal 
+                em qualquer subconjunto:
+            $$ \forall X \subseteq \mathbb{M}:\exists x_0 \in \mathbb{M}: \forall x\in X: \neg[x \prec x_0]$$
+            \paragraph{}
+                Como todo membro de $\M{B}$ surgiu neste conjunto em alguma etapa ordinal, seja $\rho_B$
+                a função que associa a cada membro de $\M{B}$ o ordinal mínimo cuja etapa o contém. Dado 
+                $\rho_B$ queremos extender esta função para uma útil em $\mathbb{M}$, no caso: 
+                $\rho\TUPLE{a}{b}=\min\SET{\rho_B(a)}{\rho_B(b)}$.
+            \paragraph{}
+                Considere, pois, o conjunto de ordinais correspondente à imagem de $\mathbb{M}$ por $\rho$,
+                este conjunto tem um mínimo $\gamma$ que é atingido por algum $\TUPLE{a}{b}\in\mathbb{M}$.
+            \paragraph{}
+                Seja, então, $\TUPLE{\alpha}{\beta}\in\mathbb{M}$
+            \begin{prooftree}
+                \AxiomC{$\scriptstyle[\alpha = a \land \beta \in Dom(b)]$ }
+                \UnaryInfC{$\scriptstyle[\rho_B(\alpha) = \rho_B(a)] \land [\rho_B (\beta)< \rho_B(b)]$}
+                \UnaryInfC{$\scriptstyle\rho \TUPLE{\alpha}{\beta} < \gamma$}
+                
+                \AxiomC{$\TUPLE{\alpha}{\beta} \prec \TUPLE{a}{b}$}
+                \UnaryInfC{$\scriptstyle[\alpha = a \land \beta \in Dom(b)] \lor [\alpha \in Dom(a) \land \beta = b]$}
+                
+                \AxiomC{$\scriptstyle[\alpha \in Dom (a)\land\beta = b ]$ }
+                \UnaryInfC{$\scriptstyle[\rho_B(\alpha) < \rho_B(a)] \land [\rho_B (\beta)= \rho_B(b)]$}
+                \UnaryInfC{$\scriptstyle\rho \TUPLE{\alpha}{\beta} < \gamma$}
+
+                \BinaryInfC{$\scriptstyle[\alpha = a \land \beta \in Dom(b)] \lor [\rho \TUPLE{\alpha}{\beta} < \gamma]$}
+                \BinaryInfC{$\scriptstyle[\rho \TUPLE{\alpha}{\beta} < \gamma] \lor [\rho \TUPLE{\alpha}{\beta} < \gamma]$}
+                \UnaryInfC{$\scriptstyle\rho \TUPLE{\alpha}{\beta} < \gamma$}
+                \UnaryInfC{$\bot$}
+            \end{prooftree}
+            \paragraph{}
+                Como se buscava, provamos que $\neg(\TUPLE{\alpha}{\beta} \prec \TUPLE{a}{b})$.\eop
+            \paragraph{}
+                Quanto a \textit{set-like}, que significa que a classe dos objetos menores que $x$ é um conjunto:
+            $$\forall x\in \mathbb{M}:\exists X\subseteq\mathbb{M}: X = \SET{t : t \prec x}$$
+            \paragraph{}
+                É simples: $\mathbb{M}$ é conjunto, e se --- dado um $x$ dentro de $\mathbb{M}$ --- um $y$ é tal que 
+                $y\prec x$ então, $y$ --- pela definição de $\prec$ deverá estar em $\mathbb{M}$ também.\eop
+        \end{proof}
+    \end{lemma}
+    \paragraph{}
+        Assim temos provado que esta relação auxiliar que definimos é bem fundada em qualquer $\M{B}$. Podemos 
+        então, definir:
+    \begin{align*}
+        F(\langle{a},{b}\rangle, f) ={{\langle}}&\bigwedge_{x\in Dom(b)}[b(x)\RAR \pi_2\circ f(\TUPLE{x}{b})]*\bigwedge_{y\in Dom(a)}[a(y)\RAR \pi_3\circ f(\TUPLE{y}{a})],\\
+            &\bigvee_{  x\in Dom(b)}[b(x)*    \pi_1\circ f(\TUPLE{a}{x})],\\
+            &\bigvee_{  x\in Dom(a)}[a(x)*    \pi_1\circ f(\TUPLE{x}{b})]{\rangle}
+    \end{align*}
+    \paragraph{}
+        Onde $\pi_i$ são as projeções usuais de \textit{tuplas}.
+    \paragraph{}
+        Pelo teorema da recursão transfinita, existe uma (única) $G$ função de domínio $\mathbb{M}=\M{B}\times\M{B}$ 
+        tal que:
+    $$\forall x\in\mathbb{M}:G(x) = F(x,G\restriction\SET{y: y \prec x})$$
+    \begin{definition}{$B$-medidas de igualdade e pertinência}
+        Para cada álgebra Booleana Completa $B$, teremos uma $G$ associada determinada pelo processo acima, definimos,
+        então definimos $\Min{}$, que é a $B$ medida de pertiência em $\M{B}$ e $\Meq$, que é a medida de igualdade de 
+        dois membros de $\M{B}$.
+        $$ a \Meq b = \pi_1 \circ G\TUPLE{a}{b} = \left[\bigwedge_{x\in Dom(a)}a(x)\RAR (x\Min b)\right]*\left[\bigwedge_{y\in Dom(b)}b(y)\RAR (y\Min a)\right]$$
+        $$ a \Min b = \pi_2 \circ G\TUPLE{a}{b} = \bigvee_{t\in Dom(b)} b(t)*(a\approx t)$$
     \end{definition}
     \paragraph{}
-        O complicado desta definição é a forma amarrada que 
-        ela se dá: a recursão acontece de maneira estranha,
-        e precisamos mostrar que a relação da recursão é bem
-        fundanda. \cite{Bell} faz isto com algum detalhe, e,
-        por ser apenas uma tecnicalidade e não ilustra nada 
-        da teoria em si, não reporduziremos a curta prova de
-        que o que definimos acima é de fato função e existe,
-        antes de qualquer outra coisa.
+        De fato o que fizemos foi uma dupla-recursão transfinita: As coordenadas da tripla $G(x)$ representam 
+        ``$\TUPLE{x_1 = x_2}{x_1 \in x_2}{x_1 \in x_2}$'' e precisamos destes valores para em níveis anteriores 
+        para definir no atual nível.
     \paragraph{}
-        Em termos de discussão que podemos fazer nesta etapa,
-        há alguns pontos particularmente interessantes: 
-        primeiramente, o motivo de exigirmos álgebras booleanas
-        \textit{completas} é que estes \textit{sups} e 
-        \textit{infs} precisam existir sempre.
-    \paragraph{}
-        Em segundo lugar, a definição de $Sat$, que funciona 
-        muito bem para fórmulas compostas, e faz mais ou menos 
-        o que se espera dela. Mas, nos casos de fórmulas 
-        atômicas, age de maneira estranha mas familiar:
-    \paragraph{}
-        Dois objetos de, digamos, ``${\V{B}}\slash{\tilde=}$''
-        são iguais quando seus representantes entram em uma 
-        sorte de acordo: $\V{B}$ acredita que se um representante
-        diz que um outro objeto pertence ao seu cliente, então 
-        o objeto pertence ao cliente do outro. E \textit{vice 
-        versa}. É fato que $\V{2}$ é essencialmente igual a $V$, 
-        assim, o que dá sabor a esta mistura é, realmente, $B$,
-        que permite que coisas ``mais ou menos'' pertençam a 
-        outras, \textit{etc}.
-    \paragraph{}
-        Uma discussão importante também é a dos morfismos de 
-        álgebras booleanas completas. Em parte por conta de 
-        propriedades futuras e importantes, mas também para 
-        nos familiarizarmos com a estrutura.
+        Provaremos que
+    $$ a \sim b \bim a\Meq b \in \mathfrak{F}$$ 
+    é uma relação de equivalência para qualquer filtro $\mathfrak{F}$ em $B$. Mas antes, alguns resultados preliminares.
+    \begin{proposition}{Propriedades das medidas de $\M{B}$}
+        \begin{enumerate}
+            \item $ x\Meq x = 1$;
+            \item $ x\in Dom(y) \rar y(x) \leq x\Min y$, no sentido da ordem $\leq$ de $B$;
+            \item $ x\Meq y = y \Meq x$;
+            \item $[x\Meq y] * [y\Meq z] \leq [x\Meq z]$;
+            \item $[x\Meq y] * [x\Min z] \leq [y\Meq z]$;
+            \item $[x\Meq y] * [x\Min z] \leq [y\Meq z]$;
+        \end{enumerate}
+        \begin{proof}
 
-    \begin{proposition}{Morfismos de Álgebras induzem morfismos entre $\V{B}$s}
-        Sejam $A$ e $B$ duas álgebras booleanas completas e seja 
-        $$\omega: A\longrightarrow B$$
-        Um morfismo de álgebras booleanas que preserva \textit{sups} arbitrários.
-        Define-se indutivamente uma série de funções compatíveis $\Omega_\alpha$:
-        Suponha que, dado um $\alpha$
-        $$[F:\bigcup_{\beta<\alpha}\V{A}_\beta\longrightarrow\V{B}] \land [F(x) = \varphi\circ x\circ F]$$
-        Então deixe 
-        \begin{align*}
-            \Omega_\alpha : &\V{A}_\alpha \longrightarrow \V{B}\\
-                            & x           \longmapsto \begin{cases}
-                F(x),                 \text{ caso } \exists\beta<\alpha:x\in\V{A}_\beta\\
-                \omega\circ x\circ F, \text{ caso contrário.}
-            \end{cases}
-        \end{align*}
-        \paragraph{}
-            Com $\Omega_\alpha$ assim definido, podemos iterar partindo de $\emptyset$ 
-            --- a função vazia --- obtendo uma sequência $\Omega_\alpha$ de funções.
-            Elas vão ser, por construção, compatíveis, então consideramos a colagem:
-            $$\Omega = \bigcup_{\alpha\in Ord}\Omega_\alpha$$
-        \paragraph{}
-            Fica claro que ela é de $\V{A}$ em $\V{B}$. Veremos mais a diante que 
-            este mapa tem uma sorte de qualidades que dependem de quão decente é 
-            nosso morfismo $\omega$. Ele se relaciona com a, agora familiar, 
-            Hierarquia de Lévy, submodelos, entre outras coisas.
+            ($ a\Meq a = 1$):
+            $$a\Meq a = \left[\bigwedge_{x\in Dom(a)}a(x)\RAR (x\Min a)\right]*\left[\bigwedge_{y\in Dom(a)}a(y)\RAR (y\Min a)\right] = $$
+            $$a\Meq a = \bigwedge_{x\in Dom(a)}a(x)\RAR (x\Min a)$$
+            \paragraph{}
+                Assumindo a hípotese indutiva, que $\forall x\in Dom(a):x\Meq x = 1$, então:
+            $$ x\Min a = \bigvee_{t\in Dom(a)} a(t)*(x\Meq t) \geq a(x)*(x\Meq x) = a(x)$$
+            \paragraph{}
+                Substituindo acima temos:
+            $$a\Meq a = \bigwedge_{x\in Dom(a)}a(x)\RAR (x\Min a) = \bigwedge_{x\in Dom(a)}a(x)\RAR a(x) = 1$$\eop
+        \end{proof}
+        \begin{proof}
+            
+            ($ y(x) \leq x\Min y$):
+            \paragraph{}
+                Como $x\in Dom(y)$,
+            $$ x\Min y = \bigvee_{t\in Dom(y)} y(t)*(x\Meq t)\geq y(x)*(x\Meq x) = 1$$\eop
+        \end{proof}
+        \begin{proof}
+            
+            ($a\Meq b = b \Meq a$):
+            \begin{align*}
+                a\Meq b = \left[\bigwedge_{x\in Dom(a)}a(x)\RAR (x\Min b)\right]&*\left[\bigwedge_{y\in Dom(b)}b(y)\RAR (y\Min a)\right] =\\
+                =\left[\bigwedge_{y\in Dom(b)}b(y)\RAR (y\Min a)\right]&*\left[\bigwedge_{x\in Dom(a)}a(x)\RAR (x\Min b)\right] = b\Meq a
+            \end{align*}\eop
+        \end{proof}
+        \begin{proof}
+            
+            ($[x\Meq y] * [y\Meq z] \leq [x\Meq z]$):
+            \paragraph{}
+                Basta provar que $[x\Meq y] \leq [y\Meq z] \RAR [x\Meq z]$
+        \end{proof}
     \end{proposition}
