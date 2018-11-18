@@ -173,10 +173,12 @@
             \item $ x\Meq x = 1$;
             \item $ x\in Dom(y) \rar y(x) \leq x\Min y$, no sentido da ordem $\leq$ de $B$;
             \item $ x\Meq y = y \Meq x$;
+            \item $[x\Meq y] *  x(u) \leq [u\Min y]$;
             \item $[x\Meq y] * [y\Meq z] \leq [x\Meq z]$;
             \item $[x\Meq y] * [x\Min z] \leq [y\Meq z]$;
             \item $[x\Meq y] * [x\Min z] \leq [y\Meq z]$;
         \end{enumerate}
+        %%
         \begin{proof}
 
             ($ a\Meq a = 1$):
@@ -189,6 +191,7 @@
                 Substituindo acima temos:
             $$a\Meq a = \bigwedge_{x\in Dom(a)}a(x)\RAR (x\Min a) = \bigwedge_{x\in Dom(a)}a(x)\RAR a(x) = 1$$\eop
         \end{proof}
+        %%
         \begin{proof}
             
             ($ y(x) \leq x\Min y$):
@@ -196,6 +199,7 @@
                 Como $x\in Dom(y)$,
             $$ x\Min y = \bigvee_{t\in Dom(y)} y(t)*(x\Meq t)\geq y(x)*(x\Meq x) = 1$$\eop
         \end{proof}
+        %%
         \begin{proof}
             
             ($a\Meq b = b \Meq a$):
@@ -204,10 +208,62 @@
                 =\left[\bigwedge_{y\in Dom(b)}b(y)\RAR (y\Min a)\right]&*\left[\bigwedge_{x\in Dom(a)}a(x)\RAR (x\Min b)\right] = b\Meq a
             \end{align*}\eop
         \end{proof}
+        %%
+        \begin{proof}
+            
+            ($[x\Meq y] *  x(u) \leq [u\Min y]$):
+            \begin{prooftree}
+                \AxiomC{$x \Meq y = \bigwedge_{i, j}(x(i)\RAR[i\Min y])*(y(j)\RAR[j\Min x])$ }
+                \UnaryInfC{$[x \Meq y]*x(u) \leq x(u) * (x(u)\RAR[u\Min y])*\bigwedge_{j}(y(j)\RAR[j\Min x])$}
+                \UnaryInfC{$[x \Meq y]*x(u) \leq x(u) * (x(u)\RAR[u\Min y])$}
+                \UnaryInfC{$[x \Meq y]*x(u) \leq u\Min y$}
+            \end{prooftree}\eop
+        \end{proof}
+        %%
         \begin{proof}
             
             ($[x\Meq y] * [y\Meq z] \leq [x\Meq z]$):
             \paragraph{}
-                Basta provar que $[x\Meq y] \leq [y\Meq z] \RAR [x\Meq z]$
+                Sejam $u,v,w\in\M{B}$. Vamos assumir, como passo indutivo, que
+            $$ \forall x\in Dom(u):\forall y,z: (x\Meq y) * (y\Meq z) \leq (x\Meq z)$$
+            \paragraph{}
+                Restringindo $y\in Dom(v), z\in Dom(w)$ temos:
+            \begin{prooftree}
+                \AxiomC{$(x\Meq y) * (y\Meq z) \leq (x\Meq z)$}
+                \UnaryInfC{$(x\Meq y) * (y\Meq z) * w(z) \leq (x\Meq z) * w(z)$}
+                \UnaryInfC{$\bigvee_{z\in Dom(w)}(x\Meq y) * (y\Meq z) * w(z) \leq \bigvee_{z\in Dom(w)}(x\Meq z) * w(z)$}
+                \UnaryInfC{$(x\Meq y) * (y\Min w) \leq (x\Min w)$}
+            \end{prooftree}
+            \paragraph{}
+                No entanto, temos, nas condições da hipótese indutiva, o seguinte resultado auxiliar:
+            \begin{prooftree}
+                \AxiomC{$a = x$, Hipótese Indutiva}
+                \AxiomC{$[a \Meq b]*a(d)\leq [d\Min b]$}
+                \UnaryInfC{$[a \Meq b]*[c\Meq d]*a(d)\leq[d\Min b]*[c\Meq d]$}
+                \UnaryInfC{$[a \Meq b]*[c\Meq d]*a(d)\leq\bigvee_{z} w(z)*[d \Meq z]*[c\Meq d]$}
+                \BinaryInfC{$[a \Meq b]*[c\Meq d]*a(d)\leq\bigvee_{z} w(z)*[c\Meq z]$}
+                \UnaryInfC{$[a \Meq b]*[c\Meq d]*a(d)\leq[c\Min b]$}
+                \UnaryInfC{$[x \Meq y]*[u\Meq v]*x(u)\leq[v\Min y]$}
+            \end{prooftree}
+            \paragraph{}
+                Tomando o supremo sobre $u$ no domínio de $x$, temos:
+            $$[x \Meq y]*[v\Min x]\leq[v\Min y]$$
+            \paragraph{}
+                Temos também que
+            $$[x \Meq y] * x(u) \leq [u\Min y]$$
+            \begin{prooftree}
+                \AxiomC{$[x \Meq y] * x(u) \leq [u\Min y]$}
+                \UnaryInfC{$[x \Meq y]*[y \Meq z] * x(u) \leq [u\Min y] * [y \Meq z]$}
+                \UnaryInfC{$[x \Meq y]*[y \Meq z] * x(u) \leq [u\Min z] $}
+                \UnaryInfC{$[x \Meq y]*[y \Meq z] \leq x(u)\RAR[u\Min z] $}
+                \UnaryInfC{$[x \Meq y]*[y \Meq z] \leq\bigwedge_u x(u)\RAR[u\Min z] $}
+            \end{prooftree}
+
+            \paragraph{}
+                Graças à hipótese indutiva, temos:
+            $$[x \Meq y]*[y \Meq z] \leq\bigwedge_v z(v)\RAR[v\Min x] $$
+            \paragraph{}
+                E, logo, 
+            $$[x \Meq y]*[y \Meq z]\leq [x \Meq z]$$\eop
         \end{proof}
     \end{proposition}
