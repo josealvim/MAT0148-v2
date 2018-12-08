@@ -155,115 +155,154 @@
     $$\forall x\in\mathbb{M}:G(x) = F(x,G\restriction\SET{y: y \prec x})$$
     \begin{definition}{$B$-medidas de igualdade e pertinência}
         Para cada álgebra Booleana Completa $B$, teremos uma $G$ associada determinada pelo processo acima, definimos,
-        então definimos $\Min{}$, que é a $B$ medida de pertiência em $\M{B}$ e $\Meq$, que é a medida de igualdade de 
+        então definimos $\Min{\_}{\_}$, que é a $B$ medida de pertiência em $\M{B}$ e $\Meq{\_}{\_}$, que é a medida de igualdade de 
         dois membros de $\M{B}$.
-        $$ a \Meq b = \pi_1 \circ G\TUPLE{a}{b} = \left[\bigwedge_{x\in Dom(a)}a(x)\RAR (x\Min b)\right]*\left[\bigwedge_{y\in Dom(b)}b(y)\RAR (y\Min a)\right]$$
-        $$ a \Min b = \pi_2 \circ G\TUPLE{a}{b} = \bigvee_{t\in Dom(b)} b(t)*(a\approx t)$$
+        $$ \Meq{a}{b} = \pi_1 \circ G\TUPLE{a}{b} = \left[\bigwedge_{x\in Dom(a)}a(x)\RAR (x\Min b)\right]*\left[\bigwedge_{y\in Dom(b)}b(y)\RAR (y\Min a)\right]$$
+        $$ \Min{a}{b} = \pi_2 \circ G\TUPLE{a}{b} = \bigvee_{t\in Dom(b)} b(t)*(a\approx t)$$
     \end{definition}
     \paragraph{}
         De fato o que fizemos foi uma dupla-recursão transfinita: As coordenadas da tripla $G(x)$ representam 
         ``$\TUPLE{x_1 = x_2}{x_1 \in x_2}{x_1 \in x_2}$'' e precisamos destes valores para em níveis anteriores 
         para definir no atual nível.
-    \paragraph{}
-        Provaremos que
-    $$ a \sim b \bim a\Meq b \in \mathfrak{F}$$ 
-    é uma relação de equivalência para qualquer filtro $\mathfrak{F}$ em $B$. Mas antes, alguns resultados preliminares.
     \begin{proposition}{Propriedades das medidas de $\M{B}$}
         \begin{enumerate}
-            \item $ x\Meq x = 1$;
-            \item $ x\in Dom(y) \rar y(x) \leq x\Min y$, no sentido da ordem $\leq$ de $B$;
-            \item $ x\Meq y = y \Meq x$;
-            \item $[x\Meq y] *  x(u) \leq [u\Min y]$;
-            \item $[x\Meq y] * [y\Meq z] \leq [x\Meq z]$;
-            \item $[x\Meq y] * [x\Min z] \leq [y\Meq z]$;
-            \item $[x\Meq y] * [x\Min z] \leq [y\Meq z]$;
+            \item $ \Meq{x}{x} = 1$;
+            \item $ \forall x\in Dom(y): y(x) \RAR \Min{x}{y} = 1$, no sentido da ordem $\leq$ de $B$;
+            \item $ \Meq{x}{y} = \Meq{y}{x}$;
+            \item $\Meq{x}{y} *  x(u)      \leq \Min{u}{y}$;
+            \item $\Meq{x}{y} * \Meq{y}{z} \leq \Meq{x}{z}$;
+            \item $\Meq{x}{y} * \Min{x}{z} \leq \Meq{y}{z}$;
+            \item $\Meq{x}{y} * \Min{x}{z} \leq \Meq{y}{z}$;
         \end{enumerate}
         %%
         \begin{proof}
 
-            ($ a\Meq a = 1$):
-            $$a\Meq a = \left[\bigwedge_{x\in Dom(a)}a(x)\RAR (x\Min a)\right]*\left[\bigwedge_{y\in Dom(a)}a(y)\RAR (y\Min a)\right] = $$
-            $$a\Meq a = \bigwedge_{x\in Dom(a)}a(x)\RAR (x\Min a)$$
+            ($\Meq{a}{a} = 1$):
+            $$\Meq{a}{a} = \left[\bigwedge_{x\in Dom(a)} a(x)\RAR (\Min{x}{a})\right]*
+                           \left[\bigwedge_{y\in Dom(a)} a(y)\RAR (\Min{y}{a})\right] = $$
+            $$\Meq{a}{a} =       \bigwedge_{x\in Dom(a)} a(x)\RAR (\Min{x}{a})$$
             \paragraph{}
                 Assumindo a hípotese indutiva, que $\forall x\in Dom(a):x\Meq x = 1$, então:
-            $$ x\Min a = \bigvee_{t\in Dom(a)} a(t)*(x\Meq t) \geq a(x)*(x\Meq x) = a(x)$$
+            $$\Min{x}{a} =       \bigvee_{  t\in Dom(a)} a(t)*    (\Meq{x}{t}) \geq a(x)*(\Meq{x}{x}) = a(x)$$
             \paragraph{}
                 Substituindo acima temos:
-            $$a\Meq a = \bigwedge_{x\in Dom(a)}a(x)\RAR (x\Min a) = \bigwedge_{x\in Dom(a)}a(x)\RAR a(x) = 1$$\eop
+            $$\Meq{a}{a} =       \bigwedge_{x\in Dom(a)} a(x)\RAR (\Min{x}{a}) = \bigwedge_{x\in Dom(a)}a(x)\RAR a(x) = 1$$\eop
         \end{proof}
         %%
         \begin{proof}
             
-            ($ y(x) \leq x\Min y$):
+            ($ y(x) \leq \Min{x}{y}$):
             \paragraph{}
                 Como $x\in Dom(y)$,
-            $$ x\Min y = \bigvee_{t\in Dom(y)} y(t)*(x\Meq t)\geq y(x)*(x\Meq x) = 1$$\eop
+            $$ \Min{x}{y} = \bigvee_{t\in Dom(y)} y(t)*(\Meq{x}{t})\geq y(x)*(\Meq{x}{x}) = 1$$\eop
         \end{proof}
         %%
         \begin{proof}
             
-            ($a\Meq b = b \Meq a$):
+            ($\Meq{a}{b} = \Meq{b}{a}$):
             \begin{align*}
-                a\Meq b = \left[\bigwedge_{x\in Dom(a)}a(x)\RAR (x\Min b)\right]&*\left[\bigwedge_{y\in Dom(b)}b(y)\RAR (y\Min a)\right] =\\
-                =\left[\bigwedge_{y\in Dom(b)}b(y)\RAR (y\Min a)\right]&*\left[\bigwedge_{x\in Dom(a)}a(x)\RAR (x\Min b)\right] = b\Meq a
+                \Meq{a}{b}  = \left[\bigwedge_{x\in Dom(a)}a(x)\RAR (\Min{x}{b})\right]&*\left[\bigwedge_{y\in Dom(b)}b(y)\RAR (\Min{y}{a})\right] = \\
+                            = \left[\bigwedge_{y\in Dom(b)}b(y)\RAR (\Min{y}{a})\right]&*\left[\bigwedge_{x\in Dom(a)}a(x)\RAR (\Min{x}{b})\right] = \Meq{b}{a}
             \end{align*}\eop
         \end{proof}
         %%
         \begin{proof}
             
-            ($[x\Meq y] *  x(u) \leq [u\Min y]$):
+            ($[\Meq{x}{y}] *  x(u) \leq [\Min{u}{y}]$):
             \begin{prooftree}
-                \AxiomC{$x \Meq y = \bigwedge_{i, j}(x(i)\RAR[i\Min y])*(y(j)\RAR[j\Min x])$ }
-                \UnaryInfC{$[x \Meq y]*x(u) \leq x(u) * (x(u)\RAR[u\Min y])*\bigwedge_{j}(y(j)\RAR[j\Min x])$}
-                \UnaryInfC{$[x \Meq y]*x(u) \leq x(u) * (x(u)\RAR[u\Min y])$}
-                \UnaryInfC{$[x \Meq y]*x(u) \leq u\Min y$}
+                \AxiomC{   $\Meq{x}{y} =  \bigwedge_{i, j}(x(i)\RAR[\Min{i}{y}])*(y(j)\RAR[\Min{j}{x}])$ }
+                \UnaryInfC{$\Meq{x}{y} * x(u) \leq x(u) * (x(u)\RAR[\Min{u}{y}])*\bigwedge_{j}(y(j)\RAR[\Min{j}{x}])$}
+                \UnaryInfC{$\Meq{x}{y} * x(u) \leq x(u) * (x(u)\RAR[\Min{u}{y}])$}
+                \UnaryInfC{$\Meq{x}{y} * x(u) \leq \Min{u}{y}$}
             \end{prooftree}\eop
         \end{proof}
         %%
         \begin{proof}
             
-            ($[x\Meq y] * [y\Meq z] \leq [x\Meq z]$):
+            ($[\Meq{x}{y}] * [\Meq{y}{z}] \leq [\Meq{x}{z}]$):
             \paragraph{}
                 Sejam $u,v,w\in\M{B}$. Vamos assumir, como passo indutivo, que
-            $$ \forall x\in Dom(u):\forall y,z: (x\Meq y) * (y\Meq z) \leq (x\Meq z)$$
+            $$ \forall x\in Dom(u):\forall y,z: (\Meq{x}{y}) * (\Meq{y}{z}) \leq (\Meq{x}{z})$$
             \paragraph{}
                 Restringindo $y\in Dom(v), z\in Dom(w)$ temos:
             \begin{prooftree}
-                \AxiomC{$(x\Meq y) * (y\Meq z) \leq (x\Meq z)$}
-                \UnaryInfC{$(x\Meq y) * (y\Meq z) * w(z) \leq (x\Meq z) * w(z)$}
-                \UnaryInfC{$\bigvee_{z\in Dom(w)}(x\Meq y) * (y\Meq z) * w(z) \leq \bigvee_{z\in Dom(w)}(x\Meq z) * w(z)$}
-                \UnaryInfC{$(x\Meq y) * (y\Min w) \leq (x\Min w)$}
+                \AxiomC{$(\Meq{x}{y}) * (\Meq{y}{z}) \leq (\Meq{x}{z})$}
+                \UnaryInfC{$(\Meq{x}{y}) * (\Meq{y}{z}) * w(z) \leq (\Meq{x}{z}) * w(z)$}
+                \UnaryInfC{$\bigvee_{z\in Dom(w)}(\Meq{x}{y}) * (\Meq{y}{z}) * w(z) \leq \bigvee_{z\in Dom(w)}(\Meq{x}{z}) * w(z)$}
+                \UnaryInfC{$(\Meq{x}{y}) * (\Min{y}{w}) \leq (\Min{x}{w})$}
             \end{prooftree}
             \paragraph{}
                 No entanto, temos, nas condições da hipótese indutiva, o seguinte resultado auxiliar:
             \begin{prooftree}
                 \AxiomC{$a = x$, Hipótese Indutiva}
-                \AxiomC{$[a \Meq b]*a(d)\leq [d\Min b]$}
-                \UnaryInfC{$[a \Meq b]*[c\Meq d]*a(d)\leq[d\Min b]*[c\Meq d]$}
-                \UnaryInfC{$[a \Meq b]*[c\Meq d]*a(d)\leq\bigvee_{z} w(z)*[d \Meq z]*[c\Meq d]$}
-                \BinaryInfC{$[a \Meq b]*[c\Meq d]*a(d)\leq\bigvee_{z} w(z)*[c\Meq z]$}
-                \UnaryInfC{$[a \Meq b]*[c\Meq d]*a(d)\leq[c\Min b]$}
-                \UnaryInfC{$[x \Meq y]*[u\Meq v]*x(u)\leq[v\Min y]$}
+                \AxiomC{$    \Meq{a}{b}*a(d)\leq \Min{d}{b}$}
+                \UnaryInfC{ $\Meq{a}{b}*\Meq{c}{d}*a(d)\leq\Min{d}{b}*\Meq{c}{d}$}
+                \UnaryInfC{ $\Meq{a}{b}*\Meq{c}{d}*a(d)\leq\bigvee_{z} w(z)*\Meq{d}{z}*\Meq{c}{d}$}
+                \BinaryInfC{$\Meq{a}{b}*\Meq{c}{d}*a(d)\leq\bigvee_{z} w(z)*\Meq{c}{z}$}
+                \UnaryInfC{ $\Meq{a}{b}*\Meq{c}{d}*a(d)\leq\Min{c}{b}$}
+                \UnaryInfC{ $\Meq{x}{y}*\Meq{u}{v}*x(u)\leq\Min{v}{y}$}
             \end{prooftree}
             \paragraph{}
                 Tomando o supremo sobre $u$ no domínio de $x$, temos:
-            $$[x \Meq y]*[v\Min x]\leq[v\Min y]$$
+            $$ \Meq{x}{y}*\Min{v}{x}\leq \Min{v}{y}$$
             \paragraph{}
                 Temos também que
-            $$[x \Meq y] * x(u) \leq [u\Min y]$$
+            $$\Meq{x}{y} * x(u) \leq \Min{u}{y}$$
             \begin{prooftree}
-                \AxiomC{$[x \Meq y] * x(u) \leq [u\Min y]$}
-                \UnaryInfC{$[x \Meq y]*[y \Meq z] * x(u) \leq [u\Min y] * [y \Meq z]$}
-                \UnaryInfC{$[x \Meq y]*[y \Meq z] * x(u) \leq [u\Min z] $}
-                \UnaryInfC{$[x \Meq y]*[y \Meq z] \leq x(u)\RAR[u\Min z] $}
-                \UnaryInfC{$[x \Meq y]*[y \Meq z] \leq\bigwedge_u x(u)\RAR[u\Min z] $}
+                \AxiomC{$   \Meq{x}{y}*x(u)             \leq\Min{u}{y}$}
+                \UnaryInfC{$\Meq{x}{y}*\Meq{y}{z}* x(u) \leq\Min{u}{y}*\Meq{y}{z}$}
+                \UnaryInfC{$\Meq{x}{y}*\Meq{y}{z}* x(u) \leq\Min{u}{z}$}
+                \UnaryInfC{$\Meq{x}{y}*\Meq{y}{z}       \leq   x(u)         \RAR\Min{u}{z}$}
+                \UnaryInfC{$\Meq{x}{y}*\Meq{y}{z}       \leq\bigwedge_u x(u)\RAR\Min{u}{z}$}
             \end{prooftree}
-
             \paragraph{}
                 Graças à hipótese indutiva, temos:
-            $$[x \Meq y]*[y \Meq z] \leq\bigwedge_v z(v)\RAR[v\Min x] $$
+            $$\Meq{x}{y}*\Meq{y}{z} \leq\bigwedge_v z(v)\RAR \Min{v}{x}$$
             \paragraph{}
                 E, logo, 
-            $$[x \Meq y]*[y \Meq z]\leq [x \Meq z]$$\eop
+            $$\Meq{x}{y}*\Meq{y}{z}\leq \Meq{x}{z}$$\eop
         \end{proof}
     \end{proposition}
+    \begin{definition}{Definição de $\hat{\_}$ e $\check{\_}$}
+        $M$ sendo o nosso modelo base, então vamos considerar as seguintes operações:
+        \begin{align*}
+            \hat{\_}   :&M \longrightarrow \M{B}\\
+                        &x \longmapsto   \hat{x} = \SET{\TUPLE{\hat{t}, 1}:t \in x}\\
+                        & \\
+            \check{\_} :&\M{2} \longrightarrow M\\
+                        &y \longmapsto \check{y} = \SET{\check{t} : t\in y^{-1}(1)}
+        \end{align*}
+        \paragraph{}
+            A definição formal é relativamente simples: fazemos a indução transfinita 
+            sobre a relação bem fundada $\in$ no caso de $\hat{}$ e $\in Dom(x)$ no 
+            caso de $\check{}$. Não há muito o que se verificar no que diz respeito 
+            à validade da definição. Mas há um teorema importante sobre estes operadores.
+    \end{definition}
+    \begin{theorem}{Caracterização das verdades atômicas de $\M{2}$}
+        \begin{enumerate}[label=(\alph*)]
+            \item $\forall x\in M   :\check{\hat{x}} = x$
+            \item $\forall y\in\M{2}:\Meq{\hat{\check{y}}}{y} = 1$
+            \item $\forall x_1, x_2 \in M   : x_1 =  x_2 \bim \Meq{\hat x_1}{\hat x_2} = 1$
+            \item $\forall x_1, x_2 \in M   : x_1\in x_2 \bim \Min{\hat x_1}{\hat x_2} = 1$
+            \item $\forall y_1, y_2 \in\M{2}:\Meq{y_1}{y_2}=1\bim\check{y_1} = \check{y_2}$
+            \item $\forall y_1, y_2 \in\M{2}:\Min{y_1}{y_2}=1\bim\check{y_1}\in\check{y_2}$
+        \end{enumerate}
+        \paragraph{}
+            Isto será muito útil para mostrar que $\M{2}$ é essencialmente $M$.
+        \begin{proof}
+            $ $\\$(a)$\\
+            Seja $x\in M$,
+            $\check{y} = \SET{\check{t} : t\in y^{-1}(1)}$, mas então, 
+            $\check{\hat{x}} = \SET{\check{t} : t\in \hat{x}^{-1}(1)}$, que por sua vez
+            $\check{\hat{x}} = \SET{\check{t} : t\in Dom(\hat{x})}$. Suponha que para 
+            todo $m$ de rank menor que $\rho(x)$ valha o que queremos provar. Então 
+            $\check{\hat{x}} = \SET{\check{\hat{m}} : m\in x}$, mas pela hipótese 
+            indutiva isso é justamente $x$. Então a etapa sucessora está provada. No 
+            caso em que o rank de $x$ é um limite, o argumento é práticamente o mesmo.
+        \end{proof}
+        \begin{proof}
+            $ $\\$(b)$\\
+            Seja $y\in\M{2}$, que, para hipótese indutiva, para cada um de seus membros 
+            valha nossa asserção. 
+        \end{proof}
+    \end{theorem} 
